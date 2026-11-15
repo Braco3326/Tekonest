@@ -67,6 +67,7 @@ import { normaliseLook } from './look'
 import { parsePhotoArg, photoProjection } from './photoProjection'
 import type { PhotoArg } from './photoProjection'
 import { renderProjection, shiftPictureX } from './projection'
+import { maskPartsInPicture, partFootprints } from './structure'
 import { orientSlab } from './slab'
 import type { Projection, ProjectionFace } from './projection'
 import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, declaredGates, runGates, DATA_TEXTURE_MAX_PX, textureMaxPx, TRIANGLE_CEILING } from './gates'
@@ -560,7 +561,9 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
             // a picture may be moved sideways (spec build.projectionShiftMm) so that it moves with the ports it shows
             const shifted = async (pr: Projection): Promise<Uint8Array> => {
               const mm = face === 'wrap' ? undefined : spec.build?.projectionShiftMm?.[face]
-              return mm ? shiftPictureX(pr.png, mm, pr.faceMm.w) : pr.png
+              const png = mm ? await shiftPictureX(pr.png, mm, pr.faceMm.w) : pr.png
+              // the parts of the structure sheet are modelled: their printed copies in the picture are painted out
+              return spec.structure && face !== 'wrap' ? maskPartsInPicture(png, pr.faceMm, partFootprints(spec, face)) : png
             }
             if (photo) {
               projections.push({ face, png: await shifted(await d.photoProjection(photo, face, spec.realSizeMm)) })

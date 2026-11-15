@@ -92,7 +92,7 @@ export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDe
     kind: spec.kind,
     shape: spec.build.shape,
     // a structure sheet may build the body lower than the overall height: the parts on top bring it up to realSizeMm.h
-    sizeMm: spec.structure?.bodyHeightMm !== undefined ? { ...spec.realSizeMm, h: spec.structure.bodyHeightMm } : spec.realSizeMm,
+    sizeMm: { ...spec.realSizeMm, ...(spec.structure?.bodyWidthMm !== undefined ? { w: spec.structure.bodyWidthMm } : {}), ...(spec.structure?.bodyHeightMm !== undefined ? { h: spec.structure.bodyHeightMm } : {}), ...(spec.structure?.bodyDepthMm !== undefined ? { d: spec.structure.bodyDepthMm } : {}) },
     ...(spec.mating?.outerMm !== undefined ? { matingOuterMm: spec.mating.outerMm } : {}),
     params: spec.build.params ?? {},
     // the structure sheet: real parts (knobs, faders, buttons, sockets, keys...) the builder models on the faces

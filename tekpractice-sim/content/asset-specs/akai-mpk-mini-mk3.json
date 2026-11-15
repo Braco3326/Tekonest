@@ -1,7 +1,7 @@
 {
   "id": "akai-mpk-mini-mk3",
   "kind": "device",
-  "tier": "standard",
+  "tier": "hero",
   "realSizeMm": {
     "w": 318,
     "h": 44,
@@ -11,12 +11,14 @@
     {
       "portId": "usb",
       "face": "io",
-      "xMm": 159,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 254,
+      "yMm": 9,
+      "confidence": "photo",
       "connector": "usb-b",
       "signal": "usb-control",
-      "dir": "bidir"
+      "dir": "bidir",
+      "insetMm": 1,
+      "openingMm": 10
     }
   ],
   "controls": [],
@@ -34,13 +36,13 @@
     ],
     "budget": {
       "min": 500,
-      "max": 2000
+      "max": 14000
     },
     "minFilletMm": 2.5,
     "photos": [
       {
         "face": "top",
-        "file": "top_rotated.png",
+        "file": "top_dark.png",
         "fill": true
       }
     ]
@@ -77,8 +79,237 @@
         "yMm": 80.5,
         "wMm": 88,
         "hMm": 11.5,
-        "marginMm": 3
+        "marginMm": 3,
+        "depthMm": 30
       }
     ]
+  },
+  "structure": {
+    "parts": [
+      {
+        "kind": "keys",
+        "face": "top",
+        "xMm": 12.6,
+        "yMm": 96.1,
+        "params": {
+          "whiteCount": 15,
+          "whitePitchMm": 19.53,
+          "whiteLenMm": 83,
+          "blackLenMm": 49.5,
+          "blackWidthMm": 10,
+          "riseMm": 8,
+          "startNote": 0
+        },
+        "colour": "#f2f2f2",
+        "colour2": "#161618",
+        "note": "25 mini keys, C to C"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 68.3,
+        "yMm": 25.8,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 34.7,
+        "pitchYMm": 35.4,
+        "params": {
+          "widthMm": 28,
+          "heightMm": 28,
+          "cornerMm": 2.5,
+          "riseMm": 1,
+          "frameMm": 0.5
+        },
+        "colour": "#1c1c1e",
+        "colour2": "#3a3a3e",
+        "note": "8 velocity pads, 2 rows of 4"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 206,
+        "yMm": 42.9,
+        "count": 8,
+        "cols": 4,
+        "pitchXMm": 30,
+        "pitchYMm": 28.6,
+        "params": {
+          "diaMm": 19,
+          "heightMm": 14,
+          "bevelMm": 1.6,
+          "taper": 0.22,
+          "pointer": 0,
+          "knurl": 36
+        },
+        "colour": "#26262a",
+        "note": "K1 to K8 rotary encoders"
+      },
+      {
+        "kind": "ring",
+        "face": "top",
+        "xMm": 25.4,
+        "yMm": 21.5,
+        "params": {
+          "diaMm": 33,
+          "innerDiaMm": 24,
+          "riseMm": 3,
+          "floorMm": 1.5
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#0c0c0d",
+        "note": "thumbstick black collar"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 25.4,
+        "yMm": 21.5,
+        "params": {
+          "diaMm": 24,
+          "heightMm": 24,
+          "bevelMm": 4.8,
+          "taper": 0.22,
+          "pointer": 0
+        },
+        "colour": "#e11e23",
+        "note": "thumbstick red mushroom cap"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 16.7,
+        "yMm": 45.3,
+        "count": 6,
+        "cols": 2,
+        "pitchXMm": 18.1,
+        "pitchYMm": 12.9,
+        "params": {
+          "widthMm": 13.6,
+          "heightMm": 8.8,
+          "cornerMm": 1.4,
+          "riseMm": 1.8,
+          "frameMm": 0.6
+        },
+        "colour": "#2a2a2c",
+        "colour2": "#0c0c0d",
+        "note": "arpeggiator and octave buttons"
+      },
+      {
+        "kind": "button",
+        "face": "top",
+        "xMm": 244.3,
+        "yMm": 19,
+        "count": 4,
+        "pitchXMm": 18.2,
+        "params": {
+          "widthMm": 13.6,
+          "heightMm": 8.8,
+          "cornerMm": 1.4,
+          "riseMm": 1.8,
+          "frameMm": 0.6
+        },
+        "colour": "#2a2a2c",
+        "colour2": "#0c0c0d",
+        "note": "pad control buttons"
+      },
+      {
+        "kind": "prism",
+        "face": "left",
+        "xMm": 10,
+        "yMm": 5,
+        "points": [
+          [
+            -10,
+            -5
+          ],
+          [
+            171,
+            -5
+          ],
+          [
+            171,
+            27
+          ],
+          [
+            71,
+            27
+          ],
+          [
+            -10,
+            18
+          ]
+        ],
+        "params": {
+          "riseMm": 12.5,
+          "bevelMm": 1.2
+        },
+        "colour": "#e11e23",
+        "note": "end cheek, wedge: flat at the rear 55 percent, sloping to the key end"
+      },
+      {
+        "kind": "prism",
+        "face": "right",
+        "xMm": 10,
+        "yMm": 5,
+        "points": [
+          [
+            -10,
+            -5
+          ],
+          [
+            171,
+            -5
+          ],
+          [
+            171,
+            27
+          ],
+          [
+            71,
+            27
+          ],
+          [
+            -10,
+            18
+          ]
+        ],
+        "params": {
+          "riseMm": 12.5,
+          "bevelMm": 1.2
+        },
+        "colour": "#e11e23",
+        "note": "end cheek, other end, same profile"
+      },
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 254,
+        "yMm": 9,
+        "type": "usbb",
+        "params": {
+          "collarMm": 1
+        },
+        "colour": "#9ea3aa",
+        "colour2": "#0b0b0d",
+        "note": "USB-B, about 20 percent of the length from the knob end"
+      },
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 283,
+        "yMm": 9,
+        "type": "jack",
+        "params": {
+          "diaMm": 6.6,
+          "collarMm": 1.2
+        },
+        "colour": "#9ea3aa",
+        "colour2": "#0b0b0d",
+        "note": "sustain pedal jack, about 11 percent from the knob end"
+      }
+    ],
+    "bodyHeightMm": 18,
+    "topSeenFromFront": true,
+    "bodyWidthMm": 293
   }
 }

@@ -48,6 +48,8 @@ cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam"))
 sc.collection.objects.link(cam)
 sc.camera = cam
 cam.data.lens = 60
+cam.data.clip_start = 0.0005
+cam.data.clip_end = 100.0
 
 
 def sun(name, loc, energy):

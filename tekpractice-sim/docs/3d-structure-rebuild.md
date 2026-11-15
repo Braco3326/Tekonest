@@ -29,9 +29,20 @@ Write the sheet in the spec, block `structure` (schema: `tools/assets3d/structur
 | slot | dark groove | lengthMm, widthMm, riseMm |
 | foot | cylindrical foot on the bottom face | diaMm, heightMm |
 
-Repeat a part with `count`, `cols`, `pitchXMm`, `pitchYMm` (a row of 24 faders, a grid of 8 pads). `colour` and `colour2` are the REAL colours of the part (the builder lifts them for the dim scene). `structure.bodyHeightMm` builds the body lower than the overall height when keys, knobs or faders stand above it (the overall size gate still checks `realSizeMm`, which is the sheet's overall dimension).
+Repeat a part with `count`, `cols`, `pitchXMm`, `pitchYMm` (a row of 24 faders, a grid of 8 pads). `colour` and `colour2` are the REAL colours of the part (the builder lifts them for the dim scene). `structure.bodyHeightMm`, `bodyWidthMm` and `bodyDepthMm` build the body smaller than the overall size when keys, knobs, faders or side cheeks stand on it (the overall size gate still checks `realSizeMm`, which is the datasheet's overall dimension).
 
 Part gaps (build more kinds in `tools/assets3d/blender/structure_parts.py`, and add the name to `tools/assets3d/structure.ts`): if a real part has no kind (a handle, a hinge, a carrying rail, a yoke, a stand arm, a recessed LCD bezel), write it as the sheet notes AND build it: extend the kit with a new kind or use the closest kind combined (button plates make panels and cheeks, slot makes grooves). Do not leave it printed.
+
+### Pitfalls found by the first independent review (read before you measure)
+
+1. **Top face is mirrored.** The face frame of the top face has the io (rear) edge at the bottom, so x runs the opposite way to what a top-view photo or the player sees. Measure the photo the usual way (front edge at the bottom, x from the left of the picture, y from the REAR edge, the top of the picture) and set `structure.topSeenFromFront: true`: the builder converts x for you and runs key rows to the right. Without the flag, mirror x yourself (x = width - x_photo). Always check a top view against the photo: left and right must agree.
+2. **Body lower than the overall size.** The datasheet height, width or depth includes the parts that stand on the body (keys, knobs, faders, side cheeks). Set `structure.bodyHeightMm`, `bodyWidthMm`, `bodyDepthMm` for the BODY alone; the parts bring the overall size back to `realSizeMm` (the size and proportion gates check the whole).
+3. **Printed copies of the controls.** A product photo used as the face picture shows the real controls; the builder now paints out the footprint of every modelled part in the picture (with the colour around it), but check that no printed knob, pad or key shows beside a modelled one. Legends and scales outside the footprints stay.
+4. **Wide parts and edges.** A key row or any part is placed by a ray cast onto the body: keep its anchor on the flat deck (a key row casts its ray at its middle). Never anchor a part on a rounded edge.
+5. **Ports and sockets.** The catalogue port node sits on the face plane; a socket part draws its collar and well so that the well floor is flush with the panel plane (default wellMm = riseMm). If the real panel is recessed, give the port an `insetMm` and the matching `openingMm` (the body shapes that cut pockets need the room).
+6. **Wedge-shaped parts** (end cheeks, sloped plates) use kind `prism` with `points` (outline polygon in the part frame, mm) and `riseMm` (thickness outwards).
+7. **Blank rectangles** reach only `depthMm` behind the face plane (default at most 40 percent of the thickness): with a lower body give them a larger `depthMm`.
+8. **Reviewers use straight-on views** as well (azimuth 180, 0, 90, 270 and elevation 88) next to the three-quarter ones: 215/35/125/305 are 35 degrees off the model axes.
 
 ### c) Real geometry
 Modelled, bevelled and engraved; recessed, never printed. Body edges: use the shape's own radius parameters with enough segments to read as a real radius (a chamfer is wrong where the real edge is round). Sockets have collars and dark wells. A photo texture is allowed only for printed graphics and labels (legends, scales, the screen content); every logo and wordmark is still blanked (`texture.blankRects`). Parts take their own colours: the picture never covers them (the builder tags part faces).

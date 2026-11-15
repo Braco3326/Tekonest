@@ -264,10 +264,10 @@ def _pins_xlr(dia: float) -> list[tuple[float, float, float]]:
 def make_socket(k: Kit, params: dict[str, float], c1: str, c2: str, stype: str) -> None:
     rise = _p(params, "riseMm", 1.3) * MM
     collar = _p(params, "collarMm", 1.4) * MM
-    well_d = _p(params, "wellMm", 1.0) * MM
+    well_d = _p(params, "wellMm", _p(params, "riseMm", 1.3)) * MM   # by default the well floor is flush with the panel plane: the port node (on that plane) sits on it
     col, wel = lifted_linear(c1), lifted_linear(c2)
     round_defaults = {"xlr": 19.5, "jack": 9.5, "trs": 7.0, "rca": 8.0, "bnc": 10.0, "powercon": 24.0, "speakon": 24.0, "din": 15.0, "ethercon": 24.0}
-    rect_defaults = {"usb": (12.0, 4.6), "rj45": (14.0, 13.0), "iec": (27.0, 19.0), "sfp": (14.0, 9.0), "generic": (10.0, 6.0)}
+    rect_defaults = {"usbb": (12.0, 11.0), "usb": (12.0, 4.6), "rj45": (14.0, 13.0), "iec": (27.0, 19.0), "sfp": (14.0, 9.0), "generic": (10.0, 6.0)}
     if stype in round_defaults or _p(params, "diaMm", 0) > 0:
         dia = _p(params, "diaMm", round_defaults.get(stype, 10.0)) * MM
         n = 24 if dia > 12 * MM else 16
@@ -303,6 +303,11 @@ def make_socket(k: Kit, params: dict[str, float], c1: str, c2: str, stype: str) 
         k.tube(outer, inner, -EMBED, rise, rise - well_d, col, wel)
         k.finish_part()
         z = rise - well_d
+        if stype == "usbb":
+            for px in (-w * 0.28, w * 0.28):
+                pin = shifted(rrect(w * 0.14, h * 0.2, 0.15 * MM, 1), px, h * 0.12)
+                k.stack([(z - 0.02 * MM, pin), (z + 0.5 * MM, pin)], lifted_linear("#b8bcc2"))
+                k.finish_part()
         if stype in ("usb", "rj45", "sfp"):
             tw, th = (w * 0.86, h * 0.28) if stype == "usb" else (w * 0.7, h * 0.14)
             tongue = shifted(rrect(tw, th, 0.1 * MM, 1), 0.0, -h * 0.1 if stype == "usb" else -h * 0.28)
@@ -417,6 +422,25 @@ def make_ball(k: Kit, params: dict[str, float], c1: str, c2: str) -> None:
     k.finish_part()
 
 
+def make_prism(k: Kit, params: dict[str, float], c1: str, c2: str, points: list[list[float]]) -> None:
+    """A solid with any outline: the polygon (mm, local x right and y up on the face) extruded outwards by riseMm, the top edge softened by shrinking the polygon."""
+    rise = _p(params, "riseMm", 5.0) * MM
+    bev = min(_p(params, "bevelMm", 0.8) * MM, rise * 0.4)
+    pts = [(p[0] * MM, p[1] * MM) for p in points]
+    cx = sum(p[0] for p in pts) / len(pts)
+    cy = sum(p[1] for p in pts) / len(pts)
+    def shrink(amount: float) -> list[tuple[float, float]]:
+        out = []
+        for (x, y) in pts:
+            dx, dy = x - cx, y - cy
+            ln = math.hypot(dx, dy) or 1.0
+            out.append((x - dx / ln * amount, y - dy / ln * amount))
+        return out
+    col = lifted_linear(c1)
+    k.stack([(-EMBED, pts), (rise - bev, pts), (rise, shrink(bev))], col)
+    k.finish_part()
+
+
 def make_ring(k: Kit, params: dict[str, float], c1: str, c2: str) -> None:
     """An annulus standing proud: a bezel round a knob or a jack, a driver surround. outer/inner diameters, rise, optional floor colour2 inside."""
     do = _p(params, 'diaMm', 30.0) * MM
@@ -458,11 +482,12 @@ def make_keys(k: Kit, params: dict[str, float], c1: str, c2: str) -> None:
     rise = _p(params, "riseMm", 8.0) * MM
     gap = _p(params, "gapMm", 0.5) * MM
     start = int(_p(params, "startNote", 0))
+    sgn = -1.0 if _p(params, "dir", 1) < 0 else 1.0   # -1: the keys step towards -x (a keyboard measured from the left of a top-view photo on the top face)
     white, black = lifted_linear(c1), lifted_linear(c2)
     bev = min(1.2 * MM, rise * 0.3)
     for i in range(n_white):
-        x0 = i * pitch + gap / 2
-        x1 = (i + 1) * pitch - gap / 2
+        xa, xb = i * pitch, (i + 1) * pitch
+        x0, x1 = (xa + gap / 2, xb - gap / 2) if sgn > 0 else (-xb + gap / 2, -xa - gap / 2)
         y0, y1 = 0.0, length
         # a key: a box whose front top edge is chamfered
         rings = [
@@ -476,7 +501,7 @@ def make_keys(k: Kit, params: dict[str, float], c1: str, c2: str) -> None:
         degree = (i + start) % 7
         if WHITE_SEMITONES[degree] not in BLACK_AFTER:
             continue
-        cx = (i + 1) * pitch
+        cx = sgn * (i + 1) * pitch
         x0, x1 = cx - black_w / 2, cx + black_w / 2
         y0, y1 = 0.0, black_len   # the black keys sit at the far (rear) end of the keys
         zt = rise + 6.5 * MM
@@ -492,10 +517,10 @@ def make_keys(k: Kit, params: dict[str, float], c1: str, c2: str) -> None:
 MAKERS: dict[str, Callable[..., None]] = {
     "knob": make_knob, "button": make_button, "fader": make_fader, "screw": make_screw, "led": make_led,
     "slot": make_slot, "foot": make_foot, "keys": make_keys, "rod": make_rod, "ball": make_ball, "ring": make_ring, "driver": make_driver,
-}
+}   # prism and socket are called with extra arguments in apply_structure
 DEFAULT_COLOURS = {
     "knob": ("#2a2a2e", "#e8e8e8"), "button": ("#8a8a90", "#1a1a1c"), "fader": ("#1c1c1f", "#0a0a0b"), "socket": ("#9ea3aa", "#0b0b0d"),
-    "screw": ("#9a9ea6", "#2a2a2e"), "led": ("#30e060", "#202020"), "keys": ("#efefef", "#18181a"), "slot": ("#0a0a0b", "#0a0a0b"), "foot": ("#1c1c1f", "#1c1c1f"), "rod": ("#9a9ea6", "#9a9ea6"), "ball": ("#9a9ea6", "#9a9ea6"), "ring": ("#9a9ea6", "#0b0b0d"), "driver": ("#1c1c1f", "#2a2a2e"),
+    "screw": ("#9a9ea6", "#2a2a2e"), "led": ("#30e060", "#202020"), "keys": ("#efefef", "#18181a"), "slot": ("#0a0a0b", "#0a0a0b"), "foot": ("#1c1c1f", "#1c1c1f"), "rod": ("#9a9ea6", "#9a9ea6"), "ball": ("#9a9ea6", "#9a9ea6"), "ring": ("#9a9ea6", "#0b0b0d"), "driver": ("#1c1c1f", "#2a2a2e"), "prism": ("#2a2a2e", "#2a2a2e"),
 }
 
 
@@ -533,6 +558,9 @@ def apply_structure(ob: bpy.types.Object, plan: dict[str, Any], colour_attribute
             xa = Vector((1.0, 0.0, 0.0)) - nrm * nrm.x
         xa.normalize()
         ya = nrm.cross(xa)
+        sh = inst.get("shiftMm")
+        if sh:   # the ray was cast at the middle of a wide part: the frame origin goes back to its anchor
+            loc = loc - xa * (sh[0] * MM) - ya * (sh[1] * MM)
         kit.set_frame(loc, xa, ya, nrm)
         kind = inst["kind"]
         d1, d2 = DEFAULT_COLOURS[kind]
@@ -541,6 +569,8 @@ def apply_structure(ob: bpy.types.Object, plan: dict[str, Any], colour_attribute
         params = inst.get("params") or {}
         if kind == "socket":
             make_socket(kit, params, c1, c2, inst.get("type") or "generic")
+        elif kind == "prism":
+            make_prism(kit, params, c1, c2, inst["points"])
         else:
             MAKERS[kind](kit, params, c1, c2)
         built += 1
