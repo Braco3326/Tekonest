@@ -6,6 +6,7 @@ import type { ProfileField } from './fieldsFor'
  * supabase/schema.sql mirrors them (first_name, age_range, goal, speciality, region, school, parental_confirmation, consent_at).
  */
 export const PROFILE_KEYS = ['ageRange', 'goal', 'speciality', 'firstName', 'region', 'school', 'parentalConfirmation', 'consentAt'] as const
+export type ProfileKey = (typeof PROFILE_KEYS)[number]
 
 export interface Profile {
   ageRange: AgeRange

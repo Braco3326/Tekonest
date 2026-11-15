@@ -43,7 +43,7 @@ describe('delete-account edge function handler', () => {
   })
 
   it('401 without a bearer token, and nothing is deleted', async () => {
-    for (const headers of [{}, { authorization: '' }, { authorization: 'Basic abc' }, { authorization: 'Bearer ' }]) {
+    for (const headers of [{} as Record<string, string>, { authorization: '' }, { authorization: 'Basic abc' }, { authorization: 'Bearer ' }]) {
       const d = deps()
       const res = await handleDeleteAccount(post(headers), d)
       expect(res.status).toBe(401)
