@@ -92,6 +92,18 @@ export function footprintCorners(p: Pose, size: Size2): { x: number; z: number }
   ]
 }
 
+/**
+ * The SVG `matrix(a b c d e f)` that draws a glyph's unit square (u across, v from the rear -0.5 to the front +0.5) onto the device's footprint on screen:
+ * the same placement as `footprintCorners` then `toScreen`.
+ */
+export function deviceMatrix(v: View, p: Pose, size: Size2): [number, number, number, number, number, number] {
+  const t = (p.rot * Math.PI) / 180
+  const c = Math.cos(t)
+  const s = Math.sin(t)
+  const o = toScreen(v, p.x, p.z)
+  return [-v.scale * c * size.w, -v.scale * s * size.w, -v.scale * s * size.d, v.scale * c * size.d, o.sx, o.sy]
+}
+
 export interface Bounds {
   minX: number
   maxX: number

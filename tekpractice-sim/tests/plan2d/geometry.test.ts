@@ -108,3 +108,22 @@ describe('metre grid', () => {
     expect(gridLines({ width: 3, length: 2 }, 1)).toEqual({ xs: [-1, 0, 1], zs: [-1, 0, 1] })
   })
 })
+
+describe('deviceMatrix: the unit square of a glyph onto the screen', () => {
+  it('maps the glyph corners onto the footprint corners, at any yaw', async () => {
+    const { deviceMatrix } = await import('../../src/plan2d/geometry')
+    const v = { scale: 40, cx: 0.5, cz: -0.25, w: 600, h: 400 }
+    for (const rot of [0, 90, 135, 270]) {
+      const pose = { x: 1.2, z: 0.7, rot }
+      const size = { w: 0.6, d: 0.3 }
+      const [a, b, c, d, e, f] = deviceMatrix(v, pose, size)
+      const corners = footprintCorners(pose, size).map((p) => toScreen(v, p.x, p.z))
+      // unit corners in the same order: rear left, rear right, front right, front left
+      const unit = [[-0.5, -0.5], [0.5, -0.5], [0.5, 0.5], [-0.5, 0.5]] as const
+      unit.forEach(([u, w], i) => {
+        close(a * u + c * w + e, corners[i]!.sx)
+        close(b * u + d * w + f, corners[i]!.sy)
+      })
+    }
+  })
+})

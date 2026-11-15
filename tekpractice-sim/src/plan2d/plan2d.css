@@ -1,0 +1,156 @@
+/* The 2D schema page (mission 2): a full-window layer over the 3D view, in the chrome's tokens (Nuit ground, Papier ink, Ambre selection), square corners.
+   The cable colours are the colour and symbol sheet's (>= 3:1 on Nuit); they are set inline by the view, never here. */
+
+.cr-dialog.p2d-page {
+  width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  max-width: none;
+  padding: 12px 16px;
+  border: 0;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  overflow: hidden;
+}
+.cr-dialog.p2d-page > .cr-dialog-title { margin: 0; font-family: var(--cr-font-title); font-size: 18px; }
+.cr-dialog.p2d-page > .cr-dialog-body { margin: 2px 0 8px; color: var(--cr-ink-muted); font-size: 13px; }
+
+.p2d { display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; min-height: 0; gap: 8px; }
+.p2d-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.p2d-btn, .p2d-snap, .p2d-search {
+  font: inherit;
+  font-size: 13px;
+  color: var(--cr-papier);
+  background: var(--cr-panel);
+  border: 1px solid var(--cr-ink-muted);
+  border-radius: 0;
+  padding: 5px 10px;
+  min-height: 32px;
+}
+.p2d-btn { cursor: pointer; }
+.p2d-btn:hover { border-color: var(--cr-ambre); }
+.p2d-btn[disabled] { opacity: 0.5; cursor: default; }
+.p2d-btn[aria-expanded='true'] { border-color: var(--cr-ambre); color: var(--cr-ambre); }
+.p2d-snap-label { font-size: 13px; color: var(--cr-ink-muted); margin-left: 6px; }
+.p2d :focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: 2px; }
+
+.p2d-main { display: grid; grid-template-columns: 220px minmax(0, 1fr) 230px; gap: 10px; min-height: 0; }
+.p2d-side-title { margin: 0 0 6px; font-family: var(--cr-font-title); font-size: 14px; }
+
+.p2d-palette { display: flex; flex-direction: column; min-height: 0; background: var(--cr-panel); padding: 8px; }
+.p2d-search-label { font-size: 12px; color: var(--cr-ink-muted); }
+.p2d-search { width: 100%; box-sizing: border-box; margin: 2px 0 8px; }
+.p2d-palette-list { overflow: auto; min-height: 0; flex: 1; }
+.p2d-palette-tab { margin: 8px 0 2px; font-size: 12px; color: var(--cr-ink-muted); font-weight: 600; }
+.p2d-palette-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  color: var(--cr-papier);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+  padding: 4px 6px;
+  min-height: 28px;
+  cursor: pointer;
+  touch-action: none;
+}
+.p2d-palette-item:hover, .p2d-palette-item:focus-visible { border-color: var(--cr-ambre); }
+.p2d-palette-item.p2d-dragging { opacity: 0.6; }
+.p2d-empty { font-size: 13px; color: var(--cr-ink-muted); }
+
+.p2d-stage { position: relative; min-height: 0; background: var(--cr-nuit); border: 1px solid var(--cr-panel-line); overflow: hidden; }
+.p2d-svg { display: block; width: 100%; height: 100%; touch-action: none; user-select: none; font-family: var(--cr-font-ui); }
+.p2d-svg:focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: -2px; }
+.p2d-empty-plan { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0; color: var(--cr-ink-muted); font-size: 14px; pointer-events: none; }
+.p2d-grid line { stroke: var(--cr-papier); stroke-opacity: 0.12; stroke-width: 1; }
+.p2d-orient text { fill: var(--cr-ink-muted); font-size: 12px; }
+.p2d-orient .p2d-room-name { fill: var(--cr-papier); font-size: 13px; font-weight: 600; }
+.p2d-scalebar path { fill: none; stroke: var(--cr-papier); stroke-width: 1.5; }
+.p2d-scalebar text { fill: var(--cr-papier); font-size: 11px; }
+
+.p2d-dev { cursor: grab; outline: none; }
+.p2d-dev .p2d-hit { fill: transparent; }
+.p2d-dev .p2d-fp { fill: var(--cr-panel); stroke: var(--cr-papier); stroke-width: 1.2; }
+.p2d-dev.p2d-size-unknown .p2d-fp { stroke-dasharray: 4 3; }
+.p2d-dev .p2d-sym { fill: none; stroke: var(--cr-papier); stroke-width: 1.3; }
+.p2d-dev .p2d-anchor { fill: var(--cr-ink-muted); }
+.p2d-dev .p2d-anchor-used { fill: var(--cr-papier); }
+.p2d-dev-label { fill: var(--cr-papier); font-size: 11px; pointer-events: none; }
+.p2d-dev-note { fill: var(--cr-ink-muted); font-size: 10px; pointer-events: none; }
+.p2d-dev.p2d-sel .p2d-fp, .p2d-dev:focus-visible .p2d-fp { stroke: var(--cr-ambre); stroke-width: 2.5; }
+.p2d-dev:focus-visible .p2d-hit { stroke: var(--cr-ambre); stroke-width: 1.5; stroke-dasharray: 3 2; }
+.p2d-dev.p2d-lit .p2d-fp { stroke: var(--cr-ambre); stroke-width: 3; }
+.p2d-dev.p2d-dim { opacity: 0.4; }
+
+.p2d-cable { cursor: pointer; outline: none; }
+.p2d-cable-hit { stroke: transparent; stroke-width: 14; fill: none; }
+.p2d-cable-line { fill: none; }
+.p2d-cable-halo { fill: none; stroke: var(--cr-ambre); stroke-opacity: 0.5; }
+.p2d-cable:focus-visible .p2d-cable-hit { stroke: var(--cr-ambre); stroke-opacity: 0.35; }
+.p2d-tag-bg { fill: var(--cr-nuit); stroke-width: 1; }
+.p2d-tag { fill: var(--cr-papier); font-size: 10px; pointer-events: none; }
+.p2d-line-glyph { fill: none; stroke-width: 1.5; }
+path.p2d-line-glyph[fill] { stroke: none; }
+
+.p2d-rear { position: absolute; inset: 0; background: color-mix(in srgb, var(--cr-nuit) 92%, transparent); overflow: auto; perspective: 1200px; }
+.p2d-rear-panel { box-sizing: border-box; min-height: 100%; padding: 16px; background: var(--cr-nuit); }
+.p2d-flip-in { animation: p2d-flip 280ms ease-out both; }
+@keyframes p2d-flip {
+  from { transform: scale(0.2) rotateY(90deg); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .p2d-flip-in { animation: none; }
+}
+.p2d-rear-title { margin: 0 0 4px; font-family: var(--cr-font-title); font-size: 16px; }
+.p2d-rear-note { margin: 0 0 4px; font-size: 12px; color: var(--cr-ink-muted); }
+.p2d-rear-line { margin: 0 0 10px; font-size: 13px; }
+.p2d-rear-grid { display: grid; grid-template-columns: repeat(var(--p2d-cols, 4), minmax(110px, 1fr)); gap: 8px; }
+.p2d-port {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  grid-template-areas: 'icon name' 'icon meta' 'why why';
+  align-items: center;
+  column-gap: 6px;
+  text-align: left;
+  font: inherit;
+  font-size: 12px;
+  color: var(--cr-papier);
+  background: var(--cr-panel);
+  border: 1px solid var(--cr-ink-muted);
+  border-radius: 0;
+  padding: 6px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.p2d-port-icon { grid-area: icon; color: var(--cr-papier); }
+.p2d-port-name { grid-area: name; font-weight: 600; word-break: break-all; }
+.p2d-port-meta { grid-area: meta; color: var(--cr-ink-muted); font-size: 11px; }
+.p2d-port-why { grid-area: why; color: var(--cr-ink-muted); font-size: 11px; margin-top: 4px; }
+.p2d-port-lit { border: 2px solid var(--cr-ambre); }
+.p2d-port-lit .p2d-port-icon { color: var(--cr-ambre); }
+.p2d-port-dim, .p2d-port-taken { opacity: 0.55; cursor: not-allowed; }
+.p2d-glyph { fill: none; stroke: currentColor; stroke-width: 1.4; }
+.p2d-glyph .p2d-pin-m { fill: currentColor; stroke: none; }
+.p2d-glyph .p2d-pin-f { fill: none; stroke: currentColor; stroke-width: 1; }
+.p2d-rear-actions { display: flex; gap: 8px; margin-top: 12px; }
+
+.p2d-side { display: flex; flex-direction: column; gap: 10px; overflow: auto; min-height: 0; }
+.p2d-legend, .p2d-sources { background: var(--cr-panel); padding: 8px; }
+.p2d-legend-list, .p2d-sources-list { list-style: none; margin: 0; padding: 0; }
+.p2d-legend-item { display: grid; grid-template-columns: 46px 1fr auto; align-items: center; gap: 6px; font-size: 12px; padding: 2px 0; }
+.p2d-legend-tag { color: var(--cr-ink-muted); font-size: 11px; }
+.p2d-sources-intro { font-size: 12px; margin: 0 0 6px; }
+.p2d-source { font-size: 12px; padding: 4px 0; border-top: 1px solid var(--cr-panel-line); }
+.p2d-source-tag { display: inline-block; margin-right: 6px; padding: 0 4px; border: 1px solid var(--cr-ink-muted); color: var(--cr-ink-muted); font-size: 11px; }
+
+.p2d-keys { margin: 0; font-size: 12px; color: var(--cr-ink-muted); }
+.p2d-live { margin: 0; min-height: 1.3em; font-size: 13px; }
+
+@media (max-width: 760px) {
+  .p2d-main { grid-template-columns: 1fr; grid-template-rows: auto minmax(320px, 1fr) auto; overflow: auto; }
+  .p2d-palette { max-height: 30vh; }
+}
