@@ -32,6 +32,8 @@ import { createPatchRules } from './patchRules'
 import { loadPlan, planKey, savePlan } from './persist'
 import { mountPalette } from './palette'
 import { mountRear, rearModel } from './rearView'
+import { planSpawn, type SpawnPlan, type SpawnTarget } from './spawn3d'
+import { choiceInPage } from './spawnDialog'
 import { CATEGORY_FAMILY, GLYPHS, familyOf, footprintOf, type Family } from './symbols'
 
 const P = (): Readonly<Record<string, string>> => COPY.plan2d!
@@ -63,6 +65,11 @@ export interface Plan2dPageDeps {
   /** True: the flip is a cut (prefers-reduced-motion). */
   reducedMotion?(): boolean
   parent?: HTMLElement
+  /**
+   * Stage 2: what the 3D page lends for « Envoyer dans la scène 3D » (closures over its store and history, never the store). Absent: no such button,
+   * the page stays the stand-alone plan of stage 1.
+   */
+  spawn?: SpawnTarget | null
 }
 
 export interface Plan2dPage {
@@ -106,6 +113,12 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
   let dragOffset: { ids: string[]; dx: number; dz: number } | null = null
   let saveWarned = false
   let finish: (() => void) | null = null
+  /** The modal's box (the in-page confirmations sit in it, beside the page's parts they make inert). */
+  let pageBox: HTMLElement | null = null
+  /** A send is being confirmed or applied: a second press does nothing. */
+  let sending = false
+  /** Where the focus goes once a send has ended. */
+  let focusNext: HTMLElement | null = null
 
   const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string): HTMLElementTagNameMap[K] => {
     const e = doc.createElement(tag)
@@ -163,7 +176,12 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
   sourcesBtn.setAttribute('aria-expanded', 'false')
   sourcesBtn.setAttribute('aria-controls', 'p2d-sources')
   const closeBtn = btn(P().close!, 'plan2d-close', () => finish?.())
-  toolbar.append(undoBtn, redoBtn, snapLabel, snapSel, zoomIn, zoomOut, fitBtn, sourcesBtn, closeBtn)
+  // Stage 2: « Envoyer dans la scène 3D », only when the 3D page lent a target; never automatic (a press, then a confirmation)
+  const spawnBtn = d.spawn ? btn(P().spawn!, 'plan2d-spawn', () => void send()) : null
+  const spawnWhy = el('span', 'p2d-spawn-why', P().spawnEmpty)
+  spawnWhy.id = 'p2d-spawn-why'
+  spawnWhy.hidden = true
+  toolbar.append(undoBtn, redoBtn, snapLabel, snapSel, zoomIn, zoomOut, fitBtn, sourcesBtn, ...(spawnBtn ? [spawnBtn, spawnWhy] : []), closeBtn)
 
   const palette = mountPalette(doc, registry, {
     onPick: (deviceId) => place(deviceId, view.cx, view.cz),
@@ -237,7 +255,12 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
   row(null, P().srcRules!)
   row(null, P().rearNote!)
   sourcesPanel.append(sourcesTitle, el('p', 'p2d-sources-intro', P().sourcesIntro), sourcesList)
-  side.append(legend, sourcesPanel)
+  // the report of the last send (stage 2), first in the side column
+  const report = el('section', 'p2d-report')
+  report.hidden = true
+  report.setAttribute('aria-labelledby', 'p2d-report-title')
+  report.dataset.testid = 'plan2d-report'
+  side.append(report, legend, sourcesPanel)
 
   const main = el('div', 'p2d-main')
   main.append(palette.root, stage, side)
@@ -378,6 +401,133 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
     say(P().cableDropped!)
   }
 
+  // ── stage 2: « Envoyer dans la scène 3D » (spawn3d.ts): a confirmation, one undoable 3D step, a report; the page stays open
+  const nDev = (n: number): string => fill(n < 2 ? P().deviceOne! : P().deviceMany!, { n: String(n) })
+  const nCab = (n: number): string => fill(n < 2 ? P().cableOne! : P().cableMany!, { n: String(n) })
+  const refusalLines = (s: SpawnPlan): string[] => [
+    ...s.refusedDevices.map((r) => {
+      const device = nameOf(r.planId)
+      switch (r.reason) {
+        case 'outside':
+          return fill(P().whyOutside!, { device })
+        case 'unknown-device':
+          return fill(P().whyUnknown!, { device })
+        case 'store':
+          return fill(P().whyStore!, { device, reason: r.message })
+        case 'overlap':
+          return r.with.inScene
+            ? fill(P().whyOverlapScene!, { device, other: `${shortName(registry, r.with.deviceId)} (${r.with.id})` })
+            : fill(P().whyOverlap!, { device, other: nameOf(r.with.id) })
+      }
+    }),
+    ...s.refusedCables.map((r) => {
+      const ends = { a: portName(r.a), b: portName(r.b) }
+      return r.reason === 'device' ? fill(P().whyCableDevice!, { ...ends, device: nameOf(r.device) }) : fill(P().whyCableRule!, { ...ends, title: r.title, detail: r.detail }).trim()
+    }),
+  ]
+  const showReport = (s: SpawnPlan | null, done: boolean): void => {
+    const target = d.spawn!
+    const undoKey = target.undoLabel()
+    const title = el('h3', 'p2d-side-title', P().reportTitle)
+    title.id = 'p2d-report-title'
+    const head = !done || !s
+      ? P().reportNone!
+      : fill(s.mode === 'replace' ? P().reportReplaced! : P().reportAdded!, { devices: nDev(s.devices.length), cables: nCab(s.cables.length), undo: undoKey })
+    const parts: HTMLElement[] = [title, el('p', 'p2d-report-head', head)]
+    const lines = s ? refusalLines(s) : []
+    if (lines.length) {
+      parts.push(el('p', 'p2d-report-refused', P().reportRefused))
+      const ul = el('ul', 'p2d-report-list')
+      for (const line of lines) ul.append(el('li', 'p2d-report-item', line))
+      parts.push(ul)
+    }
+    let show: HTMLButtonElement | null = null
+    if (done && s) {
+      const ids = s.devices.map((x) => x.instanceId)
+      show = btn(P().show3d!, 'plan2d-show3d', () => {
+        finish?.()
+        target.show(ids)
+      })
+      parts.push(show)
+    }
+    report.replaceChildren(...parts)
+    report.hidden = false
+    say(lines.length ? `${head} ${P().reportRefused} ${lines.join(' ')}` : head)
+    focusNext = show ?? spawnBtn
+  }
+  const send = async (): Promise<void> => {
+    const target = d.spawn
+    if (!target || sending || !history.plan.devices.length || !pageBox) return
+    sending = true
+    render()
+    try {
+      const plan = history.plan
+      const add = planSpawn(registry, plan, target, 'add')
+      const rep = planSpawn(registry, plan, target, 'replace')
+      const hasGear = target.design().rig.instances.length > 0
+      const canReplace = hasGear && rep.devices.length > 0
+      if (!add.devices.length && !canReplace) return showReport(add, false)
+      const cover = [toolbar, palette.root, stage, side, keysHelp]
+      const left = add.refusedDevices.length + add.refusedCables.length
+      const body = add.devices.length
+        ? [fill(P().spawnBody!, { devices: nDev(add.devices.length), cables: nCab(add.cables.length) }), ...(left ? [fill(P().spawnBodyRefused!, { devices: nDev(add.refusedDevices.length), cables: nCab(add.refusedCables.length) })] : [])]
+        : [P().spawnNothing!]
+      const choice = await choiceInPage(doc, pageBox, cover, {
+        id: 'plan2d-spawn-dialog',
+        title: P().spawnTitle!,
+        body,
+        choices: [
+          ...(add.devices.length ? [{ id: 'add' as const, label: P().spawnAdd! }] : []),
+          ...(canReplace ? [{ id: 'replace' as const, label: COPY.place!.replace! }] : []),
+          { id: 'cancel' as const, label: P().spawnCancel! },
+        ],
+        cancel: 'cancel',
+      })
+      if (choice === 'cancel') {
+        say(P().spawnCancelled!)
+        focusNext = spawnBtn
+        return
+      }
+      if (choice === 'replace') {
+        // the existing replace path's own confirmation (« Remplacer le matériel ? »), then its intent: APPLY_DESIGN, one undoable step
+        const sure = await choiceInPage(doc, pageBox, cover, {
+          id: 'plan2d-replace-dialog',
+          title: COPY.place!.replaceTitle!,
+          body: [fill(P().spawnReplaceBody!, { undo: target.undoLabel() })],
+          choices: [
+            { id: 'replace' as const, label: COPY.place!.replace! },
+            { id: 'cancel' as const, label: COPY.place!.cancel! },
+          ],
+          cancel: 'cancel',
+        })
+        if (sure !== 'replace') {
+          say(P().spawnCancelled!)
+          focusNext = spawnBtn
+          return
+        }
+        // planned again at the moment of applying: nothing changes behind a modal, but the store is the truth
+        const now = planSpawn(registry, history.plan, target, 'replace')
+        if (!now.devices.length || !target.replace(now.design!, P().entryReplace!)) {
+          say(P().spawnFailed!)
+          return
+        }
+        return showReport(now, true)
+      }
+      const now = planSpawn(registry, history.plan, target, 'add')
+      if (!now.devices.length || !target.apply(now.intents, P().entrySpawn!).ok) {
+        say(P().spawnFailed!)
+        return
+      }
+      showReport(now, true)
+    } finally {
+      sending = false
+      render()
+      // after the render: the button is enabled again only now
+      focusNext?.focus()
+      focusNext = null
+    }
+  }
+
   // ── drawing
   const outlineInner = room.outline.replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '')
   const posOf = (dv: PlanDevice): PlanDevice => (dragOffset && dragOffset.ids.includes(dv.id) ? { ...dv, x: dv.x + dragOffset.dx, z: dv.z + dragOffset.dz } : dv)
@@ -515,6 +665,18 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
     emptyMsg.hidden = plan.devices.length > 0
     undoBtn.disabled = !history.canUndo
     redoBtn.disabled = !history.canRedo
+    if (spawnBtn) {
+      // an empty plan has nothing to send: the button is off and says why (its tooltip and its accessible description)
+      const empty = plan.devices.length === 0
+      spawnBtn.disabled = empty || sending
+      if (empty) {
+        spawnBtn.title = P().spawnEmpty!
+        spawnBtn.setAttribute('aria-describedby', spawnWhy.id)
+      } else {
+        spawnBtn.removeAttribute('title')
+        spawnBtn.removeAttribute('aria-describedby')
+      }
+    }
     root.dataset.holding = String(held !== null)
   }
 
@@ -783,6 +945,7 @@ export function openPlan2dPage(d: Plan2dPageDeps): Plan2dPage {
     build(b, done) {
       b.classList.add('p2d-page')
       b.append(root)
+      pageBox = b
       finish = () => done(undefined)
       const focusables = (): HTMLElement[] =>
         [...b.querySelectorAll<HTMLElement>(FOCUSABLE)].filter((x) => x.dataset.sentinel === undefined && !x.closest('[hidden]') && !x.closest('[inert]'))

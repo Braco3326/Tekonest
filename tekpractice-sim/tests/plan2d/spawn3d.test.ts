@@ -9,7 +9,7 @@
  *    REPORTED and not created, with the cables that needed it; a cable the connection rules refuse is reported with the rule's own title and text;
  *  - nothing to add = nothing dispatched.
  */
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { CreationStore, creationEvaluator } from '../../src/creation/store'
@@ -20,6 +20,10 @@ import { createPatchRules } from '../../src/plan2d/patchRules'
 import { localToWorld } from '../../src/plan2d/geometry'
 import { footprintOf } from '../../src/plan2d/symbols'
 import { planSpawn, spawnInto, type SpawnTarget } from '../../src/plan2d/spawn3d'
+import { planKey, savePlan } from '../../src/plan2d/persist'
+import { openPlan2dPage, type Plan2dPage } from '../../src/plan2d/view'
+import { floorPlanSvg } from '../../src/creation/roomPlanSvg'
+import { COPY } from '../../src/creation/copy'
 
 const registry = loadCatalog(catalogJson)
 const SM58_OUT = registry.deviceById.get('shure-sm58')!.ports[0]!.portId
@@ -32,7 +36,7 @@ const step = (p: Plan2D, i: PlanIntent): Plan2D => {
 const build = (...intents: PlanIntent[]): Plan2D => intents.reduce(step, emptyPlan('blank'))
 
 /** The 3D page's own pieces: a CreationStore, its History, and the closures the boot hands the page (never the store itself). */
-export function scene(initial?: DesignState, floorAt: (x: number, z: number) => number = () => 0) {
+function scene(initial?: DesignState, floorAt: (x: number, z: number) => number = () => 0) {
   const store = new CreationStore(registry, creationEvaluator(registry), initial)
   const history = new History(store)
   const shown: string[] = []
@@ -265,5 +269,208 @@ describe('spawn: the replace path (only when the learner picks it)', () => {
     const { target } = scene(withGear())
     const plan = build({ type: 'place', deviceId: 'shure-sm58', x: 5.05, z: 5 }, { type: 'place', deviceId: 'shure-sm58', x: 5.05, z: 5.01 })
     expect(planSpawn(registry, plan, target, 'replace').refusedDevices.map((x) => x.planId)).toEqual(['shure-sm58-2'])
+  })
+})
+
+// ── the page: the button, the confirmation inside the page, the report, « Voir la scène 3D » ─────────────────────────────────────────────
+
+function memory(): Storage {
+  const data = new Map<string, string>()
+  return {
+    get length() {
+      return data.size
+    },
+    clear: () => data.clear(),
+    key: (i: number) => [...data.keys()][i] ?? null,
+    getItem: (k: string) => (data.has(k) ? data.get(k)! : null),
+    setItem: (k: string, v: string) => void data.set(k, v),
+    removeItem: (k: string) => void data.delete(k),
+  }
+}
+
+const P = COPY.plan2d!
+const room = { key: 'blank', name: 'Salle vide neutre', width: 24, length: 14, outline: floorPlanSvg(24, 14) }
+let page: Plan2dPage | null = null
+const q = <T extends Element = HTMLElement>(sel: string): T | null => document.querySelector<T>(sel)
+const flush = async (): Promise<void> => {
+  for (let i = 0; i < 10; i++) await Promise.resolve()
+}
+/** The page over a 3D scene, the plan already drawn (as a learner would have, saved under its own key). */
+function openWith(plan: Plan2D | null, initial?: DesignState) {
+  const storage = memory()
+  if (plan) savePlan(storage, planKey(null, 'blank'), plan)
+  const s = scene(initial)
+  page = openPlan2dPage({ doc: document, registry, room, storage, projectName: null, reducedMotion: () => true, spawn: s.target })
+  return s
+}
+const sendBtn = (): HTMLButtonElement => q<HTMLButtonElement>('[data-testid="plan2d-spawn"]')!
+const dialog = (): HTMLElement | null => q('[data-testid="plan2d-spawn-dialog"]')
+const choose = (box: HTMLElement, id: string): void => box.querySelector<HTMLButtonElement>(`[data-choice="${id}"]`)!.click()
+const live = (): string => q('[data-testid="plan2d-live"]')!.textContent ?? ''
+/** Two devices side by side and one cable: the e2e's console and speaker. */
+const duo = (): Plan2D =>
+  build(
+    { type: 'place', deviceId: 'midas-m32', x: 0, z: 0 },
+    { type: 'place', deviceId: 'qsc-k12-2', x: -2, z: 3, rot: 90 },
+    { type: 'connect', a: { dev: 'midas-m32-1', port: 'out-main-l' }, b: { dev: 'qsc-k12-2-1', port: 'in-line-a' } },
+  )
+
+describe('the page: « Envoyer dans la scène 3D »', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<div id="app"><button id="behind">3D</button></div>'
+  })
+  afterEach(() => {
+    page?.close()
+    page = null
+  })
+
+  it('no target lent by the 3D page = no button (the stand-alone plan of stage 1)', () => {
+    page = openPlan2dPage({ doc: document, registry, room, storage: memory(), projectName: null, reducedMotion: () => true })
+    expect(q('[data-testid="plan2d-spawn"]')).toBeNull()
+  })
+
+  it('an empty plan: the button is there but off, and says why (tooltip and accessible description); placing a device turns it on', () => {
+    openWith(null)
+    const b = sendBtn()
+    expect(b.textContent).toBe('Envoyer dans la scène 3D')
+    expect(b.disabled).toBe(true)
+    expect(b.title).toBe(P.spawnEmpty)
+    expect(q(`#${b.getAttribute('aria-describedby')}`)!.textContent).toBe(P.spawnEmpty)
+    q<HTMLButtonElement>('.p2d-palette-item[data-device="qsc-k12-2"]')!.click()
+    expect(b.disabled).toBe(false)
+    expect(b.hasAttribute('aria-describedby')).toBe(false)
+  })
+
+  it('a press asks first (never automatic): a dialog inside the page with the counts to add; the rest of the page is inert; Annuler / Échap change nothing and keep the page open', async () => {
+    const { store } = openWith(duo())
+    sendBtn().click()
+    const box = dialog()!
+    expect(box.getAttribute('role')).toBe('dialog')
+    expect(box.getAttribute('aria-modal')).toBe('true')
+    expect(q(`#${box.getAttribute('aria-labelledby')}`)!.textContent).toBe('Envoyer dans la scène 3D')
+    expect(box.textContent).toContain('À ajouter dans la scène 3D : 2 appareils et 1 câble, aux mêmes places que sur le plan.')
+    expect([...box.querySelectorAll('button')].map((b) => b.textContent)).toEqual(['Ajouter', 'Annuler']) // no gear in 3D: nothing to replace
+    expect(document.activeElement).toBe(box.querySelector('[data-choice="add"]'))
+    expect((q('.p2d-toolbar') as HTMLElement).inert).toBe(true)
+    expect((q('.p2d-stage') as HTMLElement).inert).toBe(true)
+    // Échap: the confirmation goes, the page stays
+    box.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }))
+    await flush()
+    expect(dialog()).toBeNull()
+    expect(q('[data-testid="plan2d"]')).not.toBeNull()
+    expect((q('.p2d-toolbar') as HTMLElement).inert).toBeFalsy() // its own state back (jsdom has no `inert` of its own: undefined)
+    expect(live()).toBe(P.spawnCancelled)
+    expect(store.design().rig.instances).toEqual([])
+    sendBtn().click()
+    choose(dialog()!, 'cancel')
+    await flush()
+    expect(store.design().rig.instances).toEqual([])
+    expect(document.activeElement).toBe(sendBtn())
+  })
+
+  it('Ajouter: the gear is created at the plan metres with its cable in ONE 3D undo step; the page stays open with the report; « Voir la scène 3D » closes it and frames the new gear', async () => {
+    const { store, history, shown } = openWith(duo())
+    sendBtn().click()
+    choose(dialog()!, 'add')
+    await flush()
+    const d = store.design()
+    expect(d.placements.map((p) => [p.instanceId, p.position_m[0], p.position_m[2], p.yawDeg])).toEqual([
+      ['midas-m32-1', 0, 0, 0],
+      ['qsc-k12-2-1', -2, 3, 90],
+    ])
+    expect(d.rig.connections).toEqual([{ a: { instance: 'midas-m32-1', port: 'out-main-l' }, b: { instance: 'qsc-k12-2-1', port: 'in-line-a' } }])
+    expect(history.sizes.undo).toBe(1)
+    expect(history.undoLabel).toBe(P.entrySpawn)
+    expect(q('[data-testid="plan2d"]')).not.toBeNull() // kept open
+    const report = q('[data-testid="plan2d-report"]')!
+    expect(report.hidden).toBe(false)
+    expect(report.textContent).toContain('Ajoutés dans la scène 3D : 2 appareils et 1 câble, aux mêmes places. Ctrl+Z dans la scène 3D les retire en une fois.')
+    expect(live()).toContain('Ajoutés dans la scène 3D')
+    const show = q<HTMLButtonElement>('[data-testid="plan2d-show3d"]')!
+    expect(document.activeElement).toBe(show)
+    const closed = page!.closed
+    show.click()
+    await closed
+    expect(q('[data-testid="plan2d"]')).toBeNull()
+    expect(shown).toEqual(['midas-m32-1', 'qsc-k12-2-1'])
+    // one 3D undo removes the whole send
+    history.undo()
+    expect(store.design().rig.instances).toEqual([])
+  })
+
+  it('a double press never sends twice; a later press of the same plan offers no « Ajouter » (each device sits on its copy) and says so', async () => {
+    const { store, history } = openWith(duo())
+    sendBtn().click()
+    sendBtn().click() // the page behind the confirmation is inert, and a send is already in progress
+    expect(document.querySelectorAll('[data-testid="plan2d-spawn-dialog"]')).toHaveLength(1)
+    choose(dialog()!, 'add')
+    await flush()
+    expect(store.design().rig.instances).toHaveLength(2)
+    sendBtn().click()
+    const box = dialog()!
+    expect(box.textContent).toContain(P.spawnNothing)
+    expect([...box.querySelectorAll('button')].map((b) => b.textContent)).toEqual(['Remplacer le matériel', 'Annuler'])
+    choose(box, 'cancel')
+    await flush()
+    expect(store.design().rig.instances).toHaveLength(2)
+    expect(history.sizes.undo).toBe(1)
+  })
+
+  it('what does not fit is said before (counts) and after (one line each, with the reason); the cable the rules refuse keeps the rule’s own text', async () => {
+    const plan = build(
+      { type: 'place', deviceId: 'midas-m32', x: 0, z: 0 },
+      { type: 'place', deviceId: 'qsc-k12-2', x: 12.5, z: 0 }, // past the wall
+      { type: 'place', deviceId: 'qsc-k12-2', x: 3, z: 0 },
+      { type: 'connect', a: { dev: 'midas-m32-1', port: 'out-main-l' }, b: { dev: 'qsc-k12-2-1', port: 'in-line-a' } },
+      { type: 'connect', a: { dev: 'midas-m32-1', port: 'out-main-r' }, b: { dev: 'qsc-k12-2-2', port: 'thru-out-a' } }, // output into output
+    )
+    const rule = createPatchRules(registry).verdict(plan, plan.cables[1]!.a, plan.cables[1]!.b)
+    if (rule.ok) throw new Error('the rules should refuse an output into an output')
+    const { store } = openWith(plan, withGear())
+    sendBtn().click()
+    const box = dialog()!
+    expect(box.textContent).toContain('À ajouter dans la scène 3D : 2 appareils et 0 câble')
+    expect(box.textContent).toContain('Ne peuvent pas être créés : 1 appareil et 2 câbles')
+    expect([...box.querySelectorAll('button')].map((b) => b.textContent)).toEqual(['Ajouter', 'Remplacer le matériel', 'Annuler'])
+    choose(box, 'add')
+    await flush()
+    const items = [...document.querySelectorAll('.p2d-report-item')].map((li) => li.textContent)
+    expect(items).toEqual([
+      'K12.2 (qsc-k12-2-1) : en dehors du lieu.',
+      'Câble M32 (midas-m32-1) · out-main-l vers K12.2 (qsc-k12-2-1) · in-line-a : K12.2 (qsc-k12-2-1) n’a pas été créé.',
+      `Câble M32 (midas-m32-1) · out-main-r vers K12.2 (qsc-k12-2-2) · thru-out-a : ${rule.title} ${rule.detail}`.trim(),
+    ])
+    expect(store.design().rig.instances).toHaveLength(4)
+  })
+
+  it('« Remplacer le matériel » asks again with the replace confirmation, then puts the plan alone in the scene as one undo step', async () => {
+    const { store, history } = openWith(duo(), withGear())
+    const before = store.design()
+    sendBtn().click()
+    choose(dialog()!, 'replace')
+    await flush()
+    const sure = q('[data-testid="plan2d-replace-dialog"]')!
+    expect(q(`#${sure.getAttribute('aria-labelledby')}`)!.textContent).toBe('Remplacer le matériel ?')
+    expect(sure.textContent).toContain('Le matériel déjà dans la scène 3D sera retiré')
+    choose(sure, 'replace')
+    await flush()
+    expect(store.design().rig.instances.map((i) => i.instanceId)).toEqual(['midas-m32-1', 'qsc-k12-2-1'])
+    expect(store.design().placements.find((p) => p.instanceId === 'qsc-k12-2-1')!.position_m).toEqual([-2, 0, 3])
+    expect(q('[data-testid="plan2d-report"]')!.textContent).toContain('Matériel remplacé : 2 appareils et 1 câble du schéma posés aux mêmes places.')
+    expect(history.sizes.undo).toBe(1)
+    history.undo()
+    expect(store.design()).toEqual(before)
+  })
+
+  it('the replace confirmation can still be declined: nothing changes', async () => {
+    const { store } = openWith(duo(), withGear())
+    const before = store.design()
+    sendBtn().click()
+    choose(dialog()!, 'replace')
+    await flush()
+    choose(q('[data-testid="plan2d-replace-dialog"]')!, 'cancel')
+    await flush()
+    expect(store.design()).toEqual(before)
+    expect(live()).toBe(P.spawnCancelled)
   })
 })

@@ -147,6 +147,14 @@ path.p2d-line-glyph[fill] { stroke: none; }
 .p2d-source { font-size: 12px; padding: 4px 0; border-top: 1px solid var(--cr-panel-line); }
 .p2d-source-tag { display: inline-block; margin-right: 6px; padding: 0 4px; border: 1px solid var(--cr-ink-muted); color: var(--cr-ink-muted); font-size: 11px; }
 
+/* stage 2: the send's report (side column) and its confirmations (the .cr-dialog pattern, drawn inside the page) */
+.p2d-report { background: var(--cr-panel); padding: 8px; border-left: 2px solid var(--cr-ambre); font-size: 12px; }
+.p2d-report-head { margin: 0 0 6px; }
+.p2d-report-refused { margin: 6px 0 2px; font-weight: 600; }
+.p2d-report-list { margin: 0 0 8px; padding-left: 16px; }
+.p2d-report-item { padding: 2px 0; }
+.p2d-confirm-overlay { z-index: 60; }
+
 .p2d-keys { margin: 0; font-size: 12px; color: var(--cr-ink-muted); }
 .p2d-live { margin: 0; min-height: 1.3em; font-size: 13px; }
 
