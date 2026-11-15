@@ -8,6 +8,8 @@
  *  - Under `?design`, the start screen and the four profile buttons stay, the profile choice is final (no tutorial offer), Aide has no « Premiers pas », and the
  *    checklist « Pourquoi je n’entends rien ? » and the power helper stay.
  *  - The drawer still holds the whole catalogue (113 devices outside the Bêta tab) and the page logs no error.
+ *  - Mission 1: the plain address opens design 2 (`defaultDesign`) and asks the goal screens instead of the four profiles (tests/e2e/onboarding-goals.spec.ts has
+ *    the rest of it).
  */
 import { expect, test, type Page } from '@playwright/test'
 
@@ -55,6 +57,17 @@ for (const q of ADDRESSES) {
   })
 }
 
+test('the plain address opens design 2 and asks the goal screens, not the four profiles (mission 1)', async ({ page }) => {
+  await page.goto('/')
+  await page.evaluate(() => window.localStorage.clear())
+  await page.reload()
+  await page.waitForFunction(() => !!(window as unknown as { __creation?: unknown }).__creation)
+  expect(await page.evaluate(() => document.documentElement.getAttribute('data-design'))).toBe('2')
+  await expect(page.getByTestId('goal-screen')).toBeVisible()
+  await expect(page.getByTestId('goal-screen').locator('button[data-goal]')).toHaveCount(5)
+  await expect(page.locator('[data-profile]')).toHaveCount(0)
+})
+
 test('under ?design the start screen and the profiles stay, the choice is final, and nothing offers a tutorial', async ({ page }) => {
   await page.goto('/?design=1')
   await page.evaluate(() => window.localStorage.clear())
@@ -79,6 +92,8 @@ test('« Pourquoi je n’entends rien ? » stays and the drawer still holds the 
   await page.evaluate(() => window.localStorage.clear())
   await page.reload()
   await page.waitForFunction(() => !!(window as unknown as { __creation?: unknown }).__creation)
+  // the start screen is a lazy chunk: a key counts once its first button holds the focus
+  await expect(page.getByTestId('start-screen').getByRole('button', { name: 'Je découvre', exact: true })).toBeFocused()
   await page.keyboard.press('2') // the first visit's start screen: profile « J’étudie le son », final (no offer)
   await page.waitForFunction(() => (window as unknown as { __creation: { place: () => string } }).__creation.place() === 'blank')
   await expect(page.getByRole('button', { name: 'Pourquoi je n’entends rien ?' }).first()).toBeVisible()
