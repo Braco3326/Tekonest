@@ -89,7 +89,8 @@ import { mountMenuBar } from './shell/menuBar'
 import { openViewPicker } from './shell/viewPickerOverlay'
 import { buildMenus } from './shell/menuModel'
 import { CREATION_TOKENS, injectCreationTokens } from '../design/creationTokens'
-import { applyDesignAttribute, tutorialSteps } from '../design/packages'
+import { applyDesignAttribute, defaultDesignFor, tutorialSteps } from '../design/packages'
+import { FEATURES } from '../features'
 import { nearestZone, ZONES, zoneAngles, zoneId, zoneLabel, type ZoneSigns } from '../camera/cubeZones'
 import { cubeSizePx } from './viewCubeGeometry'
 import {
@@ -151,7 +152,8 @@ const roomName = (id: string): string =>
  */
 export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed?: boolean; practiceNow?: () => boolean } = {}): Promise<void> {
   injectCreationTokens()
-  const designPkg = applyDesignAttribute(document.documentElement, location.search) // marks <html> only for a valid ?design=1..5 (T0.1)
+  // marks <html> for a valid ?design=1..5 (T0.1), else, on a practice address, for the feature table's default package (mission 1: design 2); an exam address keeps none
+  const designPkg = applyDesignAttribute(document.documentElement, location.search, defaultDesignFor({ practice: opts.onboarding === true, defaultDesign: FEATURES.defaultDesign }))
   /** The first-visit layer (start screen, profile, chip, Aide « Premiers pas », framing): a valid ?design, practice mode only (exam addresses: entirely off). Its code is a lazy chunk. */
   const onboardingOn = designPkg !== null && opts.onboarding === true
   useSameOriginDraco() // CA-24: the Draco decoder comes from public/draco/, never from cdn.babylonjs.com (before any .glb is loaded)

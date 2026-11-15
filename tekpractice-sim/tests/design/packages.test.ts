@@ -14,6 +14,7 @@ import {
   DESIGN_IDS,
   activePackage,
   applyDesignAttribute,
+  defaultDesignFor,
   designFromSearch,
   packageById,
   tutorialSteps,
@@ -125,6 +126,37 @@ describe('the table skeleton', () => {
       expect(p.pacing.steps.length).toBeGreaterThan(0)
       expect(p.pacing.hintAfterMs).toBeGreaterThanOrEqual(0)
     }
+  })
+})
+
+describe('the default design (mission 1: a plain practice address opens design 2)', () => {
+  it('defaultDesignFor: the package of the feature table on a practice address only; none on an exam address or without the switch', () => {
+    expect(defaultDesignFor({ practice: true, defaultDesign: 2 })).toBe(2)
+    expect(defaultDesignFor({ practice: true, defaultDesign: 5 })).toBe(5)
+    expect(defaultDesignFor({ practice: false, defaultDesign: 2 })).toBeNull()
+    expect(defaultDesignFor({ practice: true })).toBeNull()
+    expect(defaultDesignFor({ practice: true, defaultDesign: 7 as DesignId })).toBeNull()
+  })
+
+  it('activePackage: the fallback applies only when the address has no valid ?design', () => {
+    expect(activePackage('', 2)?.id).toBe(2)
+    expect(activePackage('?oscar=0', 2)?.id).toBe(2)
+    expect(activePackage('?design=9', 2)?.id).toBe(2)
+    expect(activePackage('?design=1&design=3', 2)?.id).toBe(2)
+    for (const id of DESIGN_IDS) expect(activePackage(`?design=${id}`, 2)?.id).toBe(id)
+    expect(activePackage('', null)).toBeNull()
+    expect(activePackage('')).toBeNull()
+  })
+
+  it('applyDesignAttribute: the fallback package marks <html>; a valid ?design still wins; no fallback is the address alone', () => {
+    const attrs = new Map<string, string>()
+    const root = { setAttribute: (k: string, v: string) => void attrs.set(k, v), removeAttribute: (k: string) => void attrs.delete(k) }
+    expect(applyDesignAttribute(root, '', 2)?.id).toBe(2)
+    expect(attrs.get('data-design')).toBe('2')
+    expect(applyDesignAttribute(root, '?design=4', 2)?.id).toBe(4)
+    expect(attrs.get('data-design')).toBe('4')
+    expect(applyDesignAttribute(root, '', null)).toBeNull()
+    expect(attrs.has('data-design')).toBe(false)
   })
 })
 

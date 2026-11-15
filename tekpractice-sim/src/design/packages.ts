@@ -343,10 +343,22 @@ export function tutorialSteps(pkg: DesignPackage): readonly StepId[] {
   return pkg.pacing.steps
 }
 
-/** The active package for this address, or null (no `?design`: today's behaviour). */
-export function activePackage(search: string): DesignPackage | null {
-  const id = designFromSearch(search)
+/**
+ * The active package for this address: its valid `?design`, else `fallback` (the caller's default package, mission 1: `defaultDesignFor`), else null (no package:
+ * the plain address as it was). Pure: the caller decides the fallback, this module never reads the feature table.
+ */
+export function activePackage(search: string, fallback: DesignId | null = null): DesignPackage | null {
+  const id = designFromSearch(search) ?? fallback
   return id === null ? null : packageById(id)
+}
+
+/**
+ * The package a page opens with when its address carries no valid `?design` (mission 1, spec 1.1): the feature table's `defaultDesign`, on a practice address only. An exam
+ * address (the onboarding entirely off) keeps no package; an absent or unknown value is no package.
+ */
+export function defaultDesignFor(o: { practice: boolean; defaultDesign?: DesignId }): DesignId | null {
+  if (!o.practice || o.defaultDesign === undefined) return null
+  return DESIGN_IDS.includes(o.defaultDesign) ? o.defaultDesign : null
 }
 
 /** The slice of `HTMLElement` the attribute needs (tests pass a fake). */
@@ -355,9 +367,9 @@ export interface AttributeRoot {
   removeAttribute(name: string): void
 }
 
-/** Sets `data-design` on `root` (the `<html>` element) when a package is active, removes it otherwise. Returns the package. */
-export function applyDesignAttribute(root: AttributeRoot, search: string): DesignPackage | null {
-  const pkg = activePackage(search)
+/** Sets `data-design` on `root` (the `<html>` element) when a package is active (`activePackage`, with the caller's `fallback`), removes it otherwise. Returns the package. */
+export function applyDesignAttribute(root: AttributeRoot, search: string, fallback: DesignId | null = null): DesignPackage | null {
+  const pkg = activePackage(search, fallback)
   if (pkg) root.setAttribute('data-design', String(pkg.id))
   else root.removeAttribute('data-design')
   return pkg
