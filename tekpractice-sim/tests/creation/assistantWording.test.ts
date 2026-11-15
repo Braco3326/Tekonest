@@ -98,7 +98,7 @@ describe('the app presents the assistant, never a person', () => {
     expect(rows.length).toBeGreaterThan(300)
     // Everywhere: no job, no biography, no attribution, no placeholder, and the name only in the badge. The first person is read only in the sections
     // that speak for the product (the others carry the learner's own words, e.g. « J’ai vérifié le fichier » on a confirmation).
-    const PRODUCT_VOICE = new Set(['checklist', 'assist', 'ruleOverride', 'onboarding', 'ownGear', 'tutorialUi', 'tutorial', 'tutorialCard', 'oscar', 'plainTutorial', 'accountPrompt'])
+    const PRODUCT_VOICE = new Set(['checklist', 'assist', 'ruleOverride', 'onboarding', 'ownGear', 'tutorialUi', 'tutorial', 'tutorialCard', 'oscar', 'plainTutorial', 'accountPrompt', 'plan2d'])
     // The learner's own words, the four profile buttons and « Passer, je connais »: the learner says « je », not the product.
     const LEARNER_SPEAKS = /^onboarding\.(profile[A-Za-z]+|offerSkip)$/
     for (const { section, path, value } of rows) {

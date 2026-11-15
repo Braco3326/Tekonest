@@ -1229,6 +1229,107 @@ Les noms des cinq paquets de design (packs d’accueil, T4.1 ; spec 7.2), lus pa
 | `design.name4` | Pupitre | à valider (tekuxwriter) | Paquet 4 : à plat, des filets fins, pas de panneau en relief ; le clavier d’abord |
 | `design.name5` | Modèle d’abord | à valider (tekuxwriter) | Paquet 5 : un cadre Prune autour de la vue 3D ; un modèle déjà câblé (T6.3) |
 
+## plan2d
+
+La page du schéma 2D (mission 2, spec `docs/superpowers/specs/2026-11-15-plan2d-schema-design.md`) : un plan du lieu à l’échelle, des symboles techniques, les panneaux arrière et le câblage. Seulement avec le commutateur `plan2d`, sur une adresse d’entraînement (jamais en examen). « vous », aucune première personne ; les conventions sont dites « conventions courantes », chacune avec son niveau de preuve tiré de la fiche couleurs et symboles (`E:\CLAUDE BU\reports\2D schema - colour and symbol sheet.md`), sans prétention de conformité. Tout ce qui suit : à valider (tekuxwriter, 2026-11-15).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `plan2d.menu` | Schéma 2D | à valider (tekuxwriter) | Menu Vue (adresse d’entraînement seulement, jamais en examen) : ouvre la page du schéma 2D |
+| `plan2d.title` | Schéma 2D : {room} | à valider (tekuxwriter) | Titre (h2) de la page ; {room} = le nom du lieu ouvert |
+| `plan2d.intro` | Plan à l’échelle, en mètres. Posez le matériel, puis câblez-le par les panneaux arrière. Ce plan ne modifie pas la scène 3D. | à valider (tekuxwriter) | Sous le titre (description de la page) |
+| `plan2d.toolbar` | Outils du schéma | à valider (tekuxwriter) | `aria-label` de la barre d’outils |
+| `plan2d.undo` | Annuler | à valider (tekuxwriter) | Bouton : annule le dernier geste du plan (Ctrl+Z), jamais la scène 3D |
+| `plan2d.redo` | Rétablir | à valider (tekuxwriter) | Bouton (Ctrl+Y, Ctrl+Maj+Z) |
+| `plan2d.snap` | Pas de la grille | à valider (tekuxwriter) | Étiquette du choix 10 cm, 25 cm, 50 cm, 1 m (25 cm par défaut) |
+| `plan2d.zoomIn` | Zoom avant | à valider (tekuxwriter) | Bouton ; touche + |
+| `plan2d.zoomOut` | Zoom arrière | à valider (tekuxwriter) | Bouton ; touche - |
+| `plan2d.fit` | Ajuster au lieu | à valider (tekuxwriter) | Bouton : le lieu entier à l’écran |
+| `plan2d.sources` | Légende et sources | à valider (tekuxwriter) | Bouton à bascule et titre du panneau des niveaux de preuve |
+| `plan2d.close` | Fermer | à valider (tekuxwriter) | Bouton ; Échap fait de même (le plan est gardé) |
+| `plan2d.palette` | Matériel | à valider (tekuxwriter) | Titre de la liste des appareils (mêmes familles et noms que l’inventaire) |
+| `plan2d.search` | Rechercher un appareil | à valider (tekuxwriter) | Étiquette du champ de recherche |
+| `plan2d.noMatch` | Aucun appareil ne correspond à « {q} ». | à valider (tekuxwriter) | Liste vide après une recherche |
+| `plan2d.placeItem` | Poser {device} sur le plan | à valider (tekuxwriter) | Nom accessible d’un appareil de la liste |
+| `plan2d.plan` | Plan de {room} | à valider (tekuxwriter) | `aria-label` du dessin |
+| `plan2d.keys` | Flèches : déplacer. R : pivoter de 90° (Maj+R : 15°). Suppr : supprimer. Ctrl+D : dupliquer. Entrée : panneau arrière. Ctrl+A : tout sélectionner. + et - : zoom. | à valider (tekuxwriter) | Aide des touches sous le dessin (aussi sa description) |
+| `plan2d.deviceLabel` | {device} ({id}), x {x} m, z {z} m, {rot}° | à valider (tekuxwriter) | Nom accessible d’un symbole posé |
+| `plan2d.sizeUnknown` | taille inconnue | à valider (tekuxwriter) | Dans une boîte par défaut : l’appareil n’a pas de fiche de dimensions (jamais une taille inventée) |
+| `plan2d.cableLabel` | Câble {type} : {a} vers {b} | à valider (tekuxwriter) | Nom accessible d’un câble dessiné |
+| `plan2d.stage` | Côté scène | à valider (tekuxwriter) | Repère en haut du plan (mur de face) |
+| `plan2d.audience` | Public | à valider (tekuxwriter) | Repère en bas du plan |
+| `plan2d.jardin` | Jardin | à valider (tekuxwriter) | Repère à gauche (vu depuis la salle) |
+| `plan2d.cour` | Cour | à valider (tekuxwriter) | Repère à droite (vu depuis la salle) |
+| `plan2d.legend` | Légende des câbles | à valider (tekuxwriter) | Titre de la légende toujours visible (couleur, trait et étiquette de chaque type) |
+| `plan2d.typeAnalogBal` | analogique symétrique | à valider (tekuxwriter) | Type de câble (fiche couleurs : bleu, trait plein 2 px) |
+| `plan2d.typeAnalogUnbal` | analogique asymétrique | à valider (tekuxwriter) | Type de câble (bleu, trait plein 1,5 px, étiquette « asym. ») |
+| `plan2d.typeSpeaker` | haut-parleur | à valider (tekuxwriter) | Type de câble (vermillon, trait plein 4 px, « HP ») |
+| `plan2d.typeDigital` | numérique point à point | à valider (tekuxwriter) | Type de câble (violet, tirets 8-4) |
+| `plan2d.typeNetwork` | audio sur réseau | à valider (tekuxwriter) | Type de câble (vert, pointillés ronds, flèche double) |
+| `plan2d.typeClock` | horloge (word clock) | à valider (tekuxwriter) | Type de câble (gris, trait mixte) |
+| `plan2d.typeControl` | contrôle et données | à valider (tekuxwriter) | Type de câble (gris, tirets longs 10-4) |
+| `plan2d.typeMains` | secteur | à valider (tekuxwriter) | Type de câble (marron, trait plein 4,5 px, éclair) |
+| `plan2d.typeDc` | alimentation continue | à valider (tekuxwriter) | Type de câble (marron, tirets courts 3-3) |
+| `plan2d.sourcesIntro` | Conventions courantes, pas des textes officiels lus : chaque élément indique son niveau de preuve. | à valider (tekuxwriter) | Haut du panneau Légende et sources (fiche couleurs, décision 7 : « conventions courantes ») |
+| `plan2d.tagStandard` | Standard publié (source secondaire) | à valider (tekuxwriter) | Niveau de preuve STANDARD de la fiche |
+| `plan2d.tagTrade` | Pratique courante | à valider (tekuxwriter) | Niveau de preuve TRADE PRACTICE de la fiche |
+| `plan2d.tagProposal` | Proposition TekPractice | à valider (tekuxwriter) | Niveau de preuve OUR PROPOSAL de la fiche |
+| `plan2d.srcGlyphs` | Symboles de matériel : dessins TekPractice inspirés des symboles CEI, dont les dessins originaux n’ont pas été consultés. | à valider (tekuxwriter) | Fiche §1.5 : OUR PROPOSAL |
+| `plan2d.srcColours` | Couleurs des câbles : choix TekPractice (aucune convention de couleur audio trouvée) ; contraste d’au moins 3:1 sur fond sombre et sur fond clair. | à valider (tekuxwriter) | Fiche §3 et (a) : OUR PROPOSAL |
+| `plan2d.srcLines` | Styles de trait : choix TekPractice ; la couleur n’est jamais un repère unique (trait, étiquette, flèche). | à valider (tekuxwriter) | Fiche §4 : OUR PROPOSAL |
+| `plan2d.srcWcag` | Une information ne passe jamais par la couleur seule ; contraste de 3:1 pour les éléments graphiques : WCAG 2.2 (1.4.1 et 1.4.11). | à valider (tekuxwriter) | Fiche §4 : STANDARD (W3C, lu directement) |
+| `plan2d.srcMains` | Secteur en marron : rappel de la couleur harmonisée de la phase, une règle pour les conducteurs, pas pour les schémas. | à valider (tekuxwriter) | Fiche §3 et décision 2 : OUR PROPOSAL |
+| `plan2d.srcOrientation` | Public en bas, jardin à gauche, cour à droite, vus depuis la salle : convention de théâtre. | à valider (tekuxwriter) | Fiche §1.4 : TRADE PRACTICE |
+| `plan2d.srcGender` | Mâle = sortie, femelle = entrée pour l’audio en XLR : convention AES14 (source secondaire) ; le dessin des prises est un choix TekPractice. | à valider (tekuxwriter) | Fiche §2 : STANDARD (secondaire), dessin OUR PROPOSAL |
+| `plan2d.srcFootprint` | Encombrements : la fiche de dimensions de chaque appareil, celle de son modèle 3D. Sans fiche, une boîte par défaut marquée « taille inconnue ». | à valider (tekuxwriter) | Spec §4 : un nombre, une fiche |
+| `plan2d.srcRules` | Prises allumées ou grisées : les règles de connexion du Mode Création, les mêmes que dans la vue 3D. | à valider (tekuxwriter) | Spec §1.3 : aucune seconde règle |
+| `plan2d.rearNote` | Disposition simplifiée : les prises dans l’ordre du catalogue, pas à leur place réelle sur le panneau. | à valider (tekuxwriter) | Sous le titre du panneau arrière (le catalogue ne donne pas la position des prises) |
+| `plan2d.familyMicro` | Micro | à valider (tekuxwriter) | Famille de symbole (fiche §1.5) |
+| `plan2d.familySpeaker` | Enceinte, retour, sub | à valider (tekuxwriter) | Famille de symbole |
+| `plan2d.familyHeadphones` | Casque, ear | à valider (tekuxwriter) | Famille de symbole |
+| `plan2d.familyAmp` | Amplificateur | à valider (tekuxwriter) | Famille de symbole |
+| `plan2d.familyConsole` | Console | à valider (tekuxwriter) | Famille de symbole |
+| `plan2d.familyRack` | Rack, stage box | à valider (tekuxwriter) | Famille de symbole |
+| `plan2d.familyBox` | Boîtier (DI, processeur, autre) | à valider (tekuxwriter) | Famille de symbole |
+| `plan2d.familyUnknown` | Famille non dessinée | à valider (tekuxwriter) | Famille de symbole : une boîte avec le nom |
+| `plan2d.rearTitle` | Panneau arrière : {device} | à valider (tekuxwriter) | Titre de la vue retournée |
+| `plan2d.pickStart` | Choisissez la prise où le câble commence. | à valider (tekuxwriter) | Vue arrière, aucun câble tenu |
+| `plan2d.holding` | Câble tenu depuis {port}. Choisissez une prise allumée. | à valider (tekuxwriter) | Vue arrière, un câble tenu |
+| `plan2d.dirIn` | entrée | à valider (tekuxwriter) | Sens d’une prise |
+| `plan2d.dirOut` | sortie | à valider (tekuxwriter) | Sens d’une prise |
+| `plan2d.dirBidir` | entrée et sortie | à valider (tekuxwriter) | Sens d’une prise |
+| `plan2d.portTaken` | Prise déjà câblée : sélectionnez son câble sur le plan, puis Suppr. | à valider (tekuxwriter) | Raison d’une prise grisée sans câble tenu |
+| `plan2d.back` | Retour au plan | à valider (tekuxwriter) | Bouton de la vue arrière |
+| `plan2d.drop` | Lâcher le câble | à valider (tekuxwriter) | Bouton de la vue arrière, câble tenu (Échap fait de même) |
+| `plan2d.lit` | Prises compatibles : {n} sur {total}. | à valider (tekuxwriter) | Annoncé à l’ouverture de la vue arrière, câble tenu |
+| `plan2d.placed` | {device} posé à x {x} m, z {z} m. | à valider (tekuxwriter) | Annoncé (région polie) |
+| `plan2d.moved` | Appareils déplacés : {n}. | à valider (tekuxwriter) | Annoncé |
+| `plan2d.rotated` | Appareils pivotés : {n}. | à valider (tekuxwriter) | Annoncé |
+| `plan2d.removed` | Appareils retirés du plan : {n}. | à valider (tekuxwriter) | Annoncé |
+| `plan2d.duplicated` | Appareils dupliqués : {n}. | à valider (tekuxwriter) | Annoncé |
+| `plan2d.cableStart` | Câble tenu depuis {port}. Cliquez sur l’appareil d’arrivée, ou Entrée sur lui, pour ouvrir son panneau arrière. Échap lâche le câble. | à valider (tekuxwriter) | Annoncé après le choix de la prise de départ |
+| `plan2d.cableDone` | Câble posé : {a} vers {b}. | à valider (tekuxwriter) | Annoncé |
+| `plan2d.cableDropped` | Câble lâché. | à valider (tekuxwriter) | Annoncé (Échap ou « Lâcher le câble ») |
+| `plan2d.cableRemoved` | Câble retiré : {a} vers {b}. | à valider (tekuxwriter) | Annoncé |
+| `plan2d.cableSelected` | Câble {type} : {a} vers {b}. Suppr le retire. | à valider (tekuxwriter) | Annoncé à la sélection d’un câble |
+| `plan2d.refused` | Impossible ici : {reason} | à valider (tekuxwriter) | Annoncé sur une prise grisée ; {reason} = le titre de la règle (le même texte que la vue 3D) |
+| `plan2d.undone` | Annulé : {label} | à valider (tekuxwriter) | Annoncé |
+| `plan2d.redone` | Rétabli : {label} | à valider (tekuxwriter) | Annoncé |
+| `plan2d.nothingUndo` | Rien à annuler. | à valider (tekuxwriter) | Annoncé |
+| `plan2d.nothingRedo` | Rien à rétablir. | à valider (tekuxwriter) | Annoncé |
+| `plan2d.selected` | {device} sélectionné. Cliquez encore dessus, ou Entrée, pour ouvrir son panneau arrière. | à valider (tekuxwriter) | Annoncé à la sélection d’un appareil |
+| `plan2d.selectedN` | Appareils sélectionnés : {n}. | à valider (tekuxwriter) | Annoncé (sélection multiple : Maj ou Ctrl + clic, Ctrl+A) |
+| `plan2d.dropped` | Le schéma enregistré était illisible : il a été retiré. | à valider (tekuxwriter) | Annoncé à l’ouverture quand l’enregistrement ne se lit pas |
+| `plan2d.notSaved` | Ce navigateur refuse l’enregistrement : le schéma reste là tant que la page est ouverte. | à valider (tekuxwriter) | Annoncé quand le stockage refuse l’écriture |
+| `plan2d.empty` | Plan vide : posez un appareil depuis la liste Matériel. | à valider (tekuxwriter) | Dans le dessin tant qu’il est vide |
+| `plan2d.entryPlace` | Poser {device} | à valider (tekuxwriter) | Libellé de l’étape annulable |
+| `plan2d.entryMove` | Déplacer | à valider (tekuxwriter) | Libellé de l’étape annulable |
+| `plan2d.entryRotate` | Pivoter | à valider (tekuxwriter) | Libellé de l’étape annulable |
+| `plan2d.entryRemove` | Supprimer | à valider (tekuxwriter) | Libellé de l’étape annulable |
+| `plan2d.entryDuplicate` | Dupliquer | à valider (tekuxwriter) | Libellé de l’étape annulable |
+| `plan2d.entryConnect` | Câbler {a} vers {b} | à valider (tekuxwriter) | Libellé de l’étape annulable |
+| `plan2d.entryDisconnect` | Retirer le câble | à valider (tekuxwriter) | Libellé de l’étape annulable |
+
 ## Textes hors COPY (index.html)
 
 Les seuls textes qui vivent dans `index.html` et non dans `copy.ts` : la garde d'entrée (vague de nuit 2, vague 5, P1-1 ; ronde de correction C1, C2). Quand le script d'entrée lui-même ne se charge pas (fichier absent, ou page HTML servie à sa place : la production répond 200 `text/html` pour un fichier manquant), `main.ts` ne tourne jamais et l'alerte de la section `boot` ne peut pas s'afficher : un petit script en ligne, sans module ni dépendance, **dit à l'utilisateur ce qui s'est passé** (`role="alert"`) et propose « Recharger la page ». **Ce que le lien fait, et ne fait pas :** il recharge `index.html` avec `?v=<heure>` sur l'adresse de la PAGE (le routeur ignore ce paramètre) ; il ne change pas l'adresse du script d'entrée (`/assets/main-<hash>.js`), donc si le serveur ou le cache garde du HTML sous cette adresse, l'échec revient : le vrai remède est côté site (un `404.html`, des en-têtes de cache, une purge après un déploiement). **Quand elle agit :** seulement avant que l'application ait démarré (`main.ts` pose `window.__tekBooted` quand le module de la route est chargé) ; un morceau paresseux qui échoue ensuite (fiches Bêta, couverture, tiroir, une salle, le panneau Essais…) est géré par l'application, jamais par cette garde. **Placement :** avant le module d'entrée dans le source, après lui dans le build ; elle fonctionne parce que l'événement `error` d'un script module part quand son téléchargement a échoué, une fois ce script en ligne exécuté. Une politique de sécurité de contenu (`script-src`) demanderait un empreinte (hash) ou un nonce pour ce script en ligne. `tests/creation/entryGuard.test.ts` tient `index.html` et cette section égaux.
