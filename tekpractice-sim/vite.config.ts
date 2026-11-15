@@ -30,14 +30,18 @@ function chunkModules(): Plugin {
 }
 
 /**
- * A TEST-ONLY build: with TP_TEST_FEATURES=guideInbox in the environment, every import of src/features.ts is answered by
+ * A TEST-ONLY table: with TP_TEST_FEATURES=guideInbox in the environment, every import of src/features.ts is answered by
  * tests/e2e/fixtures/features.guide-inbox.ts (the same table with the guide's inbox on), so an end-to-end spec can exercise the flag-on path of a build
- * that never ships. It is a build-time switch of a local test build only: no address and no runtime setting turns the inbox on, and tools/build-site.mjs
- * clears the variable so the deploy build can never carry it.
+ * that never ships. With TP_TEST_FEATURES=full (`npm run build:e2e`) and in every unit test (vitest), the answer is tests/e2e/fixtures/features.full.ts: the
+ * assistant and the learning pages ON, which the shipped table (src/features.ts) has OFF since 2026-11-15, so the specs of those features keep running.
+ * It is a build-time switch of a local test build only: no address and no runtime setting turns anything on, and tools/build-site.mjs
+ * clears the variable so the deploy build can never carry it (and checks the output for the product table).
  */
 function testFeatures(): Plugin | false {
-  if (process.env.TP_TEST_FEATURES !== 'guideInbox') return false
-  const target = fileURLToPath(new URL('./tests/e2e/fixtures/features.guide-inbox.ts', import.meta.url))
+  const mode = process.env.TP_TEST_FEATURES
+  const fixture = mode === 'guideInbox' ? 'features.guide-inbox.ts' : mode === 'full' || process.env.VITEST ? 'features.full.ts' : null
+  if (fixture === null) return false
+  const target = fileURLToPath(new URL(`./tests/e2e/fixtures/${fixture}`, import.meta.url))
   const original = fileURLToPath(new URL('./src/features.ts', import.meta.url)).replaceAll('\\', '/')
   return {
     name: 'tekpractice-test-features',

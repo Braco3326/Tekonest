@@ -19,6 +19,12 @@ describe('boot failure notice (Phase 1 review, Important 1)', () => {
         .use2d
     ).toBe(true)
   })
+  it('with the learning pages off (the shipped product) there is no 2D board to go to: the notice offers a reload and does not mention it', () => {
+    const v = bootFailureView('no-webgl', { levels: false, legacyPages: false, guide: false, guideLegacy: false })
+    expect(v.title).toBe('Vue 3D indisponible')
+    expect(v.body).toBe('La vue 3D ne peut pas démarrer sur cet ordinateur : ce navigateur n’a pas accès à WebGL.')
+    expect(v.action).toEqual({ kind: 'reload', label: 'Recharger la page' })
+  })
   it('a load failure: « Recharger la page »', () => {
     const v = bootFailureView('load')
     expect(v.title).toBe('Le Mode Création n’a pas pu se charger')

@@ -154,8 +154,10 @@ describe('tools/build-site.mjs refuses BEFORE building', () => {
     "const fs = require('node:fs'); const path = require('node:path')",
     "const root = path.resolve(__dirname, '..', '..', '..')",
     "fs.writeFileSync(path.join(root, 'vite-ran.marker'), 'ran')",
-    "fs.mkdirSync(path.join(root, 'dist-site'), { recursive: true })",
+    "fs.mkdirSync(path.join(root, 'dist-site', 'assets'), { recursive: true })",
     "fs.writeFileSync(path.join(root, 'dist-site', 'index.html'), '<html></html>')",
+    // the product's feature table (the assistant and the learning pages off), which the build proves is in the output
+    "fs.writeFileSync(path.join(root, 'dist-site', 'assets', 'boot-x.js'), 'var F={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1};')",
     '',
   ].join('\n')
   /** A temp project root: tools/build-site.mjs + its two guards copied, node_modules/vite/bin/vite.js the stub. */
@@ -206,7 +208,7 @@ describe('tools/build-site.mjs refuses BEFORE building', () => {
           "const out = path.resolve(__dirname, '..', '..', '..', 'dist-site', 'assets')",
           'fs.mkdirSync(out, { recursive: true })',
           "fs.writeFileSync(path.join(out, '..', 'index.html'), '<html></html>')",
-          `fs.writeFileSync(path.join(out, 'main-x.js'), 'var F={levels:!1,guide:!0,guideLegacy:!1,guideInbox:${on ? '!0' : '!1'}};')`,
+          `fs.writeFileSync(path.join(out, 'main-x.js'), 'var F={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:${on ? '!0' : '!1'}};')`,
           '',
         ].join('\n'),
       )
@@ -221,6 +223,34 @@ describe('tools/build-site.mjs refuses BEFORE building', () => {
     const ok = build(withFlag(false), {})
     expect(ok.code).toBe(0)
     expect(ok.out).not.toContain('REFUSED')
+  })
+  it('a build whose output carries the assistant or the learning pages ON, or no product table at all, fails and the output is removed (2026-11-15)', () => {
+    const withTable = (table: string): string => {
+      const dir = fakeRoot()
+      writeFileSync(
+        join(dir, 'node_modules', 'vite', 'bin', 'vite.js'),
+        [
+          "const fs = require('node:fs'); const path = require('node:path')",
+          "const out = path.resolve(__dirname, '..', '..', '..', 'dist-site', 'assets')",
+          'fs.mkdirSync(out, { recursive: true })',
+          "fs.writeFileSync(path.join(out, '..', 'index.html'), '<html></html>')",
+          `fs.writeFileSync(path.join(out, 'main-x.js'), '${table}')`,
+          '',
+        ].join('\n'),
+      )
+      return dir
+    }
+    for (const [what, table] of [
+      ['the assistant on', 'var F={levels:!1,legacyPages:!1,guide:!0,guideLegacy:!1,guideInbox:!1};'],
+      ['the learning pages on', 'var F={levels:!1,legacyPages:!0,guide:!1,guideLegacy:!1,guideInbox:!1};'],
+      ['no table', 'var nothing=1;'],
+    ] as const) {
+      const dir = withTable(table)
+      const r = build(dir, {})
+      expect(r.code, what).toBe(1)
+      expect(r.out, what).toContain('REFUSED')
+      expect(existsSync(join(dir, 'dist-site')), `${what}: the output is removed`).toBe(false)
+    }
   })
   it('an existing dist-site of the project is left alone when the build is refused (not even cleaned)', () => {
     const dir = fakeRoot()

@@ -17,7 +17,8 @@ export default defineConfig({
     // never make a context and are not affected.
     launchOptions: { args: ['--autoplay-policy=no-user-gesture-required'] },
   },
-  // Production-like: smoke runs against the built bundle, not the dev server.
+  // Production-like: smoke runs against the built bundle, not the dev server. Build it with `npm run build:e2e` (the all-on feature table: the assistant and the
+  // learning pages are ON there and OFF in the shipped product, src/features.ts). Only tests/e2e/product-build.spec.ts wants the shipped build (E2E_PRODUCT_URL).
   webServer: {
     command: `npm run preview -- --port ${PORT} --strictPort`,
     url: `http://localhost:${PORT}`,

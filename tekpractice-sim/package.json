@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "budget": "node tools/chunk-budget.mjs",
     "build:site": "node tools/build-site.mjs",
+    "build:e2e": "node tools/build-e2e.mjs",
     "smoke:site": "node tools/site-smoke.mjs",
     "test": "vitest run",
     "test:blender": "vitest run tests/tools/assets3d tests/assets",

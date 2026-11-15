@@ -8,7 +8,7 @@ import { existsSync, readdirSync, rmSync, statSync } from 'node:fs'
 import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { findSecretVars, formatRefusal } from './deploy-guard.mjs'
-import { formatFlagRefusal, scanOutputForTestFlags } from './deploy-flag-guard.mjs'
+import { formatFlagRefusal, formatMissingTableRefusal, hasProductTable, scanOutputForTestFlags } from './deploy-flag-guard.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const out = join(root, 'dist-site')
@@ -35,6 +35,12 @@ if (r.status !== 0) process.exit(r.status ?? 1)
 const flagged = scanOutputForTestFlags(out)
 if (flagged.length) {
   console.error(formatFlagRefusal(flagged))
+  rmSync(out, { recursive: true, force: true })
+  process.exit(1)
+}
+// 2026-11-15: the product table (the assistant and the learning pages off) must be in the output, so a build that lost it is not shipped as if it were clean.
+if (!hasProductTable(out)) {
+  console.error(formatMissingTableRefusal())
   rmSync(out, { recursive: true, force: true })
   process.exit(1)
 }

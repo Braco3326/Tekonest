@@ -9,6 +9,7 @@
  * failed to load), so it stands alone: inline styles with token fallbacks, no
  * creation.css, no Babylon.
  */
+import { FEATURES, type Features } from '../features'
 import { COPY } from './copy'
 
 export type BootFailureKind = 'no-webgl' | 'load'
@@ -22,8 +23,13 @@ export interface BootFailureView {
   action: { kind: 'link'; label: string; href: string } | { kind: 'reload'; label: string }
 }
 
-export function bootFailureView(kind: BootFailureKind): BootFailureView {
+/**
+ * The 2D board is one of the learning pages: while they are off (the shipped product, 2026-11-15) a computer without WebGL gets the plain notice and a reload, because
+ * the link would only come back here.
+ */
+export function bootFailureView(kind: BootFailureKind, features: Features = FEATURES): BootFailureView {
   const B = COPY.boot!
+  if (kind === 'no-webgl' && features.legacyPages === false) return { title: B.noWebglTitle!, body: B.noWebglBodyShort!, action: { kind: 'reload', label: B.reload! } }
   return kind === 'no-webgl'
     ? {
         title: B.noWebglTitle!,

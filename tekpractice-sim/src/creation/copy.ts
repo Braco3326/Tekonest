@@ -612,6 +612,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     noWebglBody: 'La vue 3D ne peut pas démarrer sur cet ordinateur : ce navigateur n’a pas accès à WebGL. Vous pouvez vous entraîner avec la version 2D.',
     /** Link to the legacy 2D board (`?level=a1&render=2d`). */
     open2d: 'Ouvrir la version 2D',
+    /** The same notice when the 2D board is not offered (the learning pages are off in the shipped product, 2026-11-15): no mention of it, and the way out is a reload (`boot.reload`). */
+    noWebglBodyShort: 'La vue 3D ne peut pas démarrer sur cet ordinateur : ce navigateur n’a pas accès à WebGL.',
     /** A part of the app (code chunk, models list) could not be downloaded. */
     loadTitle: 'Le Mode Création n’a pas pu se charger',
     loadBody: 'Une partie de l’application n’a pas pu être téléchargée. Vérifiez votre connexion, puis rechargez la page.',

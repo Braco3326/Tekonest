@@ -625,6 +625,7 @@ Le shell n'a pas pu démarrer (revue Phase 1) : une alerte persistante (`role="a
 | `boot.noWebglTitle` | Vue 3D indisponible | validé | Titre de l'alerte quand WebGL manque (le moteur 3D ne peut pas être créé) |
 | `boot.noWebglBody` | La vue 3D ne peut pas démarrer sur cet ordinateur : ce navigateur n’a pas accès à WebGL. Vous pouvez vous entraîner avec la version 2D. | validé | Corps de l'alerte sans WebGL |
 | `boot.open2d` | Ouvrir la version 2D | validé | Lien vers le plateau 2D (`?level=a1&render=2d`), reçoit le focus |
+| `boot.noWebglBodyShort` | La vue 3D ne peut pas démarrer sur cet ordinateur : ce navigateur n’a pas accès à WebGL. | à valider (tekuxwriter) | Corps de l’alerte sans WebGL quand le plateau 2D n’est pas proposé (pages d’apprentissage désactivées) : l’action est « Recharger la page » |
 | `boot.loadTitle` | Le Mode Création n’a pas pu se charger | validé | Titre de l'alerte quand un morceau de l'application (code, modèles) n'a pas pu être téléchargé |
 | `boot.loadBody` | Une partie de l’application n’a pas pu être téléchargée. Vérifiez votre connexion, puis rechargez la page. | validé | Corps de cette alerte |
 | `boot.reload` | Recharger la page | validé | Bouton de l'alerte de chargement, reçoit le focus |
