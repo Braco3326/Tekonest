@@ -977,6 +977,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     const [{ wireOnboarding }, { framingForCanvas }, { startRoomKey }] = await Promise.all([import('./onboarding/firstVisit'), import('./onboarding/framing'), import('./onboarding/startRoom')])
     onboarding = wireOnboarding({
       design: true,
+      // mission 1: the goal screens instead of the profiles, on a package whose first question is the goals (package 2), when the feature table says so
+      goals: FEATURES.goals === true && designPkg?.layout.firstQuestion === 'goals',
       storage,
       stepCount: designPkg ? tutorialSteps(designPkg).length : 0,
       tutorialAllowed: opts.tutorialAllowed === true,

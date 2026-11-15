@@ -10,6 +10,9 @@ import type { PickerStartOpts } from '../../src/creation/shell/placePicker'
 import type { ProfileChip, ProfileChipDeps } from '../../src/creation/onboarding/profileChip'
 import type { OwnGearCard, OwnGearCardDeps } from '../../src/creation/onboarding/ownGearCard'
 import { ONBOARDING_KEY, type StorageLike } from '../../src/creation/onboarding/state'
+import { findGoal, loadGoalTree } from '../../src/creation/onboarding/goalTree'
+import { SMALL } from './goalTreeFixture'
+import type { RoomFilter } from '../../src/creation/shell/placePicker'
 
 function memoryStorage(initial?: unknown): StorageLike & { data: Map<string, string> } {
   const data = new Map<string, string>()
@@ -52,6 +55,8 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
   }
   /** What the stored record looked like when the room opened: the record must be written AFTER the room is there. */
   const recordWhenRoomOpened: unknown[] = []
+  /** What the wiring handed the picker's goal filter, in order (mission 1). */
+  const filters: (RoomFilter | null)[] = []
   const mountChip = (d: ProfileChipDeps): ProfileChip => {
     chipDeps = d
     return { render: () => void chipRenders++ }
@@ -85,6 +90,7 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
       get startShowing() {
         return startShowing
       },
+      setRoomFilter: (f) => void filters.push(f),
     },
     placeOpen: () => place,
     openFirstRoom: async () => {
@@ -119,6 +125,7 @@ function harness(over: Partial<OnboardingWiring> = {}, opts: { storage?: ReturnT
     setPlace: (p: boolean) => (place = p),
     setRoomFails: (f: boolean) => (roomFails = f),
     recordWhenRoomOpened,
+    filters,
     record: () => (storage.data.has(ONBOARDING_KEY) ? JSON.parse(storage.data.get(ONBOARDING_KEY)!) : null),
   }
 }
@@ -585,5 +592,110 @@ describe('Aide « Premiers pas » on a package that starts on the playable model
     await h.ob.requestTutorial()
     expect(h.log).toEqual([])
     expect(h.record()).toMatchObject({ request: 2 })
+  })
+})
+
+describe('the goal screens (mission 1, spec 1.2 and 1.3): with `goals` on, the answer is a goal, the chip names it and the picker shows its rooms', () => {
+  const tree = loadGoalTree()!
+  const choice = { id: 'travaille.studio.mastering' }
+  const node = findGoal(tree, choice.id)!
+
+  it('the start screen gets the tree; the chip says « Choisir un but » until a goal is stored; no filter while there is none', () => {
+    const h = harness({ goals: true })
+    expect(h.chip().label()).toBe('Choisir un but')
+    expect(h.ob.startFirstVisit()).toBe(true)
+    expect(h.startOpts().goals?.goals).toHaveLength(5)
+    expect(h.filters).toEqual([null])
+  })
+
+  it('without `goals` nothing changes: no tree handed to the start screen, the profile chip, no filter call', () => {
+    const h = harness()
+    h.ob.startFirstVisit()
+    expect(h.startOpts().goals).toBeUndefined()
+    expect(h.chip().label()).toBe('Choisir un profil')
+    expect(h.filters).toEqual([])
+  })
+
+  it('a goal with the tutorial not taken: the record is written at once (goal and its profile), no room is opened, the picker shows the rooms of the goal', async () => {
+    const h = harness({ goals: true, tutorialAllowed: false })
+    h.ob.startFirstVisit()
+    h.startOpts().onResult({ kind: 'chosen', profile: 'metier', offer: null, goal: choice })
+    await settle()
+    expect(h.record()).toMatchObject({ profile: 'metier', offer: null, goal: choice })
+    expect(h.log).toEqual(['showStart', 'show:false:true'])
+    const last = h.filters.at(-1)!
+    expect(last.rooms).toEqual(node.rooms)
+    expect(last.label).toBe(node.label)
+    expect(h.chip().label()).toBe(`But : ${node.label} · changer`)
+  })
+
+  it('a goal with the tutorial taken: the first room opens first, as with a profile, and the record keeps the goal', async () => {
+    const h = harness({ goals: true })
+    h.ob.startFirstVisit()
+    h.startOpts().onResult({ kind: 'chosen', profile: 'metier', offer: 'taken', goal: choice })
+    await settle()
+    expect(h.log.slice(0, 3)).toEqual(['showStart', 'room', 'frame'])
+    expect(h.recordWhenRoomOpened).toEqual([null])
+    expect(h.record()).toMatchObject({ profile: 'metier', offer: 'taken', request: 1, goal: choice })
+    expect(h.filters.at(-1)?.rooms).toEqual(node.rooms)
+  })
+
+  it('« Passer »: no goal, no profile, the record exists (nothing asks again), every room shows (no filter)', async () => {
+    const h = harness({ goals: true, tutorialAllowed: false })
+    h.ob.startFirstVisit()
+    h.startOpts().onResult({ kind: 'chosen', profile: null, offer: null, goal: null })
+    await settle()
+    expect(h.record()).toMatchObject({ profile: null, goal: null })
+    expect(h.filters.at(-1)).toBeNull()
+    expect(h.chip().label()).toBe('Choisir un but')
+    expect(h.log).toEqual(['showStart', 'show:false:true'])
+    const again = harness({ goals: true, tutorialAllowed: false }, { storage: h.storage })
+    expect(again.ob.startFirstVisit()).toBe(false)
+  })
+
+  it('a stored goal filters the picker from the start; a node with no room (nor its parent) is an empty filter; an unknown id is no filter', () => {
+    const stored = harness({ goals: true }, { storage: memoryStorage({ ...rec('metier', 'skipped'), goal: choice }) })
+    expect(stored.filters.map((x) => x?.rooms)).toEqual([node.rooms])
+    const none = harness({ goals: true, goalTree: SMALL }, { storage: memoryStorage({ ...rec('decouvre', 'skipped'), goal: { id: 'decouvre.vide' } }) })
+    expect(none.filters.map((x) => x?.rooms)).toEqual([[]])
+    const stale = harness({ goals: true }, { storage: memoryStorage({ ...rec('metier', 'skipped'), goal: { id: 'travaille.gone' } }) })
+    expect(stale.filters).toEqual([null])
+    expect(stale.chip().label()).toBe('Choisir un but')
+  })
+
+  it('« Changer de but » (the filter\'s own button) and the chip reopen the goal screens; over a place the grids are closable', () => {
+    const h = harness({ goals: true }, { storage: memoryStorage({ ...rec('metier', 'skipped'), goal: choice }) })
+    h.filters.at(-1)!.changeGoal()
+    expect(h.showStartCalls()).toBe(1)
+    expect(h.startOpts()).toMatchObject({ closable: false, offerEscape: 'leave' })
+    h.setPlace(true)
+    h.chip().onClick()
+    expect(h.showStartCalls()).toBe(1) // the start stage is already showing: the chip does not open it twice
+    h.startOpts().onResult({ kind: 'all-places' })
+    h.chip().onClick()
+    expect(h.showStartCalls()).toBe(2)
+    expect(h.startOpts()).toMatchObject({ closable: true, offerEscape: 'leave' })
+  })
+
+  it('a new goal through the chip over a place: the room stays, the profile applies, and the picker shows the new goal\'s rooms (closable back to the place)', async () => {
+    const h = harness({ goals: true }, { storage: memoryStorage({ ...rec('metier', 'skipped'), goal: choice }) })
+    h.setPlace(true)
+    h.chip().onClick()
+    const c2 = { id: 'etudie.bts-mav-son' }
+    h.startOpts().onResult({ kind: 'chosen', profile: 'etudie', offer: 'skipped', goal: c2 })
+    await settle()
+    expect(h.log).not.toContain('room')
+    expect(h.log).toContain('show:true:true')
+    expect(h.log).toContain('drawer:consoles')
+    expect(h.record()).toMatchObject({ profile: 'etudie', goal: c2 })
+    expect(h.filters.at(-1)?.rooms).toEqual(findGoal(tree, c2.id)!.rooms)
+  })
+
+  it('the snapshot reports the goal chip text and the stored goal', async () => {
+    const h = harness({ goals: true, tutorialAllowed: false })
+    h.ob.startFirstVisit()
+    h.startOpts().onResult({ kind: 'chosen', profile: 'metier', offer: null, goal: choice })
+    await settle()
+    expect(h.ob.snapshot()).toMatchObject({ chip: `But : ${node.label} · changer`, record: { goal: choice } })
   })
 })

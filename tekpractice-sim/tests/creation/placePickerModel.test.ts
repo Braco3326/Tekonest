@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import catalogJson from '../../content/catalog.json'
 import { RoomFile } from '../../src/explore/roomSchema'
-import { gridMove, placeCards, templateCards, WITH_GEAR_ROOMS, type PlaceCard } from '../../src/creation/shell/placePickerModel'
+import { cardRoom, cardVisible, gridMove, placeCards, templateCards, WITH_GEAR_ROOMS, type PlaceCard } from '../../src/creation/shell/placePickerModel'
 import { placeSummary, summarizeRoom } from '../../src/creation/placeSummary'
 import summaryJson from '../../src/creation/placeSummary.json'
 
@@ -119,5 +119,54 @@ describe('gridMove (CA-13): arrows move the highlight, never leave the grid', ()
             const j = gridMove(i, k, count, columns)
             expect(j >= 0 && j < count, `${k} ${i}/${count} c${columns}`).toBe(true)
           }
+  })
+})
+
+describe('the room filter of a goal (mission 1, spec 1.3): cardRoom and cardVisible', () => {
+  const cards = placeCards(input())
+  const templates = templateCards(
+    [
+      { id: 'concert-simple-reference', name_fr: 'Concert simple (référence)', roomId: 'room:concert-hall-medium', devices: 4 },
+      { id: 'premier-son-pret', name_fr: 'Premier son', roomId: 'blank', devices: 3 },
+    ],
+    cards,
+  )
+  const byKey = (k: string): PlaceCard => [...cards, ...templates].find((c) => c.key === k)!
+
+  it('cardRoom: the room id of a room card and of a template card (its place), null for the empty room and the sets', () => {
+    expect(cardRoom(byKey('room:arena-large'))).toBe('arena-large')
+    expect(cardRoom(byKey('template:concert-simple-reference'))).toBe('concert-hall-medium')
+    expect(cardRoom(byKey('template:premier-son-pret'))).toBeNull()
+    expect(cardRoom(byKey('blank'))).toBeNull()
+    expect(cardRoom(cards.find((c) => c.key.startsWith('set:'))!)).toBeNull()
+  })
+
+  it('templateCards keeps the place key of a template (the filter reads it)', () => {
+    expect(byKey('template:concert-simple-reference').room).toBe('room:concert-hall-medium')
+  })
+
+  it('no filter: every card shows; the type filter alone works as before', () => {
+    for (const c of [...cards, ...templates]) expect(cardVisible(c, { type: '', rooms: null })).toBe(true)
+    const arena = byKey('room:arena-large')
+    expect(cardVisible(arena, { type: arena.typeLabel, rooms: null })).toBe(true)
+    expect(cardVisible(arena, { type: 'autre chose', rooms: null })).toBe(false)
+  })
+
+  it('a goal filter shows only its rooms, and the templates of those rooms (the « Avec le matériel » ones too); never the empty room or a set', () => {
+    const rooms = ['concert-hall-medium', 'post-atmos-mix-room-medium']
+    const shown = [...cards, ...templates].filter((c) => cardVisible(c, { type: '', rooms })).map((c) => c.key).sort()
+    expect(shown).toEqual(['room:concert-hall-medium', 'room:post-atmos-mix-room-medium', 'template:concert-simple-reference'])
+    expect(byKey('room:post-atmos-mix-room-medium').withGear).toBe(true)
+  })
+
+  it('an empty goal filter shows nothing (the empty state)', () => {
+    expect([...cards, ...templates].filter((c) => cardVisible(c, { type: '', rooms: [] }))).toEqual([])
+  })
+
+  it('both filters apply together', () => {
+    const hall = byKey('room:concert-hall-medium')
+    expect(cardVisible(hall, { type: hall.typeLabel, rooms: ['concert-hall-medium'] })).toBe(true)
+    expect(cardVisible(hall, { type: 'autre chose', rooms: ['concert-hall-medium'] })).toBe(false)
+    expect(cardVisible(hall, { type: hall.typeLabel, rooms: ['arena-large'] })).toBe(false)
   })
 })

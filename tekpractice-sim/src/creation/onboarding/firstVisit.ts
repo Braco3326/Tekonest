@@ -2,6 +2,10 @@
  * The first visit and what follows (onboarding packs, plan T2.3 to T2.5, spec 4): the start screen under `?design`, the profile applied to the
  * first room, the profile chip, Aide « Premiers pas », the framing. A LAZY chunk: boot.ts imports it only when the onboarding is on (a valid `?design`, practice mode), so
  * the plain game never loads it. The checklist's wiring stays in `wire.ts`.
+ * Mission 1 (spec 1.2 and 1.3): with `goals` (the feature switch, on a package whose first question is the goals) the start screen asks the goal screens instead of
+ * the profiles, the chip says « But : X · changer » (or « Choisir un but »), and the place picker shows only the rooms of the stored goal (`setRoomFilter`). A goal
+ * answered without the tutorial is written at once and the picker shows the goal's rooms to choose from; with the tutorial taken, the first room opens first, as
+ * with a profile.
  */
 import { COPY } from '../copy'
 import type { InventoryTab } from '../inventory'
@@ -11,7 +15,8 @@ import { mountOwnGearCard } from './ownGearCard'
 import { ownGearDue } from './ownGear'
 import { panelsFor, profileById } from './profiles'
 import { tutorialInProgress } from '../../design/tutorialRecord'
-import { chipProfile, createOnboardingStore, entryStage, type OnboardingRecord, type OnboardingStore, type ProfileId, type RequestKind, type StorageLike } from './state'
+import { chipGoal, chipProfile, createOnboardingStore, entryStage, type OnboardingRecord, type OnboardingStore, type ProfileId, type RequestKind, type StorageLike } from './state'
+import { findGoal, loadGoalTree, roomsForGoal, type GoalTree } from './goalTree'
 
 export interface OnboardingWiring {
   /**
@@ -43,7 +48,11 @@ export interface OnboardingWiring {
   shellRoot?: HTMLElement
   /** The status bar's checklist slot: the profile chip goes before it. */
   chipSlot: HTMLElement
-  picker: Pick<PlacePicker, 'showStart' | 'hide' | 'show' | 'startShowing'>
+  picker: Pick<PlacePicker, 'showStart' | 'hide' | 'show' | 'startShowing'> & Partial<Pick<PlacePicker, 'setRoomFilter'>>
+  /** The goal screens replace the profiles (mission 1: the feature switch `goals`, on a package whose `layout.firstQuestion` is `goals`). Absent = false. */
+  goals?: boolean
+  /** The goal tree (tests); absent = the bundled one (`loadGoalTree`). A tree that does not load leaves the profiles. */
+  goalTree?: GoalTree | null
   /** A place is open (the design has a room). */
   placeOpen(): boolean
   /**
@@ -119,6 +128,13 @@ export interface Onboarding {
 const chipText = (id: ProfileId | null): string =>
   id === null ? COPY.onboarding!.chipChoose! : COPY.onboarding!.chip!.replace('{profile}', COPY.onboarding![profileById(id).labelKey]!)
 
+/** The goal chip's text: the stored goal's label (from the tree), or « Choisir un but » with none, or one the tree does not know. */
+const goalChipText = (tree: GoalTree, record: OnboardingRecord | null): string => {
+  const g = chipGoal({ design: true, record })
+  const node = g ? findGoal(tree, g.id) : null
+  return node ? COPY.onboarding!.goalChip!.replace('{goal}', node.label) : COPY.onboarding!.goalChipChoose!
+}
+
 /**
  * The first visit and what follows (plan T2.3 to T2.4b, spec 4): the start screen when it is due, the profile applied to the first room (the
  * neutral room through the picker's own path, the frame, the profile's panels, the drawer on its tab), the profile chip, and Aide « Premiers pas ». boot.ts makes
@@ -129,11 +145,14 @@ const chipText = (id: ProfileId | null): string =>
  */
 export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfileChip = mountProfileChip, mountGear: typeof mountOwnGearCard = mountOwnGearCard): Onboarding {
   const store = w.design ? createOnboardingStore(w.storage) : null
+  /** The goal tree when the goal screens are asked here; null = the four profiles. */
+  const tree: GoalTree | null = store && w.goals === true ? (w.goalTree !== undefined ? w.goalTree : loadGoalTree()) : null
+  const label = (record: OnboardingRecord | null): string => (tree ? goalChipText(tree, record) : chipText(chipProfile({ design: true, record })))
   const chip = store
     ? mountChip({
         doc: w.doc,
         slot: w.chipSlot,
-        label: () => chipText(chipProfile({ design: true, record: store.read() })),
+        label: () => label(store.read()),
         hint: COPY.onboarding!.chipHint!,
         onClick: () => {
           if (!w.picker.startShowing) openStart({ mode: 'chip' }) // the start stage already showing is what the chip would open
@@ -165,8 +184,17 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
     else gear.hide()
   }
 
-  /** A first-room profile: panels, then the drawer tab. */
-  const applyProfile = (id: ProfileId): void => {
+  /** The picker shows the rooms of the stored goal (the node's, else its parent's, else none: the empty state); no filter without a known goal. */
+  const applyFilter = (): void => {
+    if (!tree || !store) return
+    const g = store.read()?.goal ?? null
+    const node = g ? findGoal(tree, g.id) : null
+    w.picker.setRoomFilter?.(g && node ? { rooms: roomsForGoal(tree, g), label: node.label, changeGoal: () => openStart({ mode: 'chip' }) } : null)
+  }
+
+  /** A first-room profile: panels, then the drawer tab. No profile (« Passer » on the goal screens): nothing changes. */
+  const applyProfile = (id: ProfileId | null): void => {
+    if (id === null) return
     const preset = profileById(id)
     const p = panelsFor(preset, w.panels)
     w.setPanel('tree', p.tree)
@@ -185,6 +213,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
       offerAllowed: w.tutorialAllowed,
       offerFor: o.offerFor,
       offerEscape: o.mode === 'chip' ? 'leave' : 'skip',
+      ...(tree ? { goals: tree, ...(o.offerFor ? { offerGoal: store.read()?.goal ?? null } : {}) } : {}),
       onResult: (r) => {
         if (answered) return
         if (r.kind === 'all-places') return // nothing answered, nothing written: the next normal visit asks again
@@ -195,6 +224,16 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
             w.picker.hide()
             w.returnFocus()
           } else w.picker.show({ closable: false, focus: true })
+          return
+        }
+        if (tree && r.offer !== 'taken') {
+          // the goal screens, no tutorial asked: the goal is written now and the picker shows its rooms to choose from (closable back to a place that is open)
+          store.dispatch({ type: 'answer', profile: r.profile, offer: r.offer, goal: r.goal ?? null })
+          chip?.render()
+          refreshGear()
+          applyFilter()
+          if (w.placeOpen()) applyProfile(r.profile)
+          w.picker.show({ closable: w.placeOpen(), focus: true })
           return
         }
         void (async () => {
@@ -210,14 +249,17 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
             }
             w.frameFirstRoom({ tutorialRow: r.offer === 'taken' && w.tutorialAllowed })
           }
-          store.dispatch({ type: 'answer', profile: r.profile, offer: r.offer })
+          store.dispatch({ type: 'answer', profile: r.profile, offer: r.offer, ...(tree ? { goal: r.goal ?? null } : {}) })
           chip?.render()
+          applyFilter()
           refreshGear() // a profile chosen after a sound (the chip) may be the entrepreneur's; one chosen instead of it takes the card away
           applyProfile(r.profile)
         })()
       },
     })
   }
+
+  applyFilter() // a goal stored on an earlier visit: the picker shows its rooms from the start
 
   let asking: Promise<void> | null = null
   const requestAtLoad = store?.read()?.request ?? 0
@@ -284,7 +326,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
         record,
         blocked: store?.blocked ?? false,
         premiersPas,
-        chip: store ? chipText(chipProfile({ design: true, record })) : null,
+        chip: store ? label(record) : null,
         requestKind: record?.kind ?? 'start',
         requestAtLoad,
       }

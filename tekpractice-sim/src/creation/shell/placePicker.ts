@@ -14,12 +14,17 @@
  * - Onboarding (T2.3, only under `?design`): `showStart` shows the start screen (src/creation/onboarding/startScreen.ts) as a STAGE of this same
  *   section: the head and the grids hide, the start panel shows, and `inert` stays owned here (`show`, `hide`). « Tous les lieux » leaves the stage for
  *   the grids; a place chosen elsewhere closes the picker through `hide` as a card does. Never called without `?design`: the DOM is then today's.
+ * - Goal filter (mission 1, spec 1.3): `setRoomFilter` shows only the rooms of the stored goal (a template card follows its place; the empty room and the sets are
+ *   hidden), says so in the head (« Lieux pour votre but : X ») with a button « Tous les lieux » that is always there to show every place (and back: « Lieux de votre
+ *   but »). No room for the goal (or none of the chosen type): an empty state, « Aucun lieu pour ce but pour l’instant », with « Voir tous les lieux » and « Changer de
+ *   but ». Without a filter the picker is today's.
  * DOM only: choosing calls `onChoose`, the shell owns the place change.
  */
 import { COPY } from '../copy'
 import type { StartResult, StartScreen, StartScreenDeps } from '../onboarding/startScreen'
+import type { GoalChoice, GoalTree } from '../onboarding/goalTree'
 import type { ProfileId } from '../onboarding/state'
-import { gridMove, type GridKey, type PlaceCard } from './placePickerModel'
+import { cardVisible, gridMove, type GridKey, type PlaceCard } from './placePickerModel'
 
 export type { PlaceCard } from './placePickerModel'
 export { placeCards, templateCards } from './placePickerModel'
@@ -43,6 +48,16 @@ export interface PlacePickerDeps {
   onChoose(card: PlaceCard, mode: 'empty' | 'gear'): void
 }
 
+/** The rooms of the stored goal (mission 1): what the picker shows while the filter is on. */
+export interface RoomFilter {
+  /** Room ids (content/rooms/index.json); `[]` = the empty state. */
+  rooms: readonly string[]
+  /** The goal's label (from the tree), for the head line. */
+  label: string
+  /** « Changer de but » of the empty state: the goal screens again. */
+  changeGoal(): void
+}
+
 export interface PlacePicker {
   readonly root: HTMLElement
   readonly isOpen: boolean
@@ -62,6 +77,8 @@ export interface PlacePicker {
   showStart(opts: PickerStartOpts): void
   /** The start screen is showing (its profile or offer stage): the profile chip and Aide « Premiers pas » wait for it. */
   readonly startShowing: boolean
+  /** The goal filter (mission 1): the rooms of the stored goal, or null (every place, today's picker). Shows the goal's places again (« Tous les lieux » off). */
+  setRoomFilter(f: RoomFilter | null): void
 }
 
 export interface PickerStartOpts {
@@ -73,6 +90,10 @@ export interface PickerStartOpts {
   offerFor?: ProfileId
   /** Échap on the offer stage: « Passer, je connais » (a first visit, the default) or leaving with no change (reopened by the chip). */
   offerEscape?: 'skip' | 'leave'
+  /** The goal tree (mission 1): the goal screens replace the profiles. Read on the first call (one start screen per page). */
+  goals?: GoalTree | null
+  /** With `offerFor` on the goal screens: the stored goal the offer names. */
+  offerGoal?: GoalChoice | null
   onResult(r: StartResult): void
 }
 
@@ -118,7 +139,17 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
   error.setAttribute('role', 'alert')
   error.dataset.testid = 'place-picker-error'
   error.hidden = true
-  titles.append(h2, hint, legend0, error)
+  // The goal filter's line and its « Tous les lieux » button (mission 1): shown only while a goal filter is set.
+  const goalBar = el(doc, 'div', 'cr-pick-goal')
+  goalBar.hidden = true
+  const goalNote = el(doc, 'p', 'cr-pick-goal-note')
+  goalNote.id = 'cr-pick-goal-note'
+  goalNote.dataset.testid = 'goal-filter-note'
+  const goalToggle = el(doc, 'button', 'cr-btn cr-pick-goal-toggle')
+  goalToggle.type = 'button'
+  goalToggle.dataset.testid = 'goal-filter-toggle'
+  goalBar.append(goalNote, goalToggle)
+  titles.append(h2, hint, legend0, goalBar, error)
   const tools = el(doc, 'div', 'cr-pick-tools')
   const filterLabel = el(doc, 'label', 'cr-pick-filter')
   const filterText = el(doc, 'span', undefined, P().filter)
@@ -136,6 +167,8 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
   // ── the two grids
   const scroll = el(doc, 'div', 'cr-pick-scroll')
   const grids: Grid[] = []
+  /** The « Modèles » row's head (heading and pitch): hidden with its grid when the goal filter leaves no template. */
+  let templatesHead: HTMLElement | null = null
   const makeGrid = (id: string, title: string, cards: PlaceCard[], testid: string): Grid => {
     const heading = el(doc, 'h3', 'cr-pick-row', title)
     heading.id = `cr-pick-${id}-title`
@@ -201,12 +234,28 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
       const rowHead = el(doc, 'div', 'cr-pick-rowhead')
       rowHead.append(heading, pitch)
       box.setAttribute('aria-describedby', `${hint.id} ${pitch.id}`) // wave 2c: the pitch describes the template grid, as the hint describes both
+      templatesHead = rowHead
       scroll.append(rowHead, box)
     } else scroll.append(heading, box)
     return g
   }
-  if (d.templates.length) makeGrid('templates', P().templates!, d.templates, 'template-grid')
+  const templatesGrid = d.templates.length ? makeGrid('templates', P().templates!, d.templates, 'template-grid') : null
   const places = makeGrid('places', P().places!.replace('{n}', String(d.places.length)), d.places, 'place-grid')
+
+  // ── the empty state of a goal filter (mission 1)
+  const empty = el(doc, 'div', 'cr-pick-empty')
+  empty.hidden = true
+  empty.dataset.testid = 'goal-empty'
+  empty.setAttribute('role', 'status')
+  const emptyText = el(doc, 'p', 'cr-pick-empty-text', COPY.onboarding!.goalEmpty)
+  const emptyActions = el(doc, 'div', 'cr-pick-empty-actions')
+  const emptyAll = el(doc, 'button', 'cr-btn cr-btn-primary', COPY.onboarding!.goalEmptyAll)
+  emptyAll.type = 'button'
+  const emptyChange = el(doc, 'button', 'cr-btn', COPY.onboarding!.goalEmptyChange)
+  emptyChange.type = 'button'
+  emptyActions.append(emptyAll, emptyChange)
+  empty.append(emptyText, emptyActions)
+  scroll.prepend(empty)
 
   // ── « Salle vide » / « Avec le matériel du modèle »
   const confirm = el(doc, 'div', 'cr-pick-confirm')
@@ -282,6 +331,9 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
   /** The start stage was asked for and not left: it shows (or is about to, while its chunk loads). */
   let startWanted = false
   let startOpts: PickerStartOpts | null = null
+  /** The goal filter, and whether « Tous les lieux » shows every place over it. */
+  let roomFilter: RoomFilter | null = null
+  let showAll = false
 
   const visible = (g: Grid): number[] => g.cards.map((c, i) => (c.el.hidden ? -1 : i)).filter((i) => i >= 0)
   const current = (g: Grid): { card: PlaceCard; el: HTMLElement } | undefined => g.cards[g.at]
@@ -377,14 +429,48 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
     }
   })
 
-  // ── filter by type
-  filter.addEventListener('change', () => {
-    const t = filter.value
-    for (const c of places.cards) c.el.hidden = t !== '' && c.card.typeLabel !== t
-    const vis = visible(places)
-    places.heading.textContent = P().places!.replace('{n}', String(vis.length))
-    if (!vis.includes(places.at) && vis.length) highlight(places, vis[0], false)
+  // ── filter by type, and by the stored goal (mission 1)
+  const goalRooms = (): readonly string[] | null => (roomFilter && !showAll ? roomFilter.rooms : null)
+  const applyFilters = (): void => {
+    const rooms = goalRooms()
+    for (const c of places.cards) c.el.hidden = !cardVisible(c.card, { type: filter.value, rooms })
+    if (templatesGrid) for (const c of templatesGrid.cards) c.el.hidden = !cardVisible(c.card, { type: '', rooms })
+    for (const g of grids) {
+      const vis = visible(g)
+      if (!vis.includes(g.at) && vis.length) highlight(g, vis[0], false)
+    }
+    places.heading.textContent = P().places!.replace('{n}', String(visible(places).length))
+    const noTemplate = !templatesGrid || visible(templatesGrid).length === 0
+    if (templatesGrid) {
+      templatesGrid.box.hidden = noTemplate
+      if (templatesHead) templatesHead.hidden = noTemplate
+    }
+    const none = visible(places).length === 0 && noTemplate
+    places.box.hidden = none && rooms !== null
+    places.heading.hidden = none && rooms !== null
+    empty.hidden = !(none && rooms !== null)
+    goalBar.hidden = roomFilter === null
+    goalNote.hidden = roomFilter === null || showAll
+    if (roomFilter) goalNote.textContent = COPY.onboarding!.goalFilterNote!.replace('{goal}', roomFilter.label)
+    goalToggle.textContent = showAll ? COPY.onboarding!.goalShowGoal! : COPY.onboarding!.allPlaces!
+  }
+  /** The keyboard lands on the first place to choose: the highlighted place, else the highlighted template, else the empty state's first button. */
+  const focusFirst = (): void => {
+    if (visible(places).length) return current(places)?.el.focus()
+    if (templatesGrid && visible(templatesGrid).length) return current(templatesGrid)?.el.focus()
+    if (!empty.hidden) emptyAll.focus()
+  }
+  filter.addEventListener('change', () => applyFilters())
+  goalToggle.addEventListener('click', () => {
+    showAll = !showAll
+    applyFilters()
   })
+  emptyAll.addEventListener('click', () => {
+    showAll = true
+    applyFilters()
+    focusFirst()
+  })
+  emptyChange.addEventListener('click', () => roomFilter?.changeGoal())
 
   // ── close (a place is on screen)
   const hide = (): void => {
@@ -420,7 +506,7 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
       open = true
       root.hidden = false
       for (const cov of d.covers) cov.inert = true
-      if (focus) current(places)?.el.focus()
+      if (focus) focusFirst()
     },
     showStart(o) {
       const load = d.loadStartScreen
@@ -438,7 +524,7 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
       const go = (s: StartScreen): void => {
         if (!startWanted) return // left while the chunk loaded (a card, `show`, `hide`)
         root.setAttribute('aria-labelledby', s.titleId)
-        s.open({ offerFor: startOpts?.offerFor, offerEscape: startOpts?.offerEscape })
+        s.open({ offerFor: startOpts?.offerFor, offerGoal: startOpts?.offerGoal, offerEscape: startOpts?.offerEscape })
       }
       if (start) return go(start)
       void load!().then(
@@ -448,12 +534,13 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
             parent: root,
             stepCount: o.stepCount,
             offerAllowed: o.offerAllowed,
+            ...(o.goals ? { goals: o.goals } : {}),
             onResult: (r) => {
               if (r.kind === 'all-places') {
                 leaveStart()
                 closable = startOpts?.closable === true
                 close.hidden = !closable
-                current(places)?.el.focus() // the learner asked for the places: the keyboard lands on the first card
+                focusFirst() // the learner asked for the places: the keyboard lands on the first card
               }
               startOpts?.onResult(r)
             },
@@ -470,10 +557,15 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
     get startShowing() {
       return startWanted
     },
+    setRoomFilter(f) {
+      roomFilter = f
+      showAll = false
+      applyFilters()
+    },
     hide,
     focus() {
       if (start?.stage) start.focus()
-      else current(places)?.el.focus()
+      else focusFirst()
     },
     setBusy(on) {
       busy = on

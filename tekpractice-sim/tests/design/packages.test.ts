@@ -316,6 +316,10 @@ describe('T6.2: the final rows of the table (spec 7.2), one assertion per row', 
     expect(DESIGN_IDS.filter((id) => packageById(id).layout.checklist === 'panel')).toEqual([2])
     expect(DESIGN_IDS.filter((id) => packageById(id).presenter === 'step-card')).toEqual([1, 3, 5])
   })
+  it('mission 1: the goal screens are the first question of package 2 only; the others keep the four profiles', () => {
+    expect(DESIGN_IDS.filter((id) => packageById(id).layout.firstQuestion === 'goals')).toEqual([2])
+    for (const id of DESIGN_IDS) expect(['profiles', 'goals']).toContain(packageById(id).layout.firstQuestion)
+  })
   it('the shortcuts sit beside the controls in packages 2 and 4 only', () => {
     expect(DESIGN_IDS.filter((id) => packageById(id).layout.shortcutsBesideControls)).toEqual([2, 4])
   })

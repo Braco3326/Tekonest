@@ -49,6 +49,11 @@ export interface LayoutPreset {
   shortcutsBesideControls: boolean
   checklist: 'chip' | 'panel'
   start: 'neutral-room' | 'playable-model'
+  /**
+   * The first question of the start screen (mission 1, spec 1.2 and 6): the four profiles, or the goal screens (only where the feature table's `goals` is on; the
+   * profiles otherwise). Package 2 asks the goals; the others keep their own start screen.
+   */
+  firstQuestion: 'profiles' | 'goals'
 }
 
 export interface Pacing {
@@ -227,6 +232,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
       shortcutsBesideControls: false,
       checklist: 'chip',
       start: 'neutral-room',
+      firstQuestion: 'profiles',
     },
     pacing: { steps: ALL_STEPS, hintAfterMs: 20_000 },
     presenter: 'step-card',
@@ -247,6 +253,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
       shortcutsBesideControls: true,
       checklist: 'panel',
       start: 'neutral-room',
+      firstQuestion: 'goals',
     },
     pacing: { steps: ALL_STEPS, hintAfterMs: 30_000 },
     presenter: 'checklist',
@@ -267,6 +274,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
       shortcutsBesideControls: false,
       checklist: 'chip',
       start: 'neutral-room',
+      firstQuestion: 'profiles',
     },
     pacing: { steps: ALL_STEPS, hintAfterMs: 20_000 },
     presenter: 'step-card',
@@ -287,6 +295,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
       shortcutsBesideControls: true,
       checklist: 'chip',
       start: 'neutral-room',
+      firstQuestion: 'profiles',
     },
     pacing: { steps: ALL_STEPS, hintAfterMs: 0 },
     presenter: 'checklist',
@@ -307,6 +316,7 @@ const DESIGN_PACKAGES: Readonly<Record<DesignId, DesignPackage>> = deepFreeze({
       shortcutsBesideControls: false,
       checklist: 'chip',
       start: 'playable-model',
+      firstQuestion: 'profiles',
     },
     // Runs on the playable model the start opens (T6.3): the sound, one unplug, the replug.
     pacing: { steps: ['ecoute', 'debrancher', 'rebrancher'], hintAfterMs: 25_000 },

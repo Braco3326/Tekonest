@@ -1,6 +1,8 @@
 /**
  * « Choisir un lieu » as data (Task 12, C15, L1, L2): the cards and the grid
  * keyboard. Pure: no DOM; `placePicker.ts` renders it.
+ * Mission 1 (spec 1.3): `cardVisible` adds the room filter of a stored goal to the type filter: a room card and a template card (by its place) show when their room
+ * is one of the goal's; the empty room and the sets show only without a goal filter.
  */
 import { COPY } from '../copy'
 
@@ -19,6 +21,8 @@ export interface PlaceCard {
   withGearCount: number
   /** A template card's note line (COPY `picker.templateNote-<id>`, T1.6): what the model already does or what is left to do. Absent on places. */
   note?: string
+  /** A template card's place key (`room:<id>`, `blank`...): the goal filter follows it. Absent on places. */
+  room?: string
 }
 
 export interface PlaceCardInput {
@@ -95,10 +99,29 @@ export function templateCards(templates: { id: string; name_fr: string; roomId: 
       thumb: room.thumb,
       withGear: false,
       withGearCount: t.devices,
+      room: t.roomId,
       ...(note ? { note } : {}),
     })
   }
   return out
+}
+
+/** The room id a card opens: a room card's, a template card's place when it is a room; null for the empty room, a set, or a template on one of them. */
+export function cardRoom(card: PlaceCard): string | null {
+  const key = card.key.startsWith('template:') ? (card.room ?? '') : card.key
+  const m = /^room:(.+)$/.exec(key)
+  return m ? m[1]! : null
+}
+
+/**
+ * Whether a card shows: `type` is the type filter's value ('' = every type), `rooms` the room filter of the stored goal (null = none, every card; `[]` = no card, the
+ * empty state). Both apply together.
+ */
+export function cardVisible(card: PlaceCard, f: { type: string; rooms: readonly string[] | null }): boolean {
+  if (f.type !== '' && card.typeLabel !== f.type) return false
+  if (f.rooms === null) return true
+  const room = cardRoom(card)
+  return room !== null && f.rooms.includes(room)
 }
 
 export type GridKey = 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End'

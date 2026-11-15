@@ -769,13 +769,27 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   font: 600 13px/1 var(--cr-font-title);
 }
 .cr-start-places { margin-top: 20px; }
+/* The goal screens (mission 1): up to ten buttons, so the grid wraps by three; « Retour », « Passer » and « Tous les lieux » under it. */
+.cr-start-goals { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cr-start-goals[data-screen="1"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.cr .cr-start-goal { min-height: 96px; font-size: 16px; }
+.cr-start-goal-nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.cr-start-goal-nav [hidden], .cr-start-goal-path[hidden], .cr-start-profile-name[hidden] { display: none; }
+/* The goal filter of the place picker (mission 1): its line in the head and its empty state. */
+.cr-pick-goal { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 8px; }
+.cr-pick-goal[hidden], .cr-pick-goal-note[hidden], .cr-pick-empty[hidden], .cr-pick-grid[hidden], .cr-pick-rowhead[hidden], .cr-pick-row[hidden] { display: none; }
+.cr-pick-goal-note { margin: 0; color: var(--cr-papier); font-weight: 500; }
+.cr-pick-empty { margin: 32px auto; max-width: 560px; text-align: center; }
+.cr-pick-empty-text { margin: 0 0 16px; color: var(--cr-papier); font-size: 16px; }
+.cr-pick-empty-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+@media (max-width: 900px) { .cr-start-goals, .cr-start-goals[data-screen="1"] { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (hover: hover) {
   .cr .cr-start-btn:hover { color: var(--cr-accent-ink); background: var(--cr-accent); }
   .cr .cr-start-btn:hover .cr-start-key { color: var(--cr-accent-ink); border-color: var(--cr-accent-ink); }
 }
 @media (max-width: 900px) { .cr-start-profiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) {
-  .cr-start-profiles, .cr-start-offer { grid-template-columns: minmax(0, 1fr); }
+  .cr-start-profiles, .cr-start-offer, .cr-start-goals, .cr-start-goals[data-screen="1"] { grid-template-columns: minmax(0, 1fr); }
   .cr .cr-start-btn { min-height: 72px; }
 }
 .cr-pick-rowhead { display: flex; flex-wrap: wrap; align-items: center; gap: 0 14px; margin: 16px 0 10px; }
