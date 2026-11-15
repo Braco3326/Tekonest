@@ -95,6 +95,8 @@ export interface MenuContext {
   firstStepsHold?(): string | undefined
   /** Aide (T3.2): the tutorial running now (`k` = the step to resume at), or null. While it runs, « Premiers pas » becomes « Reprendre à l’étape {k} », with « Recommencer le tutoriel » and « Passer le tutoriel » (actions `first-steps-restart`, `first-steps-skip`). */
   tutorialProgress?(): { k: number; n: number } | null
+  /** Accounts (mission 1, spec 5; only where the page registered `account`): the learner is signed in, so « Se connecter » is left out. */
+  accountSignedIn?(): boolean
   /** Écoute › Morceau (Task 39): the demo songs; the submenu is left out when there are none. */
   songs?(): { id: string; title: string }[]
 }
@@ -251,7 +253,18 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     {
       id: 'projet',
       label: M.projet!,
-      items: [act('new', M.newProject!), act('open', M.open!), act('save', M.save!), act('save-as', M.saveAs!), act('export-kept', M.exportKept!), undo, redo],
+      items: [
+        act('new', M.newProject!),
+        act('open', M.open!),
+        act('save', M.save!),
+        act('save-as', M.saveAs!),
+        act('export-kept', M.exportKept!),
+        undo,
+        redo,
+        // mission 1 (spec 5): only where the page registered them (the accounts switch on); none in the product
+        ...(registered('account') ? [act('account', M.account!)] : []),
+        ...(registered('sign-in') && !ctx.accountSignedIn?.() ? [act('sign-in', M.signIn!)] : []),
+      ],
     },
     {
       id: 'lieu',

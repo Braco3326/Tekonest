@@ -33,6 +33,8 @@ export interface PlainTutorialWiring {
   labels: { console: string; enceinte: string }
   /** The tutorial is over (its four steps done, or « Passer le tutoriel »): the account card may follow (spec 5). */
   onOver?(): void
+  /** The tutorial's card left the page (« Fermer », « Passer le tutoriel »): its row is free again. */
+  onCardClosed?(): void
   /** The card (tests pass a fake). */
   mountCard?: typeof mountPlainTutorialCard
 }
@@ -236,6 +238,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
       plainW?.onOver?.()
     }
     w.returnFocus()
+    plainW?.onCardClosed?.()
   }
   const plainCard: PlainCard | null = plainW
     ? (plainW.mountCard ?? mountPlainTutorialCard)({
@@ -248,6 +251,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
           closing = false
           plainCard?.hide()
           w.returnFocus()
+          plainW?.onCardClosed?.()
         },
       })
     : null

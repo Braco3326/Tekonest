@@ -977,6 +977,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   let onboarding: Onboarding = NO_ONBOARDING
   /** The plain tutorial ended (finished or passed): the account card may follow (mission 1, spec 5; wired further down when the accounts switch is on). */
   let plainOver: () => void = () => undefined
+  /** Accounts (mission 1, spec 5): only with the switch on, on a practice address. The switch is a build constant: with it off this branch and its chunk are not in the build. */
+  let accounts: import('./onboarding/accountWiring').AccountWiring | null = null
   if (onboardingOn) {
     const [{ wireOnboarding }, { framingForCanvas }, { startRoomKey }, { benchFacts }] = await Promise.all([
       import('./onboarding/firstVisit'),
@@ -1002,6 +1004,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
                 enceinte: labelOf('qsc-k12-2'),
               },
               onOver: () => plainOver(),
+              onCardClosed: () => accounts?.refresh(),
             },
           }
         : {}),
@@ -1045,8 +1048,28 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       returnFocus: () => canvas.focus(),
     })
   }
+  if (FEATURES.accounts === true && opts.onboarding === true) {
+    const [{ wireAccounts, hasAuthRedirect }, { loadGoalTree, findGoal }] = await Promise.all([import('./onboarding/accountWiring'), import('./onboarding/goalTree')])
+    const goalTree = loadGoalTree()
+    accounts = wireAccounts({
+      doc: document,
+      store: onboarding.store,
+      practiceNow: () => opts.practiceNow?.() ?? true,
+      placeOpen: () => store.design().roomId !== null,
+      getGoal: () => onboarding.store?.read()?.goal?.id ?? null,
+      describeGoal: (id) => (goalTree ? (findGoal(goalTree, id)?.label ?? null) : null),
+      covers: pickerCovers,
+      covered: () => picker.isOpen,
+      returnFocus: () => canvas.focus(),
+      mountNow: hasAuthRedirect(location.search, location.hash),
+    })
+    // The card comes once, after the plain tutorial or the first sound, whichever is first; only where the plain tutorial is this address's tutorial (where the guide runs,
+    // the all-on test build, its own tutorial owns that moment and its row).
+    if (onboarding.snapshot().plainTutorial === true) plainOver = () => accounts?.promptDue()
+  }
   // each change of the bench: the entrepreneur's card looks at the address again (a page pushed to an exam address while it runs loses the card)
   if (onboardingOn) store.subscribe(() => onboarding.refresh()) // lives with the page, like the autosave's subscription above
+  if (accounts) store.subscribe(() => accounts?.refresh())
   if (!(await restore())) {
     // First visit under ?design: the start screen, a stage of the picker; otherwise (no ?design, or already asked) the picker as it always was.
     if (!onboarding.startFirstVisit()) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
@@ -2035,6 +2058,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
             listenIntent = listen.active // an end, a failure or a rig change that stopped it: the menu follows
             if (!listen.active) forgetFile()
             if (listen.playing) onboarding.soundStarted() // the first sound of the session: the entrepreneur's card is due (T6.4; the onboarding decides who it is for)
+            if (listen.playing && onboarding.snapshot().plainTutorial === true) accounts?.promptDue() // mission 1: the account card, after the first sound
           },
           bag: shellBag,
           container: shell.props,
@@ -2188,6 +2212,8 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     'panel-props': () => shell.setPanel('props'),
     shortcuts: () => void openShortcuts(),
     ...(onboarding.premiersPas ? { 'first-steps': () => void onboarding.requestTutorial(), 'first-steps-restart': () => void onboarding.requestTutorial('restart'), 'first-steps-skip': () => void onboarding.requestTutorial('skip') } : {}),
+    // mission 1 (spec 5): « Mon compte » and « Se connecter », only with the accounts switch on (never in the product)
+    ...(accounts ? { account: () => void accounts?.open(), 'sign-in': () => void accounts?.logIn() } : {}),
     site: () => location.assign(siteHref),
     // Lieu → « Choisir un lieu… »: the picker over the current place (Fermer / Échap go back).
     'choose-place': () => {
@@ -2278,6 +2304,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       historyLocked: () => picker.isOpen, // Phase 1 review: « Annuler » never edits the rig under the picker
       firstStepsHold: () => onboarding.waiting(), // « Premiers pas » waits for the start screen
       tutorialProgress: () => onboarding.progress(), // T3.2: « Reprendre à l’étape {k} » while the guide's tutorial runs
+      accountSignedIn: () => accounts?.signedIn === true,
       hasSelection: () => viewState.get().selection !== null && !placement.placing && !dragOpen(),
       viewLocked,
       walking: () => host.walking,
