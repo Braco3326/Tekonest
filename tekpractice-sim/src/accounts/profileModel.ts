@@ -27,7 +27,7 @@ export interface Profile {
 export const LIMITS = { firstName: 40, region: 80, school: 80, id: 64, password: 72, passwordMin: 8, email: 254 } as const
 
 export type ProfileErrorCode = 'required' | 'invalid' | 'too-long' | 'too-short'
-export type ErrorField = ProfileField | 'consent' | 'email' | 'password'
+export type ErrorField = ProfileField | 'speciality' | 'consent' | 'email' | 'password'
 
 export interface ProfileError {
   field: ErrorField
