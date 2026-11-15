@@ -1,55 +1,58 @@
 /**
- * The goal tree (mission 1, spec 3): the bundled data file content/onboarding/goal-tree.json, its pure validator, the loader and `roomsForGoal`. A bad file fails here,
- * never in front of the learner (the loader then returns null and the start screen keeps the four profiles).
+ * The goal tree (mission 1, spec 3): the bundled trimmed copy content/onboarding/goal-tree.json (marketing's DRAFT, made by tools/trim-goal-tree.mjs), its pure
+ * validator, the loader, `goalPath`, `profileForGoal` and `roomsForGoal`. A bad file fails here, never in front of the learner (the loader then returns null and the
+ * start screen keeps the four profiles). The empty state and the end of the way on screen 2 are also proven on a tiny synthetic tree (`SMALL`), so they do not
+ * depend on what the draft happens to hold.
  */
 import { describe, expect, it } from 'vitest'
 import treeJson from '../../content/onboarding/goal-tree.json'
+import schoolsJson from '../../content/onboarding/schools.json'
 import roomIndex from '../../content/rooms/index.json'
 import { PROFILE_IDS } from '../../src/creation/onboarding/state'
-import { ROOM_IDS, findGoal, loadGoalTree, roomsForGoal, validateGoalTree, type GoalTree } from '../../src/creation/onboarding/goalTree'
+import { SMALL } from './goalTreeFixture'
+import { GOAL_PROFILES, ROOM_IDS, findGoal, goalPath, loadGoalTree, profileForGoal, roomsForGoal, validateGoalTree, type GoalNode, type GoalTree } from '../../src/creation/onboarding/goalTree'
 
 const rooms = new Set((roomIndex as { rooms: { id: string }[] }).rooms.map((r) => r.id))
 const clone = (): GoalTree => JSON.parse(JSON.stringify(treeJson)) as GoalTree
+const all = (ns: readonly GoalNode[]): GoalNode[] => ns.flatMap((n) => [n, ...all(n.children)])
 
-describe('content/onboarding/goal-tree.json', () => {
+describe('content/onboarding/goal-tree.json (the trimmed draft)', () => {
   const r = validateGoalTree(treeJson, rooms)
 
-  it('is valid', () => {
+  it('is valid against content/rooms/index.json', () => {
     expect(r.ok ? [] : r.errors).toEqual([])
   })
 
-  it('is the placeholder until the research file arrives, with exactly five goals mapped to a profile', () => {
+  it('has the five goals, each mapped to a profile, and an « autre » child under each', () => {
     const t = treeJson as GoalTree
-    expect(t.version).toBe(1)
-    expect(t.status).toBe('placeholder')
-    expect(t.goals).toHaveLength(5)
-    for (const g of t.goals) expect(PROFILE_IDS).toContain(g.profile)
-    expect(t.goals.map((g) => g.label_fr)).toEqual([
-      'Découvrir le son',
-      'Étudier le son',
-      'Faire de la musique (live et studio)',
-      'Monter un événement ou un projet',
-      'Travailler dans le son',
-    ])
+    expect(t.goals.map((g) => g.id)).toEqual(['etudie', 'travaille', 'reconversion', 'passion', 'decouvre'])
+    for (const g of t.goals) {
+      expect(PROFILE_IDS).toContain(profileForGoal(g.id))
+      expect(g.children.map((c) => c.id)).toContain(`${g.id}.autre`)
+    }
+    expect(t.version).toMatch(/\S/)
+    expect(t.status).toMatch(/\S/)
   })
 
-  it('every room it names exists in content/rooms/index.json, and one speciality has no room (the empty state is real)', () => {
-    const t = treeJson as GoalTree
-    const named = t.goals.flatMap((g) => g.subgoals.flatMap((s) => s.specialities.flatMap((p) => p.rooms)))
-    expect(named.length).toBeGreaterThan(0)
-    for (const id of named) expect(rooms.has(id), id).toBe(true)
-    const empty = t.goals.flatMap((g) => g.subgoals.flatMap((s) => s.specialities.filter((p) => p.rooms.length === 0)))
-    expect(empty.length).toBeGreaterThanOrEqual(1)
+  it('keeps only the fields the app uses (the review-only fields, seat counts, fees and dates are not in the copy)', () => {
+    const t = treeJson as unknown as Record<string, unknown>
+    expect(Object.keys(t).sort()).toEqual(['goals', 'status', 'version'])
+    for (const n of all((treeJson as GoalTree).goals)) {
+      for (const k of Object.keys(n)) expect(['id', 'label', 'level', 'rooms', 'children', 'school_field'], `${n.id}.${k}`).toContain(k)
+    }
+    expect(all((treeJson as GoalTree).goals).filter((n) => n.school_field).map((n) => n.id)).toEqual(['etudie'])
   })
 
-  it('every room of the index is reachable from some goal (no place is lost by choosing a goal path)', () => {
+  it('every room it names exists, and every end of the way has rooms of its own or from its parent', () => {
     const t = treeJson as GoalTree
-    const named = new Set(t.goals.flatMap((g) => g.subgoals.flatMap((s) => s.specialities.flatMap((p) => p.rooms))))
-    expect([...rooms].filter((id) => !named.has(id))).toEqual([])
+    for (const n of all(t.goals)) for (const id of n.rooms) expect(rooms.has(id), `${n.id}: ${id}`).toBe(true)
+    for (const n of all(t.goals).filter((x) => x.level > 1 && x.children.length === 0)) expect(roomsForGoal(t, { id: n.id }).length, n.id).toBeGreaterThan(0)
   })
 
-  it('the hints address the learner as « vous »', () => {
-    for (const g of (treeJson as GoalTree).goals) expect(g.hint_fr, g.id).toMatch(/\b[Vv]ous\b/)
+  it('schools.json is the school list trimmed to id, name, cities and kind', () => {
+    const s = schoolsJson as { schools: Record<string, unknown>[] }
+    expect(s.schools.length).toBeGreaterThan(0)
+    for (const x of s.schools) expect(Object.keys(x).sort()).toEqual(['cities', 'id', 'kind', 'name'])
   })
 })
 
@@ -59,42 +62,40 @@ describe('validateGoalTree', () => {
     return r.ok ? [] : r.errors
   }
 
+  it('the small synthetic tree is valid', () => {
+    expect(errs(SMALL)).toEqual([])
+  })
+
   it('refuses what is not a tree', () => {
     for (const raw of [null, 3, 'x', [], {}]) expect(errs(raw).length, JSON.stringify(raw)).toBeGreaterThan(0)
   })
 
-  it('refuses a wrong version, an unknown status, a missing source', () => {
-    expect(errs({ ...clone(), version: 2 })).not.toEqual([])
-    expect(errs({ ...clone(), status: 'draft' })).not.toEqual([])
-    expect(errs({ ...clone(), source: '' })).not.toEqual([])
-    expect(errs({ ...clone(), status: 'researched' })).toEqual([])
-  })
-
-  it('refuses four or six goals', () => {
+  it('refuses four or six goals, and a goal that maps to no profile', () => {
     const t = clone()
     expect(errs({ ...t, goals: t.goals.slice(0, 4) })).not.toEqual([])
     expect(errs({ ...t, goals: [...t.goals, { ...t.goals[0]!, id: 'sixieme' }] })).not.toEqual([])
+    const u = clone()
+    u.goals[0]!.id = 'inconnu'
+    expect(errs(u)).not.toEqual([])
   })
 
-  it('refuses an unknown room, a duplicate id, an empty label, an unknown profile, no sub-choice, no speciality', () => {
+  it('reports a room id that is not in content/rooms/index.json, and the other faults', () => {
     const cases: [string, (t: GoalTree) => void][] = [
-      ['unknown room', (t) => t.goals[0]!.subgoals[0]!.specialities[0]!.rooms.push('no-such-room')],
-      ['duplicate room in a speciality', (t) => t.goals[0]!.subgoals[0]!.specialities[0]!.rooms.push(t.goals[0]!.subgoals[0]!.specialities[0]!.rooms[0]!)],
-      ['duplicate goal id', (t) => void (t.goals[1]!.id = t.goals[0]!.id)],
-      ['duplicate sub id', (t) => void (t.goals[1]!.subgoals[0]!.id = t.goals[0]!.subgoals[0]!.id)],
-      ['duplicate speciality id', (t) => void (t.goals[1]!.subgoals[0]!.specialities[0]!.id = t.goals[0]!.subgoals[0]!.specialities[0]!.id)],
-      ['bad id', (t) => void (t.goals[0]!.id = 'Avec Espace')],
-      ['empty goal label', (t) => void (t.goals[0]!.label_fr = ' ')],
-      ['empty hint', (t) => void (t.goals[0]!.hint_fr = '')],
-      ['empty sub label', (t) => void (t.goals[0]!.subgoals[0]!.label_fr = '')],
-      ['empty speciality label', (t) => void (t.goals[0]!.subgoals[0]!.specialities[0]!.label_fr = '')],
-      ['unknown profile', (t) => void ((t.goals[0] as { profile: string }).profile = 'pro')],
-      ['no sub-choice', (t) => void (t.goals[0]!.subgoals = [])],
-      ['no speciality', (t) => void (t.goals[0]!.subgoals[0]!.specialities = [])],
-      ['rooms not a list', (t) => void ((t.goals[0]!.subgoals[0]!.specialities[0] as { rooms: unknown }).rooms = 'arena-large')],
-      ['ten sub-choices (keys 1 to 9 only)', (t) => void (t.goals[0]!.subgoals = Array.from({ length: 10 }, (_, i) => ({ ...t.goals[0]!.subgoals[0]!, id: `s${i}`, specialities: [{ id: `p${i}`, label_fr: 'X', rooms: [] }] })))],
-      ['first person in a label', (t) => void (t.goals[0]!.label_fr = 'Je découvre')],
-      ['first person in a hint', (t) => void (t.goals[0]!.hint_fr = 'Mon projet à moi')],
+      ['unknown room', (t) => t.goals[0]!.children[0]!.rooms.push('no-such-room')],
+      ['a set is not a room id', (t) => t.goals[0]!.children[0]!.rooms.push('set:plateau')],
+      ['duplicate room', (t) => t.goals[0]!.children[0]!.rooms.push(t.goals[0]!.children[0]!.rooms[0]!)],
+      ['duplicate id', (t) => void (t.goals[1]!.children[1]!.id = t.goals[1]!.children[0]!.id)],
+      ['id not under its parent', (t) => void (t.goals[1]!.children[0]!.id = 'etudie.ailleurs')],
+      ['bad word in an id', (t) => void (t.goals[1]!.children[0]!.id = 'travaille.Avec Espace')],
+      ['wrong level', (t) => void ((t.goals[1]!.children[0] as { level: number }).level = 3)],
+      ['empty label', (t) => void (t.goals[0]!.label = ' ')],
+      ['no « autre » child', (t) => void (t.goals[2]!.children = t.goals[2]!.children.filter((c) => !c.id.endsWith('.autre')))],
+      ['a goal with no children', (t) => void (t.goals[3]!.children = [])],
+      ['a fourth level', (t) => void (findGoal(t, 'travaille.live')!.children[0]!.children = [{ id: 'travaille.live.sonorisateur.x', label: 'x', level: 3, rooms: [], children: [] }])],
+      ['rooms not a list', (t) => void ((t.goals[0]!.children[0] as { rooms: unknown }).rooms = 'arena-large')],
+      ['eleven children (keys 1 to 9 and 0 only)', (t) => void (t.goals[1]!.children = [...t.goals[1]!.children, { id: 'travaille.x', label: 'x', level: 2, rooms: [], children: [] }])],
+      ['school_field not true', (t) => void ((t.goals[0] as { school_field: unknown }).school_field = 'oui')],
+      ['no version', (t) => void ((t as { version: unknown }).version = '')],
     ]
     for (const [what, mutate] of cases) {
       const t = clone()
@@ -102,67 +103,39 @@ describe('validateGoalTree', () => {
       expect(errs(t).length, what).toBeGreaterThan(0)
     }
   })
-
-  it('accepts an empty room list (the empty state)', () => {
-    const t = clone()
-    t.goals[0]!.subgoals[0]!.specialities[0]!.rooms = []
-    expect(errs(t)).toEqual([])
-  })
 })
 
-describe('loadGoalTree, findGoal and roomsForGoal', () => {
-  it('loadGoalTree returns the bundled tree, validated against the room index', () => {
-    const t = loadGoalTree()
-    expect(t).not.toBeNull()
-    expect(t!.goals).toHaveLength(5)
-    expect(ROOM_IDS).toEqual((roomIndex as { rooms: { id: string }[] }).rooms.map((r) => r.id))
-  })
-
-  it('loadGoalTree returns null for a bad file (the start screen then keeps the profiles), and warns', () => {
+describe('loadGoalTree, goalPath, profileForGoal and roomsForGoal', () => {
+  it('loadGoalTree returns the bundled tree; null (warned) for a bad file', () => {
+    expect(loadGoalTree()?.goals).toHaveLength(5)
     const warns: unknown[] = []
     expect(loadGoalTree({ version: 1 }, (...a: unknown[]) => void warns.push(a))).toBeNull()
     expect(warns.length).toBe(1)
+    expect(ROOM_IDS).toEqual((roomIndex as { rooms: { id: string }[] }).rooms.map((r) => r.id))
   })
 
-  it('a null goal is every room', () => {
-    const t = loadGoalTree()!
-    expect(roomsForGoal(t, null)).toEqual([...ROOM_IDS])
+  it('goalPath: the nodes from the goal down to a dotted id; null when any step is missing', () => {
+    expect(goalPath(SMALL, 'travaille.live.club')?.map((n) => n.id)).toEqual(['travaille', 'travaille.live', 'travaille.live.club'])
+    expect(goalPath(SMALL, 'travaille')?.map((n) => n.id)).toEqual(['travaille'])
+    expect(goalPath(SMALL, 'travaille.gone.club')).toBeNull()
+    expect(goalPath(SMALL, 'gone')).toBeNull()
   })
 
-  it('a stored speciality gives its own rooms, in the order of the data', () => {
-    const t = loadGoalTree()!
-    const g = t.goals[0]!
-    const s = g.subgoals[0]!
-    const p = s.specialities[1]!
-    expect(roomsForGoal(t, { goal: g.id, sub: s.id, speciality: p.id })).toEqual(p.rooms)
+  it('profileForGoal: by the level-1 id, for every node of that goal', () => {
+    expect(GOAL_PROFILES).toEqual({ etudie: 'etudie', travaille: 'metier', reconversion: 'projet', passion: 'projet', decouvre: 'decouvre' })
+    expect(profileForGoal('travaille.live.club')).toBe('metier')
+    expect(profileForGoal('reconversion.autre')).toBe('projet')
+    expect(profileForGoal('gone.x')).toBeNull()
   })
 
-  it('a speciality with no room gives an empty list (the empty state)', () => {
-    const t = loadGoalTree()!
-    const hit = t.goals.flatMap((g) => g.subgoals.flatMap((s) => s.specialities.filter((p) => p.rooms.length === 0).map((p) => ({ goal: g.id, sub: s.id, speciality: p.id }))))[0]!
-    expect(roomsForGoal(t, hit)).toEqual([])
-    expect(findGoal(t, hit)).not.toBeNull()
+  it('a null goal and an unknown id are every room', () => {
+    expect(roomsForGoal(SMALL, null)).toEqual([...ROOM_IDS])
+    expect(roomsForGoal(SMALL, { id: 'travaille.gone' })).toEqual([...ROOM_IDS])
   })
 
-  it('a goal path the tree does not know (a stale record after the tree was swapped) is every room, and findGoal says null', () => {
-    const t = loadGoalTree()!
-    const g = t.goals[0]!
-    for (const stale of [
-      { goal: 'gone', sub: g.subgoals[0]!.id, speciality: g.subgoals[0]!.specialities[0]!.id },
-      { goal: g.id, sub: 'gone', speciality: g.subgoals[0]!.specialities[0]!.id },
-      { goal: g.id, sub: g.subgoals[0]!.id, speciality: 'gone' },
-      { goal: g.id, sub: t.goals[1]!.subgoals[0]!.id, speciality: t.goals[1]!.subgoals[0]!.specialities[0]!.id },
-    ]) {
-      expect(roomsForGoal(t, stale)).toEqual([...ROOM_IDS])
-      expect(findGoal(t, stale)).toBeNull()
-    }
-  })
-
-  it('findGoal returns the three nodes of a stored path', () => {
-    const t = loadGoalTree()!
-    const g = t.goals[4]!
-    const s = g.subgoals[1]!
-    const p = s.specialities[0]!
-    expect(findGoal(t, { goal: g.id, sub: s.id, speciality: p.id })).toEqual({ goal: g, sub: s, speciality: p })
+  it('a node with rooms gives its own; a node with none gives its parent\'s; with none there either, the empty state', () => {
+    expect(roomsForGoal(SMALL, { id: 'travaille.live.club' })).toEqual(['bar-club-stage-small'])
+    expect(roomsForGoal(SMALL, { id: 'travaille.live.hf' })).toEqual(['arena-large', 'concert-hall-medium'])
+    expect(roomsForGoal(SMALL, { id: 'decouvre.vide' })).toEqual([])
   })
 })

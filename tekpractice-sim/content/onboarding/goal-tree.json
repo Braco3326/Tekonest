@@ -1,182 +1,920 @@
 {
-  "version": 1,
-  "status": "placeholder",
-  "source": "Arbre provisoire (mission 1, 2026-11-15) fait à partir des familles de lieux de content/rooms/index.json, en attendant le fichier de recherche du marketing. Remplacer ce fichier suffit.",
+  "version": "0.1-draft",
+  "status": "PROPOSITION : en attente de la validation du fondateur",
   "goals": [
     {
-      "id": "decouvrir",
-      "label_fr": "Découvrir le son",
-      "hint_fr": "Vous voulez voir comment le son va du micro aux enceintes.",
-      "profile": "decouvre",
-      "subgoals": [
+      "id": "etudie",
+      "label": "J’étudie le son",
+      "level": 1,
+      "rooms": [],
+      "children": [
         {
-          "id": "decouvrir-concert",
-          "label_fr": "Les lieux de concert",
-          "specialities": [
-            { "id": "decouvrir-club", "label_fr": "Petite salle et club", "rooms": ["bar-club-stage-small", "dj-booth-small"] },
-            { "id": "decouvrir-grande-scene", "label_fr": "Grande salle et festival", "rooms": ["concert-hall-medium", "arena-large", "festival-open-air-large"] }
+          "id": "etudie.bts-mav-son",
+          "label": "BTS Métiers de l’audiovisuel, option Métiers du son",
+          "level": 2,
+          "rooms": [
+            "classroom-lab-small",
+            "concert-hall-medium",
+            "theatre-italian-medium",
+            "studio-control-room-small",
+            "radio-studio-self-op-small"
+          ],
+          "children": []
+        },
+        {
+          "id": "etudie.dn-made-spectacle",
+          "label": "DN MADE Spectacle",
+          "level": 2,
+          "rooms": [
+            "theatre-italian-medium",
+            "theatre-black-box-small",
+            "concert-hall-medium",
+            "classroom-lab-small"
+          ],
+          "children": [
+            {
+              "id": "etudie.dn-made-spectacle.regie-son",
+              "label": "Régie son du spectacle vivant",
+              "level": 3,
+              "rooms": [
+                "theatre-italian-medium",
+                "theatre-black-box-small",
+                "concert-hall-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.dn-made-spectacle.sonorisation-creation",
+              "label": "Sonorisation et création sonore",
+              "level": 3,
+              "rooms": [
+                "concert-hall-medium",
+                "bar-club-stage-small",
+                "theatre-black-box-small"
+              ],
+              "children": []
+            }
           ]
         },
         {
-          "id": "decouvrir-medias",
-          "label_fr": "La radio et la télévision",
-          "specialities": [
-            { "id": "decouvrir-radio", "label_fr": "Studio radio", "rooms": ["radio-studio-self-op-small", "radio-talk-studio-medium"] },
-            { "id": "decouvrir-tele", "label_fr": "Plateau de télévision", "rooms": ["tv-studio-plateau-large", "tv-gallery-regie-medium"] }
+          "id": "etudie.licence-pro-tsi",
+          "label": "Licence professionnelle Techniques du son et de l’image",
+          "level": 2,
+          "rooms": [
+            "studio-control-room-small",
+            "foley-dubbing-stage-medium",
+            "tv-gallery-regie-medium",
+            "classroom-lab-small"
+          ],
+          "children": []
+        },
+        {
+          "id": "etudie.ecoles-nationales",
+          "label": "École nationale sur concours",
+          "level": 2,
+          "rooms": [
+            "post-atmos-mix-room-medium",
+            "theatre-italian-medium",
+            "studio-control-room-large"
+          ],
+          "children": [
+            {
+              "id": "etudie.ecoles-nationales.ens-ll-son-a-l-image",
+              "label": "ENS Louis-Lumière : Son à l’image",
+              "level": 3,
+              "rooms": [
+                "post-atmos-mix-room-medium",
+                "foley-dubbing-stage-medium",
+                "studio-control-room-large"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.ecoles-nationales.ens-ll-regies-sonores",
+              "label": "ENS Louis-Lumière : Régies sonores et multimédias",
+              "level": 3,
+              "rooms": [
+                "concert-hall-medium",
+                "theatre-black-box-small",
+                "museum-installed-sound-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.ecoles-nationales.ensatt-conception-son",
+              "label": "ENSATT : Conception son",
+              "level": 3,
+              "rooms": [
+                "theatre-italian-medium",
+                "theatre-black-box-small",
+                "opera-house-pit-large"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.ecoles-nationales.ina-chef-operateur-son",
+              "label": "INA : Chef opérateur du son",
+              "level": 3,
+              "rooms": [
+                "tv-studio-plateau-large",
+                "tv-gallery-regie-medium",
+                "radio-talk-studio-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.ecoles-nationales.cnsmdp-metiers-du-son",
+              "label": "CNSMD de Paris : métiers du son",
+              "level": 3,
+              "rooms": [
+                "studio-live-room-medium",
+                "scoring-stage-large",
+                "studio-control-room-large"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.ecoles-nationales.femis-son",
+              "label": "La Fémis : Son",
+              "level": 3,
+              "rooms": [
+                "post-atmos-mix-room-medium",
+                "foley-dubbing-stage-medium"
+              ],
+              "children": []
+            }
           ]
         },
         {
-          "id": "decouvrir-studio",
-          "label_fr": "Le studio",
-          "specialities": [
-            { "id": "decouvrir-voix", "label_fr": "Enregistrer une voix", "rooms": ["studio-vocal-booth-small", "podcast-room-small"] }
+          "id": "etudie.universite",
+          "label": "Licence, master ou diplôme d’ingénieur à l’université",
+          "level": 2,
+          "rooms": [
+            "classroom-lab-small",
+            "auditorium-amphitheatre-medium",
+            "studio-control-room-small"
+          ],
+          "children": [
+            {
+              "id": "etudie.universite.acoustique-recherche",
+              "label": "Acoustique et recherche (master acoustique, ingénieur acoustique)",
+              "level": 3,
+              "rooms": [
+                "classroom-lab-small",
+                "auditorium-amphitheatre-medium",
+                "concert-hall-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.universite.ingenierie-image-son",
+              "label": "Ingénierie de l’image et du son",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-small",
+                "foley-dubbing-stage-medium",
+                "post-atmos-mix-room-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.universite.musique-metiers-du-son",
+              "label": "Licence musique et métiers du son",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-small",
+                "studio-live-room-medium",
+                "classroom-lab-small"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.universite.cinema-audiovisuel-son",
+              "label": "Master Cinéma et audiovisuel, parcours son selon l’université",
+              "level": 3,
+              "rooms": [
+                "post-atmos-mix-room-medium",
+                "foley-dubbing-stage-medium"
+              ],
+              "children": []
+            }
           ]
+        },
+        {
+          "id": "etudie.ecole-privee",
+          "label": "École privée de son (titre reconnu ou non)",
+          "level": 2,
+          "rooms": [
+            "studio-control-room-small",
+            "studio-live-room-medium",
+            "concert-hall-medium",
+            "post-atmos-mix-room-medium"
+          ],
+          "children": [
+            {
+              "id": "etudie.ecole-privee.technicien-son-niveau-5",
+              "label": "Titre Technicien du son (niveau 5)",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-small",
+                "concert-hall-medium",
+                "bar-club-stage-small"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.ecole-privee.ingenieur-son-niveau-6",
+              "label": "Titre Ingénieur du son (niveau 6)",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-large",
+                "studio-live-room-medium",
+                "post-atmos-mix-room-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.ecole-privee.dests",
+              "label": "DESTS, ESRA / ISTS (niveau 6)",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-large",
+                "concert-hall-medium",
+                "post-atmos-mix-room-medium"
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "etudie.formation-spectacle",
+          "label": "Formation technique du spectacle (régisseur son)",
+          "level": 2,
+          "rooms": [
+            "theatre-italian-medium",
+            "concert-hall-medium",
+            "bar-club-stage-small"
+          ],
+          "children": [
+            {
+              "id": "etudie.formation-spectacle.regisseur-son",
+              "label": "Régisseur son (niveau 5)",
+              "level": 3,
+              "rooms": [
+                "theatre-italian-medium",
+                "concert-hall-medium",
+                "bar-club-stage-small"
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "etudie.conservatoire",
+          "label": "Conservatoire (MAO, électroacoustique, technique du son)",
+          "level": 2,
+          "rooms": [
+            "studio-control-room-small",
+            "studio-live-room-medium",
+            "classroom-lab-small"
+          ],
+          "children": [
+            {
+              "id": "etudie.conservatoire.mao",
+              "label": "MAO / musique électroacoustique",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-small",
+                "studio-live-room-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "etudie.conservatoire.technique-du-son",
+              "label": "Technique du son (technicien du son)",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-small",
+                "studio-live-room-medium",
+                "concert-hall-medium"
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "etudie.autre",
+          "label": "Autre / je ne sais pas encore",
+          "level": 2,
+          "rooms": [
+            "classroom-lab-small"
+          ],
+          "children": []
+        }
+      ],
+      "school_field": true
+    },
+    {
+      "id": "travaille",
+      "label": "Je travaille dans le son",
+      "level": 1,
+      "rooms": [],
+      "children": [
+        {
+          "id": "travaille.live",
+          "label": "Live : concert, festival, club",
+          "level": 2,
+          "rooms": [
+            "arena-large",
+            "concert-hall-medium",
+            "bar-club-stage-small",
+            "dj-booth-small",
+            "festival-open-air-large"
+          ],
+          "children": [
+            {
+              "id": "travaille.live.sonorisateur",
+              "label": "Sonorisateur",
+              "level": 3,
+              "rooms": [
+                "concert-hall-medium",
+                "bar-club-stage-small",
+                "festival-open-air-large"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.live.regisseur-plateau-retours",
+              "label": "Régisseur plateau son (retours)",
+              "level": 3,
+              "rooms": [
+                "concert-hall-medium",
+                "arena-large",
+                "festival-open-air-large"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.live.technicien-hf",
+              "label": "Technicien HF",
+              "level": 3,
+              "rooms": [
+                "concert-hall-medium",
+                "arena-large",
+                "festival-open-air-large"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.live.chef-sonorisateur",
+              "label": "Chef sonorisateur",
+              "level": 3,
+              "rooms": [
+                "arena-large",
+                "concert-hall-medium",
+                "festival-open-air-large"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.live.club",
+              "label": "Sonorisation de club et de bar-concert (DJ)",
+              "level": 3,
+              "rooms": [
+                "dj-booth-small",
+                "bar-club-stage-small"
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "travaille.spectacle-vivant",
+          "label": "Spectacle vivant : théâtre, danse, opéra",
+          "level": 2,
+          "rooms": [
+            "theatre-italian-medium",
+            "theatre-black-box-small",
+            "opera-house-pit-large"
+          ],
+          "children": [
+            {
+              "id": "travaille.spectacle-vivant.regisseur-son",
+              "label": "Régisseur son",
+              "level": 3,
+              "rooms": [
+                "theatre-italian-medium",
+                "theatre-black-box-small"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.spectacle-vivant.concepteur-son",
+              "label": "Concepteur du son",
+              "level": 3,
+              "rooms": [
+                "theatre-italian-medium",
+                "opera-house-pit-large"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.spectacle-vivant.operateur-son",
+              "label": "Opérateur son / preneur de son",
+              "level": 3,
+              "rooms": [
+                "theatre-italian-medium",
+                "theatre-black-box-small"
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "travaille.studio",
+          "label": "Studio : musique enregistrée",
+          "level": 2,
+          "rooms": [
+            "studio-control-room-small",
+            "studio-control-room-large",
+            "studio-live-room-medium",
+            "studio-vocal-booth-small",
+            "mastering-room-medium",
+            "scoring-stage-large"
+          ],
+          "children": [
+            {
+              "id": "travaille.studio.ingenieur-du-son",
+              "label": "Ingénieur du son",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-large",
+                "studio-live-room-medium",
+                "studio-control-room-small"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.studio.mixeur",
+              "label": "Mixeur",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-large",
+                "studio-control-room-small"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.studio.assistant-son",
+              "label": "Assistant son",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-large",
+                "studio-live-room-medium",
+                "studio-vocal-booth-small"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.studio.mastering",
+              "label": "Mastering",
+              "level": 3,
+              "rooms": [
+                "mastering-room-medium"
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "travaille.cinema-tv-post",
+          "label": "Cinéma, télévision, post-production",
+          "level": 2,
+          "rooms": [
+            "foley-dubbing-stage-medium",
+            "post-atmos-mix-room-medium",
+            "tv-studio-plateau-large",
+            "tv-gallery-regie-medium",
+            "ob-van-small",
+            "eng-outdoor-reportage"
+          ],
+          "children": [
+            {
+              "id": "travaille.cinema-tv-post.chef-operateur-son",
+              "label": "Chef opérateur du son (tournage)",
+              "level": 3,
+              "rooms": [
+                "eng-outdoor-reportage",
+                "tv-studio-plateau-large"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.cinema-tv-post.perchiste",
+              "label": "Perchiste",
+              "level": 3,
+              "rooms": [
+                "eng-outdoor-reportage",
+                "tv-studio-plateau-large"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.cinema-tv-post.monteur-son",
+              "label": "Monteur son",
+              "level": 3,
+              "rooms": [
+                "post-atmos-mix-room-medium",
+                "foley-dubbing-stage-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.cinema-tv-post.bruiteur",
+              "label": "Bruiteur",
+              "level": 3,
+              "rooms": [
+                "foley-dubbing-stage-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.cinema-tv-post.mixeur-cinema",
+              "label": "Mixeur cinéma",
+              "level": 3,
+              "rooms": [
+                "post-atmos-mix-room-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.cinema-tv-post.regie-tv",
+              "label": "Régie son TV et car régie",
+              "level": 3,
+              "rooms": [
+                "tv-gallery-regie-medium",
+                "ob-van-small",
+                "tv-studio-plateau-large"
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "travaille.radio-podcast",
+          "label": "Radio et podcast",
+          "level": 2,
+          "rooms": [
+            "radio-studio-self-op-small",
+            "radio-talk-studio-medium",
+            "podcast-room-small",
+            "eng-outdoor-reportage"
+          ],
+          "children": [
+            {
+              "id": "travaille.radio-podcast.technicien-realisateur-radio",
+              "label": "Technicien-réalisateur radio",
+              "level": 3,
+              "rooms": [
+                "radio-studio-self-op-small",
+                "radio-talk-studio-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.radio-podcast.podcast",
+              "label": "Podcast",
+              "level": 3,
+              "rooms": [
+                "podcast-room-small"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.radio-podcast.reportage",
+              "label": "Reportage (radio, prise de son extérieure)",
+              "level": 3,
+              "rooms": [
+                "eng-outdoor-reportage"
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "travaille.evenementiel",
+          "label": "Événementiel, congrès et entreprise",
+          "level": 2,
+          "rooms": [
+            "wedding-event-hall-medium",
+            "conference-room-small",
+            "hybrid-meeting-room-small",
+            "interpretation-booth-small",
+            "auditorium-amphitheatre-medium"
+          ],
+          "children": [
+            {
+              "id": "travaille.evenementiel.technicien-prestataire",
+              "label": "Technicien son en société de prestation",
+              "level": 3,
+              "rooms": [
+                "wedding-event-hall-medium",
+                "conference-room-small",
+                "auditorium-amphitheatre-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.evenementiel.conference",
+              "label": "Sonorisation de conférence et visioconférence",
+              "level": 3,
+              "rooms": [
+                "conference-room-small",
+                "hybrid-meeting-room-small",
+                "interpretation-booth-small"
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "travaille.installation",
+          "label": "Installation fixe et intégration audiovisuelle",
+          "level": 2,
+          "rooms": [
+            "museum-installed-sound-medium",
+            "sports-venue-pa-large",
+            "church-worship-medium"
+          ],
+          "children": [
+            {
+              "id": "travaille.installation.musee",
+              "label": "Musées et expositions sonorisées",
+              "level": 3,
+              "rooms": [
+                "museum-installed-sound-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.installation.stade",
+              "label": "Stades et grandes salles équipées",
+              "level": 3,
+              "rooms": [
+                "sports-venue-pa-large"
+              ],
+              "children": []
+            },
+            {
+              "id": "travaille.installation.culte",
+              "label": "Lieux de culte",
+              "level": 3,
+              "rooms": [
+                "church-worship-medium"
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "travaille.jeu-video",
+          "label": "Jeu vidéo et sound design",
+          "level": 2,
+          "rooms": [
+            "studio-control-room-small",
+            "studio-vocal-booth-small"
+          ],
+          "children": [
+            {
+              "id": "travaille.jeu-video.sound-designer",
+              "label": "Sound designer / designer sonore",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-small",
+                "studio-vocal-booth-small"
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "travaille.enseignement",
+          "label": "J’enseigne ou je forme",
+          "level": 2,
+          "rooms": [
+            "classroom-lab-small",
+            "auditorium-amphitheatre-medium"
+          ],
+          "children": []
+        },
+        {
+          "id": "travaille.autre",
+          "label": "Autre / je ne sais pas encore",
+          "level": 2,
+          "rooms": [
+            "studio-control-room-small",
+            "concert-hall-medium"
+          ],
+          "children": []
         }
       ]
     },
     {
-      "id": "etudier",
-      "label_fr": "Étudier le son",
-      "hint_fr": "Vous suivez une formation ou vous la préparez.",
-      "profile": "etudie",
-      "subgoals": [
+      "id": "reconversion",
+      "label": "Je me forme pour changer de métier",
+      "level": 1,
+      "rooms": [],
+      "children": [
         {
-          "id": "etudier-cours",
-          "label_fr": "En cours",
-          "specialities": [
-            { "id": "etudier-tp", "label_fr": "Travaux pratiques", "rooms": ["classroom-lab-small"] },
-            { "id": "etudier-amphi", "label_fr": "Cours en amphithéâtre", "rooms": ["auditorium-amphitheatre-medium"] }
+          "id": "reconversion.titre-reconnu",
+          "label": "Un titre reconnu (RNCP), en école ou en alternance",
+          "level": 2,
+          "rooms": [
+            "studio-control-room-small",
+            "concert-hall-medium",
+            "classroom-lab-small"
+          ],
+          "children": [
+            {
+              "id": "reconversion.titre-reconnu.technicien-son-niveau-5",
+              "label": "Technicien du son (niveau 5)",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-small",
+                "concert-hall-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "reconversion.titre-reconnu.ingenieur-son-niveau-6",
+              "label": "Ingénieur du son (niveau 6)",
+              "level": 3,
+              "rooms": [
+                "studio-control-room-large",
+                "post-atmos-mix-room-medium"
+              ],
+              "children": []
+            },
+            {
+              "id": "reconversion.titre-reconnu.regisseur-son-niveau-5",
+              "label": "Régisseur son du spectacle (niveau 5)",
+              "level": 3,
+              "rooms": [
+                "theatre-italian-medium",
+                "concert-hall-medium"
+              ],
+              "children": []
+            }
           ]
         },
         {
-          "id": "etudier-studio",
-          "label_fr": "Les techniques de studio",
-          "specialities": [
-            { "id": "etudier-prise", "label_fr": "Prise de son", "rooms": ["studio-live-room-medium", "studio-control-room-small"] },
-            { "id": "etudier-mixage", "label_fr": "Mixage et mastering", "rooms": ["studio-control-room-large", "mastering-room-medium"] }
-          ]
+          "id": "reconversion.formation-courte",
+          "label": "Une formation courte (MAO, logiciel de production)",
+          "level": 2,
+          "rooms": [
+            "studio-control-room-small",
+            "studio-vocal-booth-small"
+          ],
+          "children": []
         },
         {
-          "id": "etudier-image",
-          "label_fr": "Le son à l’image",
-          "specialities": [
-            { "id": "etudier-bruitage", "label_fr": "Bruitage et postsynchronisation", "rooms": ["foley-dubbing-stage-medium"] },
-            { "id": "etudier-post", "label_fr": "Mixage pour l’image", "rooms": ["post-atmos-mix-room-medium"] }
-          ]
+          "id": "reconversion.autoformation",
+          "label": "Je commence seul·e avant de choisir",
+          "level": 2,
+          "rooms": [
+            "classroom-lab-small",
+            "studio-control-room-small"
+          ],
+          "children": []
+        },
+        {
+          "id": "reconversion.autre",
+          "label": "Autre / je ne sais pas encore",
+          "level": 2,
+          "rooms": [
+            "classroom-lab-small"
+          ],
+          "children": []
         }
       ]
     },
     {
-      "id": "musique",
-      "label_fr": "Faire de la musique (live et studio)",
-      "hint_fr": "Vous jouez, chantez ou mixez, sur scène ou en studio.",
-      "profile": "projet",
-      "subgoals": [
+      "id": "passion",
+      "label": "Je fais du son par passion",
+      "level": 1,
+      "rooms": [],
+      "children": [
         {
-          "id": "musique-live",
-          "label_fr": "Jouer en live",
-          "specialities": [
-            { "id": "musique-club", "label_fr": "Concert en club", "rooms": ["bar-club-stage-small"] },
-            { "id": "musique-dj", "label_fr": "Mix DJ", "rooms": ["dj-booth-small"] },
-            { "id": "musique-scene", "label_fr": "Grande scène", "rooms": ["concert-hall-medium", "festival-open-air-large"] }
-          ]
+          "id": "passion.groupe",
+          "label": "Je joue dans un groupe",
+          "level": 2,
+          "rooms": [
+            "bar-club-stage-small",
+            "concert-hall-medium",
+            "studio-control-room-small"
+          ],
+          "children": []
         },
         {
-          "id": "musique-studio",
-          "label_fr": "Enregistrer en studio",
-          "specialities": [
-            { "id": "musique-home", "label_fr": "Home studio", "rooms": ["studio-control-room-small", "studio-vocal-booth-small"] },
-            { "id": "musique-pro", "label_fr": "Studio professionnel", "rooms": ["studio-live-room-medium", "studio-control-room-large"] }
-          ]
+          "id": "passion.dj",
+          "label": "Je mixe (DJ)",
+          "level": 2,
+          "rooms": [
+            "dj-booth-small",
+            "bar-club-stage-small",
+            "wedding-event-hall-medium"
+          ],
+          "children": []
         },
         {
-          "id": "musique-classique",
-          "label_fr": "La musique classique",
-          "specialities": [
-            { "id": "musique-orchestre", "label_fr": "Orchestre et opéra", "rooms": ["opera-house-pit-large", "scoring-stage-large"] },
-            { "id": "musique-eglise", "label_fr": "Concert en église", "rooms": ["church-worship-medium"] }
-          ]
+          "id": "passion.home-studio",
+          "label": "Je fais de la musique chez moi (MAO, home studio)",
+          "level": 2,
+          "rooms": [
+            "studio-control-room-small",
+            "studio-vocal-booth-small"
+          ],
+          "children": []
+        },
+        {
+          "id": "passion.podcast-contenu",
+          "label": "Je crée des podcasts ou des vidéos",
+          "level": 2,
+          "rooms": [
+            "podcast-room-small",
+            "radio-studio-self-op-small"
+          ],
+          "children": []
+        },
+        {
+          "id": "passion.benevole",
+          "label": "Je fais le son pour une association, une fête ou un lieu de culte",
+          "level": 2,
+          "rooms": [
+            "church-worship-medium",
+            "wedding-event-hall-medium",
+            "theatre-black-box-small",
+            "bar-club-stage-small"
+          ],
+          "children": []
+        },
+        {
+          "id": "passion.autre",
+          "label": "Autre / je ne sais pas encore",
+          "level": 2,
+          "rooms": [
+            "studio-control-room-small",
+            "bar-club-stage-small"
+          ],
+          "children": []
         }
       ]
     },
     {
-      "id": "evenement",
-      "label_fr": "Monter un événement ou un projet",
-      "hint_fr": "Vous organisez une soirée, une conférence ou un spectacle.",
-      "profile": "projet",
-      "subgoals": [
+      "id": "decouvre",
+      "label": "Je découvre le son",
+      "level": 1,
+      "rooms": [],
+      "children": [
         {
-          "id": "evenement-fete",
-          "label_fr": "Une soirée ou une fête",
-          "specialities": [
-            { "id": "evenement-reception", "label_fr": "Mariage et réception", "rooms": ["wedding-event-hall-medium"] },
-            { "id": "evenement-soiree-dj", "label_fr": "Soirée DJ", "rooms": ["dj-booth-small"] }
-          ]
+          "id": "decouvre.curieux",
+          "label": "Je suis curieux·se, je veux comprendre",
+          "level": 2,
+          "rooms": [
+            "classroom-lab-small",
+            "studio-control-room-small",
+            "concert-hall-medium"
+          ],
+          "children": []
         },
         {
-          "id": "evenement-reunion",
-          "label_fr": "Une conférence ou une réunion",
-          "specialities": [
-            { "id": "evenement-visio", "label_fr": "Réunion et visioconférence", "rooms": ["conference-room-small", "hybrid-meeting-room-small"] },
-            { "id": "evenement-multilingue", "label_fr": "Conférence en plusieurs langues", "rooms": ["interpretation-booth-small", "auditorium-amphitheatre-medium"] }
-          ]
+          "id": "decouvre.orientation",
+          "label": "Je cherche une voie (lycée, orientation)",
+          "level": 2,
+          "rooms": [
+            "classroom-lab-small",
+            "studio-control-room-small",
+            "concert-hall-medium"
+          ],
+          "children": []
         },
         {
-          "id": "evenement-spectacle",
-          "label_fr": "Un spectacle ou une exposition",
-          "specialities": [
-            { "id": "evenement-theatre", "label_fr": "Théâtre", "rooms": ["theatre-black-box-small", "theatre-italian-medium"] },
-            { "id": "evenement-expo", "label_fr": "Exposition sonorisée", "rooms": ["museum-installed-sound-medium"] }
-          ]
+          "id": "decouvre.accompagne",
+          "label": "J’accompagne quelqu’un (parent, enseignant)",
+          "level": 2,
+          "rooms": [
+            "classroom-lab-small"
+          ],
+          "children": []
         },
         {
-          "id": "evenement-podcast",
-          "label_fr": "Un podcast",
-          "specialities": [
-            { "id": "evenement-podcast-studio", "label_fr": "Podcast à plusieurs voix", "rooms": ["podcast-room-small"] }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "metier",
-      "label_fr": "Travailler dans le son",
-      "hint_fr": "Le son est votre métier, ou vous voulez qu’il le devienne.",
-      "profile": "metier",
-      "subgoals": [
-        {
-          "id": "metier-sono",
-          "label_fr": "Sonorisation",
-          "specialities": [
-            { "id": "metier-facade", "label_fr": "Façade et retours", "rooms": ["concert-hall-medium", "arena-large", "festival-open-air-large"] },
-            { "id": "metier-installe", "label_fr": "Son installé", "rooms": ["sports-venue-pa-large", "museum-installed-sound-medium"] }
-          ]
-        },
-        {
-          "id": "metier-audiovisuel",
-          "label_fr": "Radio et télévision",
-          "specialities": [
-            { "id": "metier-radio", "label_fr": "Radio", "rooms": ["radio-talk-studio-medium", "radio-studio-self-op-small"] },
-            { "id": "metier-tele", "label_fr": "Régie de télévision", "rooms": ["tv-gallery-regie-medium", "tv-studio-plateau-large"] },
-            { "id": "metier-reportage", "label_fr": "Car régie et reportage", "rooms": ["ob-van-small", "eng-outdoor-reportage"] }
-          ]
-        },
-        {
-          "id": "metier-studio",
-          "label_fr": "Studio et post-production",
-          "specialities": [
-            { "id": "metier-enregistrement", "label_fr": "Enregistrement et mixage", "rooms": ["studio-control-room-large", "studio-live-room-medium"] },
-            { "id": "metier-mastering", "label_fr": "Mastering", "rooms": ["mastering-room-medium"] },
-            { "id": "metier-post", "label_fr": "Post-production pour l’image", "rooms": ["post-atmos-mix-room-medium", "foley-dubbing-stage-medium"] },
-            { "id": "metier-jeu-video", "label_fr": "Son pour le jeu vidéo", "rooms": [] }
-          ]
-        },
-        {
-          "id": "metier-spectacle",
-          "label_fr": "Spectacle vivant",
-          "specialities": [
-            { "id": "metier-theatre", "label_fr": "Théâtre et opéra", "rooms": ["theatre-italian-medium", "theatre-black-box-small", "opera-house-pit-large"] }
-          ]
+          "id": "decouvre.autre",
+          "label": "Autre / je ne sais pas encore",
+          "level": 2,
+          "rooms": [
+            "classroom-lab-small"
+          ],
+          "children": []
         }
       ]
     }

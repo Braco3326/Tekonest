@@ -1,120 +1,114 @@
 /**
- * The goal tree (mission 1, spec 3): five goals, each with its sub-choices, each with its specialities, and the rooms a speciality lists. Data only: the tree is
- * content/onboarding/goal-tree.json, bundled (imported as JSON), so a bad file fails the unit tests (tests/creation/goalTree.test.ts), not the learner. Pure: no DOM,
- * no storage. The file is a placeholder (`status: "placeholder"`) until marketing's research file arrives; swapping it is replacing that one JSON.
+ * The goal tree (mission 1, spec 3): five level-1 goals, their level-2 children, and level-3 children under some of those. Data only: the tree is
+ * content/onboarding/goal-tree.json, a TRIMMED copy of marketing's research file (DRAFT, labels may still change, ids are stable) made by
+ * tools/trim-goal-tree.mjs. It is bundled (imported as JSON), so a bad file fails the unit tests (tests/creation/goalTree.test.ts), not the learner. The labels
+ * live in the JSON only, never in code: a relabel is a file swap. Pure: no DOM, no storage.
  *
- * `roomsForGoal` is what the place picker shows for a stored goal: the speciality's rooms (possibly none: the empty state), or every room for no goal or a path the
- * tree does not know (a record written against an older tree is never a reason to hide places).
+ * A node id is dotted: a child's id is its parent's id, a dot, and one more word (`etudie.ecoles-nationales.femis-son`), so a stored id names its ancestors too.
+ * `roomsForGoal` is what the place picker shows for a stored goal: the chosen node's rooms, else its parent's, else none (the empty state); every room for no goal
+ * or an id the tree does not know (a record written against an older tree is never a reason to hide places).
  */
 import treeJson from '../../../content/onboarding/goal-tree.json'
 import roomIndexJson from '../../../content/rooms/index.json'
-import { PROFILE_IDS, type ProfileId } from './state'
+import type { ProfileId } from './state'
 
-export interface GoalSpeciality {
+export interface GoalNode {
+  /** Dotted and stable: a child's id starts with its parent's id and a dot. */
   id: string
-  label_fr: string
-  /** Room ids of content/rooms/index.json; `[]` is legal (the picker shows its empty state). */
+  /** The only text shown to the learner. */
+  label: string
+  /** 1 (a goal, screen 1), 2 (screen 2) or 3 (screen 3). */
+  level: 1 | 2 | 3
+  /** Room ids of content/rooms/index.json; `[]` is legal (then the parent's rooms, then the empty state). */
   rooms: string[]
-}
-
-export interface GoalSub {
-  id: string
-  label_fr: string
-  specialities: GoalSpeciality[]
-}
-
-export interface Goal {
-  id: string
-  label_fr: string
-  hint_fr: string
-  /** The profile the record keeps for the panels and the drawer tab (profiles.ts): the goal decides it. */
-  profile: ProfileId
-  subgoals: GoalSub[]
+  children: GoalNode[]
+  /** Only on `etudie`: the accounts form asks for a school (content/onboarding/schools.json). */
+  school_field?: true
 }
 
 export interface GoalTree {
-  version: 1
-  status: 'placeholder' | 'researched'
-  source: string
-  goals: Goal[]
+  /** The research file's `meta.version` (a draft is « 0.1-draft »). */
+  version: string
+  /** The research file's `meta.status`. */
+  status: string
+  goals: GoalNode[]
 }
 
-/** A stored goal path (the onboarding record's `goal`): the ids of the three screens' answers. */
+/** A stored goal (the onboarding record's `goal`): the deepest chosen node; its ancestors are the prefixes of the dotted id. */
 export interface GoalChoice {
-  goal: string
-  sub: string
-  speciality: string
+  id: string
 }
 
 /** Every room id of content/rooms/index.json, in its order. */
 export const ROOM_IDS: readonly string[] = Object.freeze((roomIndexJson as { rooms: { id: string }[] }).rooms.map((r) => r.id))
 
-/** The number of goals (spec 1.2: screen 1 has five, keys 1 to 5). */
+/** The level-1 goal ids and the profile each maps to (the record keeps it for the panels and the drawer tab of profiles.ts). Ids are stable; labels are data. */
+export const GOAL_PROFILES: Readonly<Record<string, ProfileId>> = Object.freeze({
+  etudie: 'etudie',
+  travaille: 'metier',
+  reconversion: 'projet',
+  passion: 'projet',
+  decouvre: 'decouvre',
+})
+
+/** Screen 1 has five goals (keys 1 to 5). */
 export const GOAL_COUNT = 5
-/** A sub-choice or speciality screen answers to the digit keys 1 to 9. */
-const MAX_CHOICES = 9
-const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
-/** The learner is addressed as « vous »: no label or hint of the tree speaks in the first person. */
-const FIRST_PERSON = /(?:^|[^\p{L}])(?:je|j[’']|me|m[’']|moi|mon|ma|mes)(?=$|[^\p{L}])/iu
+/** A screen answers to the digit keys 1 to 9 and 0 (the tenth). */
+export const MAX_CHOICES = 10
+const WORD = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v)
 const text = (v: unknown): v is string => typeof v === 'string' && v.trim() !== ''
 
 export type GoalTreeCheck = { ok: true; tree: GoalTree } | { ok: false; errors: string[] }
 
-/** Checks `raw` against the schema of spec 3; `rooms` = the room ids that exist. Every problem is listed (a path and what is wrong), none is repaired. */
+/**
+ * Checks `raw` against the trimmed schema; `rooms` = the room ids that exist. Every problem is listed (a path and what is wrong), none is repaired: exactly the five
+ * level-1 goals of `GOAL_PROFILES`, each with children and an « autre » child (`<goal>.autre`); levels follow the depth (3 at most); ids dotted from the parent's,
+ * unique; labels non-empty; every room id in content/rooms/index.json, none twice in a node; at most ten children per node.
+ */
 export function validateGoalTree(raw: unknown, rooms: ReadonlySet<string>): GoalTreeCheck {
   const errors: string[] = []
   const err = (at: string, what: string): void => void errors.push(`${at}: ${what}`)
   if (!isObj(raw)) return { ok: false, errors: ['tree: not an object'] }
-  if (raw.version !== 1) err('version', 'must be 1')
-  if (raw.status !== 'placeholder' && raw.status !== 'researched') err('status', 'must be "placeholder" or "researched"')
-  if (!text(raw.source)) err('source', 'must be a non-empty text')
-  const label = (at: string, v: unknown): void => {
-    if (!text(v)) err(at, 'must be a non-empty French text')
-    else if (FIRST_PERSON.test(v)) err(at, 'speaks in the first person (the learner is addressed as « vous »)')
-  }
-  const ids = { goal: new Set<string>(), sub: new Set<string>(), speciality: new Set<string>() }
-  const id = (at: string, v: unknown, kind: keyof typeof ids): void => {
-    if (typeof v !== 'string' || !ID.test(v)) return err(at, 'id must be lower-case words joined by « - »')
-    if (ids[kind].has(v)) err(at, `duplicate ${kind} id « ${v} »`)
-    ids[kind].add(v)
-  }
-  const list = (at: string, v: unknown, min: number, max: number): unknown[] => {
-    if (!Array.isArray(v)) {
-      err(at, 'must be a list')
-      return []
+  if (!text(raw.version)) err('version', 'must be a non-empty text')
+  if (!text(raw.status)) err('status', 'must be a non-empty text')
+  const seen = new Set<string>()
+  const walk = (n: unknown, at: string, parent: string | null, level: number): void => {
+    if (!isObj(n)) return err(at, 'not an object')
+    const id = n.id
+    if (typeof id !== 'string') return err(`${at}.id`, 'must be a text')
+    const last = parent === null ? id : id.slice(parent.length + 1)
+    if ((parent !== null && !id.startsWith(`${parent}.`)) || !WORD.test(last)) err(`${at}.id`, `« ${id} » must be ${parent === null ? 'one word' : `« ${parent}. » and one word`}`)
+    if (seen.has(id)) err(`${at}.id`, `duplicate id « ${id} »`)
+    seen.add(id)
+    if (!text(n.label)) err(`${at}.label`, 'must be a non-empty French text')
+    if (n.level !== level) err(`${at}.level`, `must be ${level}`)
+    if (n.school_field !== undefined && n.school_field !== true) err(`${at}.school_field`, 'must be true or absent')
+    if (!Array.isArray(n.rooms)) err(`${at}.rooms`, 'must be a list (empty is allowed)')
+    else {
+      const once = new Set<unknown>()
+      for (const r of n.rooms) {
+        if (typeof r !== 'string' || !rooms.has(r)) err(`${at}.rooms`, `unknown room « ${String(r)} » (not in content/rooms/index.json)`)
+        if (once.has(r)) err(`${at}.rooms`, `room « ${String(r)} » listed twice`)
+        once.add(r)
+      }
     }
-    if (v.length < min || v.length > max) err(at, min === max ? `must hold exactly ${min}` : `must hold ${min} to ${max}`)
-    return v
+    if (!Array.isArray(n.children)) return err(`${at}.children`, 'must be a list')
+    if (n.children.length > MAX_CHOICES) err(`${at}.children`, `at most ${MAX_CHOICES} (keys 1 to 9 and 0)`)
+    if (level === 1 && n.children.length === 0) err(`${at}.children`, 'a goal needs children (screen 2)')
+    if (level === 3 && n.children.length > 0) err(`${at}.children`, 'a level-3 node has no children (three screens at most)')
+    if (level === 1 && !n.children.some((c) => isObj(c) && c.id === `${id}.autre`)) err(`${at}.children`, `needs the « autre » child « ${id}.autre »`)
+    n.children.forEach((c, i) => walk(c, `${at}.children[${i}]`, id, level + 1))
   }
-  list('goals', raw.goals, GOAL_COUNT, GOAL_COUNT).forEach((g, gi) => {
-    const at = `goals[${gi}]`
-    if (!isObj(g)) return err(at, 'not an object')
-    id(`${at}.id`, g.id, 'goal')
-    label(`${at}.label_fr`, g.label_fr)
-    label(`${at}.hint_fr`, g.hint_fr)
-    if (!(PROFILE_IDS as readonly unknown[]).includes(g.profile)) err(`${at}.profile`, `must be one of ${PROFILE_IDS.join('|')}`)
-    list(`${at}.subgoals`, g.subgoals, 1, MAX_CHOICES).forEach((s, si) => {
-      const sat = `${at}.subgoals[${si}]`
-      if (!isObj(s)) return err(sat, 'not an object')
-      id(`${sat}.id`, s.id, 'sub')
-      label(`${sat}.label_fr`, s.label_fr)
-      list(`${sat}.specialities`, s.specialities, 1, MAX_CHOICES).forEach((p, pi) => {
-        const pat = `${sat}.specialities[${pi}]`
-        if (!isObj(p)) return err(pat, 'not an object')
-        id(`${pat}.id`, p.id, 'speciality')
-        label(`${pat}.label_fr`, p.label_fr)
-        if (!Array.isArray(p.rooms)) return err(`${pat}.rooms`, 'must be a list (empty is allowed)')
-        const seen = new Set<unknown>()
-        for (const r of p.rooms) {
-          if (typeof r !== 'string' || !rooms.has(r)) err(`${pat}.rooms`, `unknown room « ${String(r)} »`)
-          if (seen.has(r)) err(`${pat}.rooms`, `room « ${String(r)} » listed twice`)
-          seen.add(r)
-        }
-      })
-    })
-  })
+  if (!Array.isArray(raw.goals)) err('goals', 'must be a list')
+  else {
+    if (raw.goals.length !== GOAL_COUNT) err('goals', `must hold exactly ${GOAL_COUNT}`)
+    const top = raw.goals.map((g) => (isObj(g) ? g.id : undefined))
+    for (const id of Object.keys(GOAL_PROFILES)) if (!top.includes(id)) err('goals', `misses the goal « ${id} »`)
+    for (const id of top) if (typeof id === 'string' && !(id in GOAL_PROFILES)) err('goals', `« ${id} » is not a known goal (no profile maps to it)`)
+    raw.goals.forEach((g, i) => walk(g, `goals[${i}]`, null, 1))
+  }
   return errors.length ? { ok: false, errors } : { ok: true, tree: raw as unknown as GoalTree }
 }
 
@@ -129,16 +123,36 @@ export function loadGoalTree(raw: unknown = treeJson, warn: (...a: unknown[]) =>
   return null
 }
 
-/** The three nodes of a stored path, or null when the tree does not hold it (each id must be found under the one before). */
-export function findGoal(tree: GoalTree, c: GoalChoice): { goal: Goal; sub: GoalSub; speciality: GoalSpeciality } | null {
-  const goal = tree.goals.find((g) => g.id === c.goal)
-  const sub = goal?.subgoals.find((s) => s.id === c.sub)
-  const speciality = sub?.specialities.find((p) => p.id === c.speciality)
-  return goal && sub && speciality ? { goal, sub, speciality } : null
+/** The nodes from the goal down to `id` (each found under the one before), or null when the tree does not hold it. */
+export function goalPath(tree: GoalTree, id: string): GoalNode[] | null {
+  const parts = id.split('.')
+  const out: GoalNode[] = []
+  let level: readonly GoalNode[] = tree.goals
+  for (let i = 0; i < parts.length; i++) {
+    const want = parts.slice(0, i + 1).join('.')
+    const n = level.find((x) => x.id === want)
+    if (!n) return null
+    out.push(n)
+    level = n.children
+  }
+  return out
 }
 
-/** The rooms the place picker shows for this goal: the speciality's own (maybe none), or every room for no goal or a path the tree does not know. */
+/** The node of a stored id, or null. */
+export function findGoal(tree: GoalTree, id: string): GoalNode | null {
+  return goalPath(tree, id)?.at(-1) ?? null
+}
+
+/** The profile a goal id maps to (by its level-1 id), or null for an id whose goal is not known. */
+export function profileForGoal(id: string): ProfileId | null {
+  return GOAL_PROFILES[id.split('.')[0]!] ?? null
+}
+
+/** The rooms the place picker shows for this goal: the node's own, else its parent's, else none (the empty state); every room for no goal or an unknown id. */
 export function roomsForGoal(tree: GoalTree, goal: GoalChoice | null): string[] {
-  const hit = goal ? findGoal(tree, goal) : null
-  return hit ? [...hit.speciality.rooms] : [...ROOM_IDS]
+  const path = goal ? goalPath(tree, goal.id) : null
+  if (!path) return [...ROOM_IDS]
+  const node = path.at(-1)!
+  const parent = path.at(-2)
+  return [...(node.rooms.length ? node.rooms : (parent?.rooms ?? []))]
 }
