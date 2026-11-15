@@ -7,10 +7,13 @@
  *   the 3D history or the scene, so it cannot change them.
  * - Closing it (« Fermer », Échap) returns the focus to the 3D view; the plan stays saved for the next time.
  * - It re-reads the address at each open: a page pushed to an exam address while it runs opens nothing.
+ * - Stage 2 (« Envoyer dans la scène 3D »): the page is lent a send target, read at each open from spawnTarget: closures over the 3D store and history that
+ *   boot.ts builds (a copy of the design, the floor, history.doAll, the replace path, select and frame), never the store or the history themselves.
  */
 import type { Registry } from '../engine/CatalogLoader'
 import { loadPlaceData, type PlaceData } from './placeData'
 import { placeFromKey } from './places'
+import type { SpawnTarget } from '../plan2d/spawn3d'
 
 export interface Plan2dWiringDeps {
   doc: Document
@@ -23,6 +26,8 @@ export interface Plan2dWiringDeps {
   /** The address is a practice one NOW (never in an exam). */
   practiceNow(): boolean
   returnFocus(): void
+  /** Stage 2: what « Envoyer dans la scène 3D » may do in the 3D page now; null (or absent) = the page has no such button. */
+  spawnTarget?(): SpawnTarget | null
   /** Tests: the place's data and the page module. */
   loadPlace?(key: string): Promise<PlaceData>
   load?(): Promise<typeof import('../plan2d/view')>
@@ -56,6 +61,7 @@ export function wirePlan2d(d: Plan2dWiringDeps): Plan2dWiring {
           room: { key, name: d.placeName(key), width: place.width, length: place.length, outline: m.outlineOf(place) },
           storage: d.storage(),
           projectName: d.projectName(),
+          spawn: d.spawnTarget?.() ?? null,
         })
         await page.closed
       } catch (e) {

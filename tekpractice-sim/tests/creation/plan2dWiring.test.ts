@@ -67,6 +67,28 @@ describe('the 2D schema page wiring', () => {
     expect(state.focused).toBe(1)
   })
 
+  it('stage 2: the page gets the 3D page’s send target (closures only, never the store or the history), read at each open; none lent = none passed', async () => {
+    const target = { design: () => null, roomBounds: () => null, floorAt: () => 0, apply: () => ({ ok: true }), replace: () => true, undoLabel: () => 'Ctrl+Z', show: () => undefined }
+    let asked = 0
+    const { d, state, closeNow } = deps({ spawnTarget: () => (asked++, target as never) })
+    const w = wirePlan2d(d)
+    const p = w.open()
+    await flush()
+    expect(asked).toBe(1)
+    const opened = state.opened[0] as Record<string, unknown>
+    expect(opened.spawn).toBe(target)
+    expect(Object.keys(opened)).not.toContain('store')
+    expect(Object.keys(opened)).not.toContain('history')
+    closeNow()
+    await p
+    const none = deps()
+    const q = wirePlan2d(none.d).open()
+    await flush()
+    expect((none.state.opened[0] as Record<string, unknown>).spawn ?? null).toBeNull()
+    none.closeNow()
+    await q
+  })
+
   it('never on an exam address, and never without a place on screen', async () => {
     const exam = deps({ practiceNow: () => false })
     await wirePlan2d(exam.d).open()

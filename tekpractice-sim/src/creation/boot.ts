@@ -1061,6 +1061,25 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
           storage: () => storage,
           practiceNow: () => opts.practiceNow?.() ?? true,
           returnFocus: () => canvas.focus(),
+          // Stage 2, « Envoyer dans la scène 3D »: closures over the store and the history, never the store itself; one send = one `doAll` entry
+          spawnTarget: () =>
+            viewLocked()
+              ? null
+              : {
+                  design: () => store.design(),
+                  roomBounds: () => host.roomBounds(),
+                  floorAt: (x, z) => host.floorHeight(x, z, 0),
+                  apply: (intents, label) => history.doAll(intents, label),
+                  replace: (design, label) => history.do({ type: 'APPLY_DESIGN', design }, label).ok,
+                  undoLabel,
+                  show: (ids) => {
+                    // « Voir la scène 3D »: the first new device is selected and framed (an orbit view, as Entrée / F frames)
+                    const id = ids.find((i) => host.instance(i))
+                    if (!id) return
+                    if (host.walking) leaveWalk()
+                    selection.select(id)
+                  },
+                },
         })
       : null
   if (FEATURES.accounts === true && opts.onboarding === true) {
