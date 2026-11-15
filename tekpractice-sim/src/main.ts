@@ -12,12 +12,27 @@ import { PRACTICE_CLASS } from './design/practice'
  * `tutorialAllowed`: practice mode and the guide may run (not `?oscar=0`): the start screen offers the tutorial and Aide has « Premiers pas ». `?oscar=0` keeps the profile choice.
  * One more thing on a practice address (plan T4.3): <html> gets the class `cr-practice` (`PRACTICE_CLASS`), the one gate the shell reads (`lookOfRoot`) before a valid `?design`
  * restyles and lays it out; an exam address never gets it, so it never changes, with or without `?design`.
+ * `plainTutorial` (mission 1): practice mode and no `?oscar=0` (any key case). The plain tutorial is not the assistant, but `?oscar=0` has always meant « no tutorial, the profile choice
+ * is final », so it keeps that meaning; the boot still runs the plain one only where the guide's is not allowed and the switch is on.
  */
-function onboardingGates(search: string): { onboarding: boolean; tutorialAllowed: boolean; practiceNow: () => boolean } {
+function oscarOff(search: string): boolean {
+  try {
+    for (const [k, v] of new URLSearchParams(search)) if (k.toLowerCase() === 'oscar' && v === '0') return true
+    return false
+  } catch {
+    return true
+  }
+}
+function onboardingGates(search: string): { onboarding: boolean; tutorialAllowed: boolean; plainTutorial: boolean; practiceNow: () => boolean } {
   const onboarding = guideMode(search, 'creation') === 'practice'
   if (onboarding) document.documentElement.classList.add(PRACTICE_CLASS)
   // `practiceNow`: the same mode gate read again at each call, on the address the page has NOW (a pushState to an exam address turns the entrepreneur's card off)
-  return { onboarding, tutorialAllowed: onboarding && guideRouteAllowed(search, 'creation'), practiceNow: () => guideMode(location.search, 'creation') === 'practice' }
+  return {
+    onboarding,
+    tutorialAllowed: onboarding && guideRouteAllowed(search, 'creation'),
+    plainTutorial: onboarding && !oscarOff(search),
+    practiceNow: () => guideMode(location.search, 'creation') === 'practice',
+  }
 }
 
 /**

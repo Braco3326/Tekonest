@@ -5,8 +5,10 @@
  *
  * A labelled region (no dialog role, no `aria-modal`, nothing inert, no focus trap, no animation). While a step runs: « Étape k sur 4 », what to do, the step's hint (shown once
  * the step has been the current one for 30 s), « Étape suivante » and « Passer le tutoriel », both always there. After the last step: « Fin des étapes », one line, « Fermer ».
- * Its buttons are native buttons in the tab order after the status bar (the slot is the last child of the shell root); Escape is not read here. The owner announces the steps
- * on the shell's status line (the same polite region the checklist's changes use).
+ * Its buttons are native buttons in the tab order after the status bar (the slot is the last child of the shell root); Escape is not read here.
+ * What a screen reader hears: the card's own polite region (`role="status"`, visually hidden) says each new step, its hint and the end. Not the shell's status line: that line is
+ * « last write wins », and the first room's drawer (opened right after « Faire le tutoriel ») writes « Prêt » over it once its chunk is in. The owner says « Passer le tutoriel » on
+ * the status line, since the card is gone by then.
  */
 import { COPY } from '../copy'
 import { closeTutorialSlot, openTutorialSlot } from '../../design/tutorialSlot'
@@ -15,7 +17,8 @@ import './plainTutorial.css'
 
 export const PLAIN_CARD_TESTID = 'plain-tutorial'
 
-export type PlainCardView = { kind: 'step'; k: number; n: number; text: string; hint: string } | { kind: 'done' }
+/** `say`: what the card's polite region says with this view (a new step, the end); absent = nothing new to say. */
+export type PlainCardView = { kind: 'step'; k: number; n: number; text: string; hint: string; say?: string } | { kind: 'done'; say?: string }
 
 export interface PlainCardDeps {
   doc: Document
@@ -23,7 +26,7 @@ export interface PlainCardDeps {
   onSkip(): void
   /** « Fermer » on the closing card. */
   onClose(): void
-  /** The hint of the current step was just shown (the owner says it on the status line). */
+  /** The hint of the current step was just shown (it is said in the card's polite region). */
   onHint?(hint: string): void
   /** The place picker's `covers` array: the slot is in it while shown, so the picker makes it inert while it covers the page. */
   covers?: HTMLElement[]
@@ -60,7 +63,16 @@ export function mountPlainTutorialCard(d: PlainCardDeps): PlainCard {
   const TC = (): Readonly<Record<string, string>> => COPY.tutorialCard!
   let slot: HTMLElement | null = null
   let card: HTMLElement | null = null
-  let parts: { count: HTMLElement; text: HTMLElement; hint: HTMLElement; next: HTMLButtonElement; skip: HTMLButtonElement; close: HTMLButtonElement } | null = null
+  let parts: { count: HTMLElement; text: HTMLElement; hint: HTMLElement; live: HTMLElement; next: HTMLButtonElement; skip: HTMLButtonElement; close: HTMLButtonElement } | null = null
+  /** Says `text` in the card's polite region, after the current task (a region filled in the tick it is created in is not always read). */
+  const say = (text: string | undefined): void => {
+    if (!text || parts === null) return
+    const live = parts.live
+    live.textContent = ''
+    queueMicrotask(() => {
+      live.textContent = text
+    })
+  }
   let shownStep: number | null = null
   let timer: unknown = null
   const stopTimer = (): void => {
@@ -95,14 +107,16 @@ export function mountPlainTutorialCard(d: PlainCardDeps): PlainCard {
     const text = el('p', 'tp-coach-text', 'plain-tutorial-text')
     const hint = el('p', 'tp-coach-hint', 'plain-tutorial-hint')
     hint.hidden = true
+    const live = el('p', 'tp-coach-sr', 'plain-tutorial-live')
+    live.setAttribute('role', 'status')
     const actions = el('div', 'tp-coach-actions')
     const next = button('tp-coach-next', 'plain-tutorial-next', PT().next!, () => d.onNext())
     const skip = button('tp-coach-skip', 'plain-tutorial-skip', COPY.tutorialUi!.skip!, () => d.onSkip())
     const close = button('tp-coach-close', 'plain-tutorial-close', TC().close!, () => d.onClose())
     actions.append(next, skip, close)
-    card.append(count, text, hint, actions)
+    card.append(count, text, hint, actions, live)
     slot.append(card)
-    parts = { count, text, hint, next, skip, close }
+    parts = { count, text, hint, live, next, skip, close }
     relayout(d.doc)
   }
 
@@ -122,6 +136,7 @@ export function mountPlainTutorialCard(d: PlainCardDeps): PlainCard {
         parts.skip.hidden = true
         parts.close.hidden = false
         if (hadFocus) parts.close.focus()
+        say(v.say)
         return
       }
       card.dataset.state = 'step'
@@ -131,6 +146,7 @@ export function mountPlainTutorialCard(d: PlainCardDeps): PlainCard {
       parts.next.hidden = false
       parts.skip.hidden = false
       parts.close.hidden = true
+      say(v.say)
       if (shownStep === v.k) return // the same step drawn again: its hint and its timer stay as they are
       shownStep = v.k
       stopTimer()
@@ -140,6 +156,7 @@ export function mountPlainTutorialCard(d: PlainCardDeps): PlainCard {
         timer = null
         if (parts === null || shownStep !== v.k) return
         parts.hint.hidden = false
+        say(parts.hint.textContent ?? '')
         d.onHint?.(v.hint)
       }, PLAIN_HINT_MS)
     },

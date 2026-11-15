@@ -6,6 +6,10 @@
  * the profiles, the chip says « But : X · changer » (or « Choisir un but »), and the place picker shows only the rooms of the stored goal (`setRoomFilter`). A goal
  * answered where no offer was made (the tutorial is not on this address) is written at once and the picker shows the goal's rooms to choose from; once the offer
  * was answered (« Faire le tutoriel » or « Passer, je connais ») the first room opens first, as with a profile, and the goal's rooms are there the next time the picker opens.
+ * Mission 1 (spec 4): with `plainTutorial` (boot.ts: the switch on, the guide off on this address, a package that asks the goals) the tutorial is the PLAIN one: the start screen
+ * offers it after the goal screens, Aide has « Premiers pas », and its coach card (plainTutorialCard.ts) follows the bench through the facts the page already reads (plainTutorial.ts).
+ * Decision (part A's open question): once the offer is answered the learner lands in the first room (the empty neutral room), with the card if the tutorial was taken; the
+ * goal's filtered picker stays reachable from the menu (Lieu) and the chip changes the goal. Nothing here uses or loads the guide.
  */
 import { COPY } from '../copy'
 import type { InventoryTab } from '../inventory'
@@ -17,6 +21,21 @@ import { panelsFor, profileById } from './profiles'
 import { tutorialInProgress } from '../../design/tutorialRecord'
 import { chipGoal, chipProfile, createOnboardingStore, entryStage, type OnboardingRecord, type OnboardingStore, type ProfileId, type RequestKind, type StorageLike } from './state'
 import { findGoal, loadGoalTree, roomsForGoal, type GoalTree } from './goalTree'
+import { nextStep, PLAIN_STEPS, plainProgress, restartPlain, settle, skipPlain, type PlainFacts, type PlainState, type PlainStepId } from './plainTutorial'
+import { mountPlainTutorialCard, type PlainCard } from './plainTutorialCard'
+import { PLAIN_STEP_COUNT } from './state'
+
+/** What the page hands the plain tutorial (boot.ts). */
+export interface PlainTutorialWiring {
+  /** The four facts of the bench now (plainTutorial.ts `benchFacts` over the live design); `sounded` = a sound started in this session. */
+  facts(sounded: boolean): PlainFacts
+  /** Catalog labels the instructions name: the console that plays a test sound, an example speaker. */
+  labels: { console: string; enceinte: string }
+  /** The tutorial is over (its four steps done, or « Passer le tutoriel »): the account card may follow (spec 5). */
+  onOver?(): void
+  /** The card (tests pass a fake). */
+  mountCard?: typeof mountPlainTutorialCard
+}
 
 export interface OnboardingWiring {
   /**
@@ -53,6 +72,11 @@ export interface OnboardingWiring {
   goals?: boolean
   /** The goal tree (tests); absent = the bundled one (`loadGoalTree`). A tree that does not load leaves the profiles. */
   goalTree?: GoalTree | null
+  /**
+   * The plain tutorial « Premiers pas » (mission 1, spec 4) runs on this address instead of the guide's (boot.ts gives it only where `tutorialAllowed` is false). With it the offer,
+   * Aide « Premiers pas » and the tutorial row exist as they do for the guide's tutorial, and the offer counts its four steps. Absent = none.
+   */
+  plainTutorial?: PlainTutorialWiring
   /** A place is open (the design has a room). */
   placeOpen(): boolean
   /**
@@ -81,6 +105,8 @@ export interface OnboardingDebug {
   premiersPas: boolean
   /** The text of the profile chip (« Choisir un profil » while none is stored), or null without the onboarding. */
   chip: string | null
+  /** The plain tutorial (mission 1) is the tutorial of this address. */
+  plainTutorial?: boolean
   /** What the last request asked for (plan T3.2: the guide acts on it once): start (or resume a run), restart, skip. Stored with the request. */
   requestKind?: TutorialAsk
   /**
@@ -145,6 +171,10 @@ const goalChipText = (tree: GoalTree, record: OnboardingRecord | null): string =
  */
 export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfileChip = mountProfileChip, mountGear: typeof mountOwnGearCard = mountOwnGearCard): Onboarding {
   const store = w.design ? createOnboardingStore(w.storage) : null
+  const plainW = store ? (w.plainTutorial ?? null) : null
+  /** A tutorial may be offered here: the guide's (`tutorialAllowed`) or the plain one. */
+  const tutorialOn = w.tutorialAllowed || plainW !== null
+  const stepCount = plainW ? PLAIN_STEP_COUNT : w.stepCount
   /** The goal tree when the goal screens are asked here; null = the four profiles. */
   const tree: GoalTree | null = store && w.goals === true ? (w.goalTree !== undefined ? w.goalTree : loadGoalTree()) : null
   const label = (record: OnboardingRecord | null): string => (tree ? goalChipText(tree, record) : chipText(chipProfile({ design: true, record })))
@@ -184,6 +214,88 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
     else gear.hide()
   }
 
+  // ── The plain tutorial (mission 1, spec 4): the record holds where it is; the card follows the bench on every change of the store and on the first sound.
+  const PT = (): Readonly<Record<string, string>> => COPY.plainTutorial!
+  const fill = (t: string): string => (plainW ? t.replace('{console}', plainW.labels.console).replace('{enceinte}', plainW.labels.enceinte) : t)
+  const stepText = (id: PlainStepId): { text: string; hint: string } => ({ text: fill(PT()[id]!), hint: fill(PT()[`${id}Hint`]!) })
+  /** The closing card is showing (the four steps done, until « Fermer »). */
+  let closing = false
+  /** The step last announced, so a redraw on an unrelated change of the bench says nothing. */
+  let saidStep: number | null = null
+  const plainFacts = (): PlainFacts => plainW!.facts(sounded)
+  const plainState = (): PlainState | null => store?.read()?.plainTutorial ?? null
+  const writePlain = (s: PlainState): void => void store?.dispatch({ type: 'plainTutorial', step: s.step, done: s.done })
+  /** « Passer le tutoriel » (the card or Aide): over where it is; the card leaves, the focus goes back to the page. */
+  function plainSkip(): void {
+    plainCard?.hide()
+    const s = plainState()
+    closing = false
+    if (s && !s.done) {
+      writePlain(skipPlain(s))
+      w.announce?.(PT().announceSkipped!)
+      plainW?.onOver?.()
+    }
+    w.returnFocus()
+  }
+  const plainCard: PlainCard | null = plainW
+    ? (plainW.mountCard ?? mountPlainTutorialCard)({
+        doc: w.doc,
+        ...(w.pickerCovers ? { covers: w.pickerCovers } : {}),
+        ...(w.pickerOpen ? { covered: w.pickerOpen } : {}),
+        onNext: () => plainMove((s) => nextStep(s, plainFacts())),
+        onSkip: plainSkip,
+        onClose: () => {
+          closing = false
+          plainCard?.hide()
+          w.returnFocus()
+        },
+      })
+    : null
+  /** Draws the card for the state (and says a new step); hides it where it may not show (no place open, the address is no longer a practice one). */
+  function drawPlain(s: PlainState | null): void {
+    if (!plainCard) return
+    if (!w.placeOpen() || !(w.practiceNow?.() ?? true)) return plainCard.hide()
+    if (closing) {
+      const said = saidStep === 0
+      saidStep = 0 // the end is said once
+      return plainCard.show({ kind: 'done', ...(said ? {} : { say: PT().announceDone! }) })
+    }
+    if (!s || s.done) return plainCard.hide()
+    const t = stepText(PLAIN_STEPS[s.step - 1])
+    const fresh = saidStep !== s.step
+    saidStep = s.step
+    plainCard.show({ kind: 'step', k: s.step, n: PLAIN_STEP_COUNT, ...t, ...(fresh ? { say: PT().announceStep!.replace('{k}', String(s.step)).replace('{n}', String(PLAIN_STEP_COUNT)).replace('{text}', t.text) } : {}) })
+  }
+  /** The tutorial just ended on its last step: the closing card, said once. */
+  function plainEnded(): void {
+    closing = true
+    saidStep = null
+    plainW?.onOver?.()
+  }
+  /** Applies a move to a running tutorial, writes it, and draws. */
+  function plainMove(move: (s: PlainState) => PlainState): void {
+    const s = plainState()
+    if (!plainW || !s || s.done) return drawPlain(s)
+    const next = move(s)
+    if (next.step !== s.step || next.done !== s.done) writePlain(next)
+    if (next.done) plainEnded()
+    drawPlain(next)
+  }
+  /** The bench changed, or a sound started: the steps that are now true complete. */
+  const plainSync = (): void => {
+    if (plainW) plainMove((s) => settle(s, plainFacts()))
+  }
+  /** « Faire le tutoriel », Aide « Premiers pas » or « Recommencer »: step 1, then whatever the bench already has. */
+  function plainBegin(): void {
+    if (!plainW) return
+    closing = false
+    saidStep = null
+    const s = restartPlain(plainFacts())
+    writePlain(s)
+    if (s.done) plainEnded()
+    drawPlain(s)
+  }
+
   /** The picker shows the rooms of the stored goal (the node's, else its parent's, else none: the empty state); no filter without a known goal. */
   const applyFilter = (): void => {
     if (!tree || !store) return
@@ -209,8 +321,8 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
     answered = false
     w.picker.showStart({
       closable: w.placeOpen(), // reopened over a project (the chip): its grids can be closed back to it
-      stepCount: w.stepCount,
-      offerAllowed: w.tutorialAllowed,
+      stepCount,
+      offerAllowed: tutorialOn,
       offerFor: o.offerFor,
       offerEscape: o.mode === 'chip' ? 'leave' : 'skip',
       ...(tree ? { goals: tree, ...(o.offerFor ? { offerGoal: store.read()?.goal ?? null } : {}) } : {}),
@@ -247,13 +359,14 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
               answered = false // busy, cancelled or failed: the picker has the error or still shows the screen; nothing was written, the next answer is taken
               return
             }
-            w.frameFirstRoom({ tutorialRow: r.offer === 'taken' && w.tutorialAllowed })
+            w.frameFirstRoom({ tutorialRow: r.offer === 'taken' && tutorialOn })
           }
           store.dispatch({ type: 'answer', profile: r.profile, offer: r.offer, ...(tree ? { goal: r.goal ?? null } : {}) })
           chip?.render()
           applyFilter()
           refreshGear() // a profile chosen after a sound (the chip) may be the entrepreneur's; one chosen instead of it takes the card away
           applyProfile(r.profile)
+          if (r.offer === 'taken') plainBegin() // the plain tutorial starts in the room that is now open (the guide's acts on the request instead)
         })()
       },
     })
@@ -262,21 +375,48 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
   applyFilter() // a goal stored on an earlier visit: the picker shows its rooms from the start
 
   let asking: Promise<void> | null = null
+  /** Aide for the plain tutorial: « Premiers pas » / « Reprendre » (a run resumes where it is and its card takes the focus; otherwise it starts again), « Recommencer », « Passer ». */
+  function plainRequest(kind: TutorialAsk): Promise<void> {
+    if (kind === 'skip') {
+      plainSkip()
+      return Promise.resolve()
+    }
+    asking = (async () => {
+      if (!w.placeOpen()) {
+        await w.openFirstRoom()
+        if (!w.placeOpen()) return
+        w.frameFirstRoom({ tutorialRow: true }) // « Premiers pas »: the tutorial follows
+      }
+      const s = plainState()
+      if (kind === 'start' && s && !s.done) {
+        saidStep = null
+        plainSync()
+        plainCard?.focus() // « Reprendre à l’étape {k} »: the learner lands on the card
+      } else plainBegin()
+    })().finally(() => {
+      asking = null
+    })
+    return asking
+  }
   const requestAtLoad = store?.read()?.request ?? 0
-  const premiersPas = store !== null && w.tutorialAllowed
+  const premiersPas = store !== null && tutorialOn
   const waiting = (): string | undefined => (premiersPas && w.picker.startShowing ? COPY.menu!.firstStepsWait : undefined)
   return {
     store,
     soundStarted() {
       sounded = true
       refreshGear()
+      plainSync()
     },
-    refresh: refreshGear,
+    refresh() {
+      refreshGear()
+      plainSync()
+    },
     premiersPas,
     startFirstVisit() {
       if (!store) return false
       const record = store.read()
-      const stage = entryStage({ design: true, tutorialAllowed: w.tutorialAllowed, restored: false, record })
+      const stage = entryStage({ design: true, tutorialAllowed: tutorialOn, restored: false, record })
       if (stage === 'start') openStart({ mode: 'first' })
       else if (stage === 'offer' && record?.profile) openStart({ mode: 'first', offerFor: record.profile })
       else return false
@@ -285,6 +425,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
     requestTutorial(kind = 'start') {
       if (!store || !premiersPas || waiting()) return Promise.resolve()
       if (asking) return asking
+      if (plainW) return plainRequest(kind)
       if (kind !== 'start') {
         // restart and skip act on the running tutorial: its room is open, nothing to open
         store.dispatch({ type: 'request', kind })
@@ -317,7 +458,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
       return asking
     },
     waiting,
-    progress: () => (premiersPas ? tutorialInProgress(w.storage) : null),
+    progress: () => (!premiersPas ? null : plainW ? plainProgress(plainState() ?? undefined) : tutorialInProgress(w.storage)),
     snapshot() {
       const record = store ? store.read() : null
       return {
@@ -326,6 +467,7 @@ export function wireOnboarding(w: OnboardingWiring, mountChip: typeof mountProfi
         record,
         blocked: store?.blocked ?? false,
         premiersPas,
+        ...(plainW ? { plainTutorial: true } : {}),
         chip: store ? label(record) : null,
         requestKind: record?.kind ?? 'start',
         requestAtLoad,

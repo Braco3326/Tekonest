@@ -111,6 +111,19 @@ describe('the coach card', () => {
     close.click()
     expect(log).toEqual(['close'])
   })
+  it('says each new step, the hint and the end in its own polite region (after the current task)', async () => {
+    card.show({ kind: 'step', k: 1, n: 4, text: 't1', hint: 'h1', say: 'Tutoriel, étape 1 sur 4 : t1' })
+    const live = q('plain-tutorial-live')!
+    expect(live.getAttribute('role')).toBe('status')
+    await Promise.resolve()
+    expect(live.textContent).toBe('Tutoriel, étape 1 sur 4 : t1')
+    fire()
+    await Promise.resolve()
+    expect(live.textContent).toBe('Astuce : h1')
+    card.show({ kind: 'done', say: 'Tutoriel : fin des étapes.' })
+    await Promise.resolve()
+    expect(live.textContent).toBe('Tutoriel : fin des étapes.')
+  })
   it('hide frees the row and the covers at once, and is idempotent', () => {
     card.show({ kind: 'step', k: 1, n: 4, text: 't', hint: 'h' })
     card.hide()

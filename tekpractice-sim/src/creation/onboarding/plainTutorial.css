@@ -13,6 +13,7 @@
 }
 
 .tp-coach {
+  position: relative; /* holds its hidden polite region */
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
@@ -30,6 +31,8 @@
 .tp-coach-text { flex: 1 1 320px; margin: 0; min-width: 0; }
 .tp-coach-hint { order: 3; flex: 1 1 100%; margin: 0; font-size: 12px; }
 .tp-coach-hint[hidden] { display: none; }
+/* the card's polite region: visually hidden, still read */
+.tp-coach-sr { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .tp-coach-actions { order: 2; flex: 0 0 auto; display: flex; gap: 8px; margin-left: auto; }
 .cr .tp-coach-btn {
   min-height: 30px;

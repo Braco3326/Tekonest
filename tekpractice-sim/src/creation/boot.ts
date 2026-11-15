@@ -149,8 +149,10 @@ const roomName = (id: string): string =>
  * `onboarding` (src/main.ts: practice mode, no exam address) turns the whole first-visit layer on under `?design`; `tutorialAllowed` (also the guide may run: not `?oscar=0`)
  * decides whether the start screen offers the tutorial and Aide has « Premiers pas ». Creation may not import the guide, so both are passed in. Missing = false (fail closed,
  * like the guide's own mode gate).
+ * `plainTutorial` (mission 1, spec 4): the address allows the plain tutorial (practice mode, no `?oscar=0`); it runs only with the feature switch on, where the guide's tutorial is
+ * not allowed, on a package that asks the goal screens (package 2).
  */
-export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed?: boolean; practiceNow?: () => boolean } = {}): Promise<void> {
+export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed?: boolean; plainTutorial?: boolean; practiceNow?: () => boolean } = {}): Promise<void> {
   injectCreationTokens()
   // marks <html> for a valid ?design=1..5 (T0.1), else, on a practice address, for the feature table's default package (mission 1: design 2); an exam address keeps none
   const designPkg = applyDesignAttribute(document.documentElement, location.search, defaultDesignFor({ practice: opts.onboarding === true, defaultDesign: FEATURES.defaultDesign }))
@@ -973,12 +975,36 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
     snapshot: () => ({ design: false, tutorialAllowed: opts.tutorialAllowed === true, record: null, blocked: false, premiersPas: false, chip: null }),
   }
   let onboarding: Onboarding = NO_ONBOARDING
+  /** The plain tutorial ended (finished or passed): the account card may follow (mission 1, spec 5; wired further down when the accounts switch is on). */
+  let plainOver: () => void = () => undefined
   if (onboardingOn) {
-    const [{ wireOnboarding }, { framingForCanvas }, { startRoomKey }] = await Promise.all([import('./onboarding/firstVisit'), import('./onboarding/framing'), import('./onboarding/startRoom')])
+    const [{ wireOnboarding }, { framingForCanvas }, { startRoomKey }, { benchFacts }] = await Promise.all([
+      import('./onboarding/firstVisit'),
+      import('./onboarding/framing'),
+      import('./onboarding/startRoom'),
+      import('./onboarding/plainTutorial'), // in the first visit's own chunk (firstVisit.ts imports it): no extra fetch
+    ])
+    // mission 1: the goal screens instead of the profiles, on a package whose first question is the goals (package 2), when the feature table says so
+    const goalsHere = FEATURES.goals === true && designPkg?.layout.firstQuestion === 'goals'
+    // mission 1 (spec 4): the plain tutorial « Premiers pas », where the guide's may not run (the product: the guide is off), on that package, never with ?oscar=0 or in an exam
+    const plainOn = goalsHere && FEATURES.plainTutorial === true && opts.plainTutorial === true && opts.tutorialAllowed !== true
+    const labelOf = (id: string | undefined): string => (id ? (registry.deviceById.get(id)?.label ?? id) : '')
     onboarding = wireOnboarding({
       design: true,
-      // mission 1: the goal screens instead of the profiles, on a package whose first question is the goals (package 2), when the feature table says so
-      goals: FEATURES.goals === true && designPkg?.layout.firstQuestion === 'goals',
+      goals: goalsHere,
+      ...(plainOn
+        ? {
+            plainTutorial: {
+              facts: (sounded: boolean) => benchFacts(store.design(), registry, signalPath(store.design(), registry, store.events()), sounded),
+              labels: {
+                // the console that plays a test sound (a catalog route from a control) and an example speaker, by their catalog labels
+                console: labelOf(registry.catalog.devices.find((d) => (d.routing ?? []).some((r) => r.from.startsWith('control:')))?.id),
+                enceinte: labelOf('qsc-k12-2'),
+              },
+              onOver: () => plainOver(),
+            },
+          }
+        : {}),
       storage,
       stepCount: designPkg ? tutorialSteps(designPkg).length : 0,
       tutorialAllowed: opts.tutorialAllowed === true,
