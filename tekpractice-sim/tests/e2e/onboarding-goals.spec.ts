@@ -1,8 +1,10 @@
 /**
- * Mission 1, end to end on the PRODUCT build (spec 1 and 7): the plain address opens design 2, the goal screens replace the four profiles (screen 1: the five goals,
+ * Mission 1, end to end on the PRODUCT build (spec 1 and 7): `?design=2` opens design 2, the goal screens replace the four profiles (screen 1: the five goals,
  * keys 1 to 5; screen 2: the goal's choices; screen 3 only when the chosen one has any), « Retour », « Passer », the picker shows the goal's rooms with « Tous les
  * lieux » always there, the empty state with its two buttons, and the chip « But : X · changer » reopens the screens. No assistant, no account UI, no console error;
  * an exam address keeps no package and no goal screen; `?design=1` keeps its profiles.
+ * Founder’s order 2026-11-16 (classic look): the product has no default package any more, so a plain address shows none of this (the goal screens are dormant
+ * there; tests/e2e/product-build.spec.ts checks it) and every test below asks for design 2 by its address.
  * Mission 1 part C (decision): the product now offers the plain tutorial after the goal screens, and once the offer is answered the FIRST room opens (the empty neutral
  * room); the goal's filtered picker is then reached from Lieu › Choisir un lieu… (tests/e2e/onboarding-plain-tutorial.spec.ts has the tutorial itself).
  *
@@ -68,7 +70,7 @@ async function openPicker(page: Page): Promise<void> {
   await expect(page.getByTestId('place-grid')).toBeVisible()
 }
 
-async function openFresh(page: Page, query = '', seed?: unknown): Promise<void> {
+async function openFresh(page: Page, query = '?design=2', seed?: unknown): Promise<void> {
   await page.goto('/' + query)
   await page.evaluate(([k, v]) => {
     window.localStorage.clear()
@@ -79,7 +81,7 @@ async function openFresh(page: Page, query = '', seed?: unknown): Promise<void> 
   await expect(page.getByTestId('place-picker')).toBeVisible()
 }
 
-test('the plain address opens design 2 and asks the five goals (keys 1 to 5), with « Passer » and « Tous les lieux »; no assistant, no account, no error', async ({ page }) => {
+test('?design=2 opens design 2 and asks the five goals (keys 1 to 5), with « Passer » and « Tous les lieux »; no assistant, no account, no error', async ({ page }) => {
   const errors = errorsOf(page)
   await openFresh(page)
   expect(await page.evaluate(() => document.documentElement.getAttribute('data-design'))).toBe('2')
@@ -176,7 +178,7 @@ test('« Passer »: no goal, every place, the chip says « Choisir un but », an
 
 test('the chip « But : X · changer » once a room is open, and it reopens the goal screens', async ({ page }) => {
   // a record whose offer was answered (an unanswered one gets the offer first, as for a profile)
-  await openFresh(page, '', { v: 1, profile: 'metier', offer: 'skipped', request: 0, shown: [], goal: { id: LEAF.id } })
+  await openFresh(page, '?design=2', { v: 1, profile: 'metier', offer: 'skipped', request: 0, shown: [], goal: { id: LEAF.id } })
   expect((await shownPlaces(page)).sort()).toEqual(LEAF.rooms.map((r) => `room:${r}`).sort())
   await page.locator('[data-testid="place-grid"] [role=option]:not([hidden])').first().click()
   const chip = page.getByTestId('profile-chip')
@@ -188,7 +190,7 @@ test('the chip « But : X · changer » once a room is open, and it reopens the 
 })
 
 test('the empty state: no room of the goal for the chosen type says so, with « Voir tous les lieux » and « Changer de but »', async ({ page }) => {
-  await openFresh(page, '', { v: 1, profile: 'metier', offer: 'skipped', request: 0, shown: [], goal: { id: NO_TEMPLATE.id } })
+  await openFresh(page, '?design=2', { v: 1, profile: 'metier', offer: 'skipped', request: 0, shown: [], goal: { id: NO_TEMPLATE.id } })
   // a type none of the goal's rooms has
   const type = await page.evaluate(() => {
     const shown = new Set([...document.querySelectorAll<HTMLElement>('[data-testid="place-grid"] [role=option]')].filter((e) => !e.hidden).map((e) => e.querySelector('.cr-card-type')?.textContent))

@@ -129,7 +129,7 @@ describe('the table skeleton', () => {
   })
 })
 
-describe('the default design (mission 1: a plain practice address opens design 2)', () => {
+describe('the default design mechanism (mission 1; the product table carries none since the founder’s order of 2026-11-16, the classic look)', () => {
   it('defaultDesignFor: the package of the feature table on a practice address only; none on an exam address or without the switch', () => {
     expect(defaultDesignFor({ practice: true, defaultDesign: 2 })).toBe(2)
     expect(defaultDesignFor({ practice: true, defaultDesign: 5 })).toBe(5)

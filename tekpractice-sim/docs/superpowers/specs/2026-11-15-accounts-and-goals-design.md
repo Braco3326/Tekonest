@@ -3,6 +3,11 @@
 Status: design from the founder's brief of 2026-11-15 (relayed by the Tekonest Master, « card B » and the Auto brief). Branch `deploy/mode-creation-only-20261115`.
 Owner: TekoPractice Build-Up. Not touched: `src/guide/**` (Tek Brain, on hold), the engine, catalogue and 3D models.
 
+> **Note 2026-11-16 (founder's order, relayed by the Master):** « build on the classic design for now », the designs change later. The product table no longer
+> carries `defaultDesign`: a plain address opens with NO package (the classic look), so point 1.1 below no longer holds. The goal screens, the plain tutorial and the
+> start screen still work, but only under `?design=2` (or another package whose `layout.firstQuestion` is `goals`); on a plain address they are dormant. The switches
+> `goals`, `plainTutorial` and `accounts` are unchanged; the packages are untouched. The deploy guard now refuses a table that carries any `defaultDesign`.
+
 ## 1. What the learner sees
 
 1. **First visit, plain address** (no `?design`): the game opens on design 2 « Atelier » (today only `?design=2` does that). `?design=1..5` still picks a design; an exam address and `?oscar=` keep their meaning.

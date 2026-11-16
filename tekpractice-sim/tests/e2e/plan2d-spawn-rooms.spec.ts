@@ -5,7 +5,8 @@
  *  - every placement is the plan's x / z to 1 mm and its yaw exactly; mount « floor »;
  *  - y is the floor under the device (floorAtM), so a device on the deck has y = 0.8, and its loaded body's lowest point is ON the deck (not in it, not floating);
  *  - every cable rests on its surface (cableSupportReport, mission 3 A): nothing under the surface, no flying stretch (the drop off the deck edge is a ramp).
- * All-on build by default; the product build too when E2E_PRODUCT_URL serves one; both entered in design 2 « Atelier » (the shipped default) the way a learner does.
+ * All-on build by default; the product build too when E2E_PRODUCT_URL serves one; both entered in design 2 « Atelier » by `?design=2`
+ * (the shipped default until the founder’s order of 2026-11-16; the product now opens in the classic look) the way a learner does.
  */
 import { expect, test, type Page } from '@playwright/test'
 import { cableKey } from '../../src/creation/sceneDiff'
@@ -57,7 +58,7 @@ const CABLES = [
 const MAX_END_SPAN_M = 0.4 + 4 * 0.05
 const MAX_MID_SPAN_M = 0.4
 
-/** Design 2 (the shipped default) entered as a learner does (the start screen's first answer, plan2dKit), then the room. */
+/** Design 2 (`?design=2`) entered as a learner does (the start screen's first answer, plan2dKit), then the room. */
 async function openPlace(page: Page, key: string): Promise<void> {
   await enterDesign(page, 2)
   await page.evaluate((k) => (window as unknown as { __creation: Hook }).__creation.choosePlace(k), key)

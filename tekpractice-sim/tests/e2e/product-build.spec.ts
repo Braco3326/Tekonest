@@ -8,8 +8,8 @@
  *  - Under `?design`, the start screen and the four profile buttons stay, the profile choice is final (no tutorial offer), Aide has no « Premiers pas », and the
  *    checklist « Pourquoi je n’entends rien ? » and the power helper stay.
  *  - The drawer still holds the whole catalogue (113 devices outside the Bêta tab) and the page logs no error.
- *  - Mission 1: the plain address opens design 2 (`defaultDesign`) and asks the goal screens instead of the four profiles (tests/e2e/onboarding-goals.spec.ts has
- *    the rest of it).
+ *  - The classic look (founder’s order 2026-11-16): a plain address opens with NO package (no `data-design`, no start screen, no goal screen: the mission 1
+ *    screens are dormant there) and loads the app; `?design=2` still opens design 2 and its goal screens (tests/e2e/onboarding-goals.spec.ts has the rest of it).
  */
 import { expect, test, type Page } from '@playwright/test'
 import { cableKey } from '../../src/creation/sceneDiff'
@@ -58,8 +58,31 @@ for (const q of ADDRESSES) {
   })
 }
 
-test('the plain address opens design 2 and asks the goal screens, not the four profiles (mission 1)', async ({ page }) => {
+test('the classic look: a plain practice address opens with no package, no start screen and no goal screen, and loads the app (founder 2026-11-16)', async ({ page }) => {
+  const errors = await noErrors(page)
   await page.goto('/')
+  await page.evaluate(() => window.localStorage.clear())
+  await page.reload()
+  await page.waitForFunction(() => !!(window as unknown as { __creation?: unknown }).__creation)
+  await page.waitForTimeout(1500)
+  expect(await page.evaluate(() => document.documentElement.hasAttribute('data-design')), 'a plain address carries a package').toBe(false)
+  await expect(page.getByTestId('start-screen')).toHaveCount(0)
+  await expect(page.getByTestId('goal-screen')).toHaveCount(0)
+  await expect(page.locator('[data-profile]')).toHaveCount(0)
+  await expect(page.getByText('Un tutoriel pour votre premier son ?')).toHaveCount(0)
+  await expect(page.getByRole('menuitem', { name: 'Matériel', exact: true })).toBeVisible()
+  // the classic app: the place picker « Choisir un lieu » over the 3D view, as before the packages
+  await expect(page.getByTestId('place-picker')).toBeVisible()
+  const firstPlace = page.getByTestId('place-grid').locator('[role=option]').first()
+  await expect(firstPlace).toBeVisible()
+  await firstPlace.click()
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  await expect(page.locator('#renderCanvas')).toBeVisible()
+  expect(errors(), 'console errors').toEqual([])
+})
+
+test('?design=2 still opens design 2 and asks the goal screens, not the four profiles (mission 1)', async ({ page }) => {
+  await page.goto('/?design=2')
   await page.evaluate(() => window.localStorage.clear())
   await page.reload()
   await page.waitForFunction(() => !!(window as unknown as { __creation?: unknown }).__creation)

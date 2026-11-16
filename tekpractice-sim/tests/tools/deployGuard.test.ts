@@ -157,7 +157,7 @@ describe('tools/build-site.mjs refuses BEFORE building', () => {
     "fs.mkdirSync(path.join(root, 'dist-site', 'assets'), { recursive: true })",
     "fs.writeFileSync(path.join(root, 'dist-site', 'index.html'), '<html></html>')",
     // the product's feature table (the assistant and the learning pages off), which the build proves is in the output
-    "fs.writeFileSync(path.join(root, 'dist-site', 'assets', 'boot-x.js'), 'var F={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!1,plan2d:!0,cableTrace:!0,defaultDesign:2};')",
+    "fs.writeFileSync(path.join(root, 'dist-site', 'assets', 'boot-x.js'), 'var F={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!1,plan2d:!0,cableTrace:!0};')",
     '',
   ].join('\n')
   /** A temp project root: tools/build-site.mjs + its two guards copied, node_modules/vite/bin/vite.js the stub. */
@@ -208,7 +208,7 @@ describe('tools/build-site.mjs refuses BEFORE building', () => {
           "const out = path.resolve(__dirname, '..', '..', '..', 'dist-site', 'assets')",
           'fs.mkdirSync(out, { recursive: true })',
           "fs.writeFileSync(path.join(out, '..', 'index.html'), '<html></html>')",
-          `fs.writeFileSync(path.join(out, 'main-x.js'), 'var F={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:${on ? '!0' : '!1'},goals:!0,plainTutorial:!0,accounts:!1,plan2d:!0,cableTrace:!0,defaultDesign:2};')`,
+          `fs.writeFileSync(path.join(out, 'main-x.js'), 'var F={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:${on ? '!0' : '!1'},goals:!0,plainTutorial:!0,accounts:!1,plan2d:!0,cableTrace:!0};')`,
           '',
         ].join('\n'),
       )
@@ -243,8 +243,12 @@ describe('tools/build-site.mjs refuses BEFORE building', () => {
     for (const [what, table] of [
       ['the assistant on', 'var F={levels:!1,legacyPages:!1,guide:!0,guideLegacy:!1,guideInbox:!1};'],
       ['the learning pages on', 'var F={levels:!1,legacyPages:!0,guide:!1,guideLegacy:!1,guideInbox:!1};'],
-      ['the accounts on (mission 1)', 'var F={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!0,plan2d:!0,cableTrace:!0,defaultDesign:2};'],
+      ['the accounts on (mission 1)', 'var F={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!0,plan2d:!0,cableTrace:!0};'],
       ['no table', 'var nothing=1;'],
+      // the founder's order 2026-11-16 (classic look): a table that still carries a default design is not the product
+      ['the old table with design 2 by default', 'var F={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!1,plan2d:!0,cableTrace:!0,defaultDesign:2};'],
+      ['a table with design 3 by default', 'var F={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!1,plan2d:!0,cableTrace:!0,defaultDesign:3};'],
+      ['the old table written out', 'var F = { levels: false, legacyPages: false, guide: false, guideLegacy: false, guideInbox: false, goals: true, plainTutorial: true, accounts: false, plan2d: true, cableTrace: true, defaultDesign: 2 };'],
     ] as const) {
       const dir = withTable(table)
       const r = build(dir, {})

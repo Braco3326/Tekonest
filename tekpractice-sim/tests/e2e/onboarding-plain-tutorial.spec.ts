@@ -1,9 +1,10 @@
 /**
- * Mission 1, the plain tutorial « Premiers pas » end to end on the PRODUCT build (spec 4 and 7). The plain address opens design 2, the goal screens, then the offer
+ * Mission 1, the plain tutorial « Premiers pas » end to end on the PRODUCT build (spec 4 and 7). `?design=2` opens design 2, the goal screens, then the offer
  * (« Faire le tutoriel », four steps); the answer lands in the first room (the empty neutral room) with the coach card in the reserved tutorial row, and the four steps
  * are completed with the REAL interface only (the inventory drawer, a drop in the 3D view, the Projet tree, « Connecter à… », the power helper of the checklist, the
  * « Lecture console » control and Écoute › Signal de test): no debug-hook intent. No assistant node, no account UI, no console error, no request to an accounts host and no
- * accounts chunk; an exam address shows none of it.
+ * accounts chunk; an exam address shows none of it. Founder’s order 2026-11-16 (classic look): the product has no default package any more, so the tutorial is
+ * dormant on a plain address and every test below asks for design 2 by its address.
  *
  * Named onboarding-plain-tutorial (tests/e2e/onboarding-tutorial.spec.ts is the guide's own tutorial on the all-on build). Runs against a build made WITHOUT the all-on
  * table, like tests/e2e/onboarding-goals.spec.ts: `npx vite build --outDir dist-product`, `npx vite preview --outDir dist-product --port 4393`, E2E_PRODUCT_URL.
@@ -48,7 +49,7 @@ async function noAccounts(page: Page, requests: string[]): Promise<void> {
   expect(await page.evaluate(() => Object.keys(window.localStorage).filter((k) => /account|supabase|sb-/i.test(k)))).toEqual([])
 }
 
-async function openFresh(page: Page, query = ''): Promise<void> {
+async function openFresh(page: Page, query = '?design=2'): Promise<void> {
   await page.goto('/' + query)
   await page.evaluate(() => window.localStorage.clear())
   await page.reload()
@@ -83,7 +84,7 @@ async function selectInTree(page: Page, label: RegExp): Promise<void> {
   await item.click()
 }
 
-test('plain address: goal screens, « Faire le tutoriel », the first room with the card, four steps done with the real interface, then the sound; no assistant, no account, no error', async ({ page }) => {
+test('?design=2: goal screens, « Faire le tutoriel », the first room with the card, four steps done with the real interface, then the sound; no assistant, no account, no error', async ({ page }) => {
   const seen = watch(page)
   await openFresh(page)
   expect(await page.evaluate(() => document.documentElement.getAttribute('data-design'))).toBe('2')
@@ -209,7 +210,7 @@ test('an exam address shows none of it: no package, no goal screen, no offer, no
 })
 
 test('?oscar=0 keeps its meaning: the goal screens, no offer, no tutorial', async ({ page }) => {
-  await openFresh(page, '?oscar=0')
+  await openFresh(page, '?design=2&oscar=0')
   await page.getByTestId('goal-screen').getByRole('button', { name: 'Passer', exact: true }).click()
   await expect(page.getByText('Un tutoriel pour votre premier son ?')).toHaveCount(0)
   await page.getByRole('menuitem', { name: 'Aide', exact: true }).click()
