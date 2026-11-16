@@ -28,7 +28,15 @@
     "shape": "speaker-cabinet-v2",
     "params": {
       "edgeRadiusMm": 12,
-      "edgeSegments": 4
+      "edgeSegments": 4,
+      "bodyGrey": 105,
+      "handleCount": 2,
+      "handleLenMm": 140,
+      "handleWidthMm": 120,
+      "handleDepthMm": 30,
+      "handleFromRearMm": 215,
+      "handlePitchMm": 215,
+      "handleYMm": 416
     },
     "budget": {
       "min": 150,
@@ -38,6 +46,19 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_rectified.png",
+        "fill": true,
+        "crop": [
+          6,
+          4,
+          1326,
+          530
+        ]
+      }
     ]
   },
   "sources": [
@@ -51,5 +72,25 @@
       "url": "https://www.l-acoustics.com/products/KS28",
       "note": "L-Acoustics page read 2026-11-12 (two fetches): \"Dimensions (W x H x D) 1340 mm / 550 mm / 719 mm\", 79 kg net, connectors \"1 x 4-point speakON\" (no link connector listed; NL4 or NL8 not named: a 4-point speakON is the catalogue speakon-nl4), six ergonomic handles, a flush 2-point rigging system with 8 side runners and 2 ground runners, two 18 in neodymium cone drivers, Baltic beech and birch plywood. Not modelled: the six handles (positions not stated), the rigging hardware. The baffle picture has the two 18 in drivers side by side (an estimate of their place). Rear panel position is a guess; the corner radius is our estimate."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 220,
+        "yMm": 0,
+        "wMm": 53,
+        "hMm": 54,
+        "marginMm": 5
+      },
+      {
+        "face": "opposite",
+        "xMm": 1106,
+        "yMm": 15,
+        "wMm": 46,
+        "hMm": 67,
+        "marginMm": 5
+      }
+    ]
+  }
 }

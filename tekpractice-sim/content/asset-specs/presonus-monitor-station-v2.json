@@ -11,9 +11,9 @@
     {
       "portId": "in-a-l",
       "face": "io",
-      "xMm": 14,
-      "yMm": 44,
-      "confidence": "guess",
+      "xMm": 193.4,
+      "yMm": 36.6,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -21,9 +21,9 @@
     {
       "portId": "in-a-r",
       "face": "io",
-      "xMm": 32,
-      "yMm": 44,
-      "confidence": "guess",
+      "xMm": 193.9,
+      "yMm": 19,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -31,9 +31,9 @@
     {
       "portId": "in-b-l",
       "face": "io",
-      "xMm": 50,
-      "yMm": 44,
-      "confidence": "guess",
+      "xMm": 212.3,
+      "yMm": 36.6,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -41,9 +41,9 @@
     {
       "portId": "in-b-r",
       "face": "io",
-      "xMm": 68,
-      "yMm": 44,
-      "confidence": "guess",
+      "xMm": 212,
+      "yMm": 18.7,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -51,9 +51,9 @@
     {
       "portId": "in-aux-l",
       "face": "io",
-      "xMm": 90,
-      "yMm": 44,
-      "confidence": "guess",
+      "xMm": 146.7,
+      "yMm": 29.5,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "line-level-consumer",
       "dir": "in"
@@ -61,9 +61,9 @@
     {
       "portId": "in-aux-r",
       "face": "io",
-      "xMm": 108,
-      "yMm": 44,
-      "confidence": "guess",
+      "xMm": 147.4,
+      "yMm": 16,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "line-level-consumer",
       "dir": "in"
@@ -71,9 +71,9 @@
     {
       "portId": "in-spdif",
       "face": "io",
-      "xMm": 126,
-      "yMm": 44,
-      "confidence": "guess",
+      "xMm": 168.6,
+      "yMm": 29.5,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "spdif",
       "dir": "in"
@@ -81,9 +81,9 @@
     {
       "portId": "in-aux-35",
       "face": "io",
-      "xMm": 144,
-      "yMm": 44,
-      "confidence": "guess",
+      "xMm": 170.1,
+      "yMm": 16,
+      "confidence": "photo",
       "connector": "trs-35mm",
       "signal": "line-level-consumer",
       "dir": "in"
@@ -91,9 +91,9 @@
     {
       "portId": "out-main-l",
       "face": "io",
-      "xMm": 14,
-      "yMm": 18,
-      "confidence": "guess",
+      "xMm": 39.4,
+      "yMm": 37.9,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -101,9 +101,9 @@
     {
       "portId": "out-main-r",
       "face": "io",
-      "xMm": 32,
-      "yMm": 18,
-      "confidence": "guess",
+      "xMm": 38.9,
+      "yMm": 20.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -111,9 +111,9 @@
     {
       "portId": "out-spk-a-l",
       "face": "io",
-      "xMm": 54,
-      "yMm": 18,
-      "confidence": "guess",
+      "xMm": 76.9,
+      "yMm": 37.9,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -121,9 +121,9 @@
     {
       "portId": "out-spk-a-r",
       "face": "io",
-      "xMm": 72,
-      "yMm": 18,
-      "confidence": "guess",
+      "xMm": 76.8,
+      "yMm": 20.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -131,9 +131,9 @@
     {
       "portId": "out-spk-b-l",
       "face": "io",
-      "xMm": 90,
-      "yMm": 18,
-      "confidence": "guess",
+      "xMm": 95.2,
+      "yMm": 37.9,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -141,9 +141,9 @@
     {
       "portId": "out-spk-b-r",
       "face": "io",
-      "xMm": 108,
-      "yMm": 18,
-      "confidence": "guess",
+      "xMm": 95,
+      "yMm": 20.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -151,9 +151,9 @@
     {
       "portId": "out-spk-c-l",
       "face": "io",
-      "xMm": 126,
-      "yMm": 18,
-      "confidence": "guess",
+      "xMm": 113.2,
+      "yMm": 37.9,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -161,9 +161,9 @@
     {
       "portId": "out-spk-c-r",
       "face": "io",
-      "xMm": 144,
-      "yMm": 18,
-      "confidence": "guess",
+      "xMm": 113.2,
+      "yMm": 20.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -171,9 +171,9 @@
     {
       "portId": "out-cue-l",
       "face": "io",
-      "xMm": 166,
-      "yMm": 18,
-      "confidence": "guess",
+      "xMm": 57.5,
+      "yMm": 37.9,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -181,9 +181,9 @@
     {
       "portId": "out-cue-r",
       "face": "io",
-      "xMm": 184,
-      "yMm": 18,
-      "confidence": "guess",
+      "xMm": 56.8,
+      "yMm": 20.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -244,13 +244,36 @@
     },
     "projection": [
       "opposite",
-      "io"
+      "io",
+      "top"
     ],
     "budget": {
       "min": 400,
       "max": 2000
     },
-    "minFilletMm": 3.5
+    "minFilletMm": 3.5,
+    "photos": [
+      {
+        "face": "top",
+        "file": "_front_top_rot180.png",
+        "crop": [
+          1,
+          2,
+          2999,
+          2690
+        ]
+      },
+      {
+        "face": "io",
+        "file": "rear.png",
+        "crop": [
+          0,
+          168,
+          3000,
+          867
+        ]
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://goknight.com/presonus-monitor-station-2-desktop-studio-control-center-with-spdif-input/",
@@ -280,5 +303,45 @@
       "url": "https://goknight.com/presonus-monitor-station-2-desktop-studio-control-center-with-spdif-input/",
       "note": "Dealer listings read by the Wave 0c research (Goknight spec table, ProSoundWeb release, zZounds): inputs 4 x 1/4 in TRS balanced (2 stereo pairs), 2 x RCA aux, 1 x RCA coaxial S/PDIF, 1 x 1/8 in TRS; outputs 6 x 1/4 in TRS (3 stereo speaker pairs), 2 x 1/4 in TRS main, 2 x 1/4 in TRS cue, 4 x 1/4 in TRS headphone; 18 VDC barrel power from an external supply (no mains inlet: not a port). Size 228.6 x 216 x 63.5 mm (9 x 8.5 x 2.5 in, labelled W x D x H, converted). The rear versus front split is not stated: guesses (inputs and outputs on the rear, the four headphone jacks on the front). Talkback mic not listed by the dealer: not modelled. The big knob and buttons are a picture only."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 149.5,
+        "yMm": 13,
+        "wMm": 67,
+        "hMm": 14.5,
+        "marginMm": 3,
+        "fill": "#3a3f45"
+      },
+      {
+        "face": "top",
+        "xMm": 11,
+        "yMm": 18.5,
+        "wMm": 76,
+        "hMm": 8,
+        "marginMm": 3,
+        "fill": "#3a3f45"
+      },
+      {
+        "face": "opposite",
+        "xMm": 19,
+        "yMm": 26.5,
+        "wMm": 171.5,
+        "hMm": 31,
+        "marginMm": 3,
+        "fill": "#34363b"
+      },
+      {
+        "face": "opposite",
+        "xMm": 94,
+        "yMm": 14,
+        "wMm": 96,
+        "hMm": 13,
+        "marginMm": 3,
+        "fill": "#34363b"
+      }
+    ]
+  }
 }

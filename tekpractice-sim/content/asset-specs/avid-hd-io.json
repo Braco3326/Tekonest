@@ -99,7 +99,8 @@
       "plateFilletMm": 1,
       "plateInsetMm": 1,
       "rearInsetMm": 8,
-      "seamMm": 50
+      "seamMm": 50,
+      "bodyRgb": 1579037
     },
     "projection": [
       "io",
@@ -107,9 +108,31 @@
     ],
     "budget": {
       "min": 1500,
-      "max": 3500
+      "max": 15000
     },
-    "minFilletMm": 1
+    "minFilletMm": 1,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          10,
+          12,
+          1965,
+          362
+        ]
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          12,
+          610,
+          1476,
+          272
+        ]
+      }
+    ]
   },
   "texture": {
     "blankRects": [
@@ -161,5 +184,756 @@
       "url": "https://www.barryrudolph.com/recall/manuals/avid_hd_io_guide_v81.pdf",
       "note": "Wave 5 re-measure on the rear picture itself (rear.jpg crop 12,610,1476,272 over 482.6 x 88.9 mm, 3.06 px/mm, read on a mm grid): the first positions were taken from the manual illustration and sat 10 to 16 mm off the connectors of the photo. Shell centres incl. ears: ANALOG INPUT +4 dBu DB25 (43.0, 72.1), ANALOG OUTPUT DB25 (79.0, 28.1), AES/EBU DB25 (187.0, 62.1), DigiLink PRIMARY PORT (332.4, 9.8), WD CLK in BNC (434.1, 68.2), WD CLK out BNC (434.5, 45.1), AC inlet opening unchanged (448.2, 15.1). +/- 0.5 mm."
     }
-  ]
+  ],
+  "structure": {
+    "parts": [
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 266.1,
+        "yMm": 73,
+        "count": 32,
+        "cols": 8,
+        "pitchXMm": 9.07,
+        "pitchYMm": -6.2,
+        "points": [
+          [
+            -2.2,
+            -1.95
+          ],
+          [
+            2.2,
+            -1.95
+          ],
+          [
+            2.2,
+            1.95
+          ],
+          [
+            -2.2,
+            1.95
+          ]
+        ],
+        "params": {
+          "riseMm": 0.35,
+          "bevelMm": 0.1,
+          "textured": 1
+        },
+        "colour": "#2a2c2a",
+        "note": "input meter 1-8 LEDs"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 356.5,
+        "yMm": 73,
+        "count": 32,
+        "cols": 8,
+        "pitchXMm": 9.07,
+        "pitchYMm": -6.2,
+        "points": [
+          [
+            -2.2,
+            -1.95
+          ],
+          [
+            2.2,
+            -1.95
+          ],
+          [
+            2.2,
+            1.95
+          ],
+          [
+            -2.2,
+            1.95
+          ]
+        ],
+        "params": {
+          "riseMm": 0.35,
+          "bevelMm": 0.1,
+          "textured": 1
+        },
+        "colour": "#2a2c2a",
+        "note": "input meter 9-16 LEDs"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 266.1,
+        "yMm": 36.9,
+        "count": 32,
+        "cols": 8,
+        "pitchXMm": 9.07,
+        "pitchYMm": -6.2,
+        "points": [
+          [
+            -2.2,
+            -1.95
+          ],
+          [
+            2.2,
+            -1.95
+          ],
+          [
+            2.2,
+            1.95
+          ],
+          [
+            -2.2,
+            1.95
+          ]
+        ],
+        "params": {
+          "riseMm": 0.35,
+          "bevelMm": 0.1,
+          "textured": 1
+        },
+        "colour": "#2a2c2a",
+        "note": "output meter 1-8 LEDs"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 356.5,
+        "yMm": 36.9,
+        "count": 32,
+        "cols": 8,
+        "pitchXMm": 9.07,
+        "pitchYMm": -6.2,
+        "points": [
+          [
+            -2.2,
+            -1.95
+          ],
+          [
+            2.2,
+            -1.95
+          ],
+          [
+            2.2,
+            1.95
+          ],
+          [
+            -2.2,
+            1.95
+          ]
+        ],
+        "params": {
+          "riseMm": 0.35,
+          "bevelMm": 0.1,
+          "textured": 1
+        },
+        "colour": "#2a2c2a",
+        "note": "output meter 9-16 LEDs"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 130.7,
+        "yMm": 41.5,
+        "count": 6,
+        "pitchXMm": 8.7,
+        "points": [
+          [
+            -1.8,
+            -1.8
+          ],
+          [
+            1.8,
+            -1.8
+          ],
+          [
+            1.8,
+            1.8
+          ],
+          [
+            -1.8,
+            1.8
+          ]
+        ],
+        "params": {
+          "riseMm": 0.35,
+          "bevelMm": 0.1,
+          "textured": 1
+        },
+        "colour": "#2a2c2a",
+        "note": "sample rate LEDs"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 187.2,
+        "yMm": 41.5,
+        "points": [
+          [
+            -1.8,
+            -1.8
+          ],
+          [
+            1.8,
+            -1.8
+          ],
+          [
+            1.8,
+            1.8
+          ],
+          [
+            -1.8,
+            1.8
+          ]
+        ],
+        "params": {
+          "riseMm": 0.35,
+          "bevelMm": 0.1,
+          "textured": 1
+        },
+        "colour": "#2a2c2a",
+        "note": "loop master LED"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 200.7,
+        "yMm": 41.5,
+        "count": 4,
+        "pitchXMm": 8.7,
+        "points": [
+          [
+            -1.8,
+            -1.8
+          ],
+          [
+            1.8,
+            -1.8
+          ],
+          [
+            1.8,
+            1.8
+          ],
+          [
+            -1.8,
+            1.8
+          ]
+        ],
+        "params": {
+          "riseMm": 0.35,
+          "bevelMm": 0.1,
+          "textured": 1
+        },
+        "colour": "#2a2c2a",
+        "note": "sync mode LEDs"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 45.1,
+        "yMm": 72.5,
+        "points": [
+          [
+            -19,
+            -4.75
+          ],
+          [
+            19,
+            -4.75
+          ],
+          [
+            19,
+            4.75
+          ],
+          [
+            -19,
+            4.75
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#9ea2a8",
+        "note": "analog input DB25"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 113.7,
+        "yMm": 72.5,
+        "points": [
+          [
+            -19,
+            -4.75
+          ],
+          [
+            19,
+            -4.75
+          ],
+          [
+            19,
+            4.75
+          ],
+          [
+            -19,
+            4.75
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#9ea2a8",
+        "note": "analog input DB25 (-10 dBV)"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 81,
+        "yMm": 26.8,
+        "points": [
+          [
+            -19,
+            -4.75
+          ],
+          [
+            19,
+            -4.75
+          ],
+          [
+            19,
+            4.75
+          ],
+          [
+            -19,
+            4.75
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#9ea2a8",
+        "note": "analog output DB25"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 188.9,
+        "yMm": 62.7,
+        "points": [
+          [
+            -19,
+            -4.75
+          ],
+          [
+            19,
+            -4.75
+          ],
+          [
+            19,
+            4.75
+          ],
+          [
+            -19,
+            4.75
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#9ea2a8",
+        "note": "AES/EBU DB25"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 244.4,
+        "yMm": 62.7,
+        "points": [
+          [
+            -19,
+            -4.75
+          ],
+          [
+            19,
+            -4.75
+          ],
+          [
+            19,
+            4.75
+          ],
+          [
+            -19,
+            4.75
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#9ea2a8",
+        "note": "TDIF DB25"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 280.4,
+        "yMm": 62.7,
+        "points": [
+          [
+            -4,
+            -4
+          ],
+          [
+            4,
+            -4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#17171a",
+        "note": "ADAT optical"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 295.8,
+        "yMm": 62.7,
+        "points": [
+          [
+            -4,
+            -4
+          ],
+          [
+            4,
+            -4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#17171a",
+        "note": "ADAT optical"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 373.5,
+        "yMm": 53,
+        "points": [
+          [
+            -4,
+            -4
+          ],
+          [
+            4,
+            -4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#17171a",
+        "note": "optical"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 388.2,
+        "yMm": 53,
+        "points": [
+          [
+            -4,
+            -4
+          ],
+          [
+            4,
+            -4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#17171a",
+        "note": "optical"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 435,
+        "yMm": 63.4,
+        "params": {
+          "diaMm": 14,
+          "innerDiaMm": 10.5,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#b4b8be",
+        "colour2": "#050506",
+        "note": "WD CLK IN BNC"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 435,
+        "yMm": 41.5,
+        "params": {
+          "diaMm": 14,
+          "innerDiaMm": 10.5,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#b4b8be",
+        "colour2": "#050506",
+        "note": "WD CLK OUT BNC"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 463.4,
+        "yMm": 63.4,
+        "params": {
+          "diaMm": 14,
+          "innerDiaMm": 10.5,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#b4b8be",
+        "colour2": "#050506",
+        "note": "LOOP SYNC IN BNC"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 463.4,
+        "yMm": 42,
+        "params": {
+          "diaMm": 14,
+          "innerDiaMm": 10.5,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#b4b8be",
+        "colour2": "#050506",
+        "note": "LOOP SYNC OUT BNC"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 406.2,
+        "yMm": 65.4,
+        "params": {
+          "diaMm": 9.5,
+          "innerDiaMm": 6.5,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#c8c8c0",
+        "colour2": "#050506",
+        "note": "S/PDIF in RCA"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 406.2,
+        "yMm": 53,
+        "params": {
+          "diaMm": 9.5,
+          "innerDiaMm": 6.5,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#c0382c",
+        "colour2": "#050506",
+        "note": "S/PDIF out RCA"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 322.6,
+        "yMm": 59.5,
+        "params": {
+          "diaMm": 19.4,
+          "innerDiaMm": 16.8,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "note": "AES/EBU input XLR"
+      },
+      {
+        "kind": "ring",
+        "face": "io",
+        "xMm": 352,
+        "yMm": 59.5,
+        "params": {
+          "diaMm": 19.4,
+          "innerDiaMm": 16.8,
+          "riseMm": 0.25,
+          "floorMm": 0.1
+        },
+        "colour": "#1f2023",
+        "colour2": "#050506",
+        "note": "AES/EBU output XLR"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 399.6,
+        "yMm": 18.6,
+        "points": [
+          [
+            -8.5,
+            -4
+          ],
+          [
+            8.5,
+            -4
+          ],
+          [
+            8.5,
+            4
+          ],
+          [
+            -8.5,
+            4
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#9ea2a8",
+        "note": "accessory DE-9"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 332.4,
+        "yMm": 9.8,
+        "points": [
+          [
+            -12,
+            -2.75
+          ],
+          [
+            12,
+            -2.75
+          ],
+          [
+            12,
+            2.75
+          ],
+          [
+            -12,
+            2.75
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#9ea2a8",
+        "note": "DigiLink primary"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 362,
+        "yMm": 9.8,
+        "points": [
+          [
+            -12,
+            -2.75
+          ],
+          [
+            12,
+            -2.75
+          ],
+          [
+            12,
+            2.75
+          ],
+          [
+            -12,
+            2.75
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#9ea2a8",
+        "note": "DigiLink expansion"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 448.2,
+        "yMm": 15.1,
+        "points": [
+          [
+            -18,
+            -12
+          ],
+          [
+            18,
+            -12
+          ],
+          [
+            18,
+            12
+          ],
+          [
+            -18,
+            12
+          ]
+        ],
+        "params": {
+          "riseMm": 0.25,
+          "bevelMm": 0.1
+        },
+        "colour": "#1d1e21",
+        "note": "AC inlet C14"
+      }
+    ]
+  }
 }

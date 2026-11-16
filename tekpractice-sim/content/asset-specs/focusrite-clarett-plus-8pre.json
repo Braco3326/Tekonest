@@ -11,9 +11,9 @@
     {
       "portId": "in-combo-1",
       "face": "opposite",
-      "xMm": 40,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 42.7,
+      "yMm": 21.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -26,9 +26,9 @@
     {
       "portId": "in-combo-2",
       "face": "opposite",
-      "xMm": 66,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 71.9,
+      "yMm": 21.7,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -41,9 +41,9 @@
     {
       "portId": "out-phones-1",
       "face": "opposite",
-      "xMm": 330,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 396.6,
+      "yMm": 12.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "headphone-level",
       "dir": "out"
@@ -51,9 +51,9 @@
     {
       "portId": "out-phones-2",
       "face": "opposite",
-      "xMm": 350,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 418.4,
+      "yMm": 12.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "headphone-level",
       "dir": "out"
@@ -290,8 +290,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "opposite",
-      "xMm": 455,
-      "yMm": 22,
+      "xMm": 440.4,
+      "yMm": 17.2,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -329,7 +329,32 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1.5
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          176,
+          1105,
+          2049,
+          186
+        ],
+        "fill": true
+      }
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 22.8,
+        "yMm": 2.6,
+        "wMm": 57.5,
+        "hMm": 6,
+        "marginMm": 3
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.adorama.com/col/productManuals/FRCLPLUS8PRE.pdf",
@@ -353,6 +378,11 @@
       "kind": "manual",
       "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/clarett_8_pre_user_guide_v4_english.pdf",
       "note": "Phantom power (review fix, read 2026-11-12 by a research pass): the Clarett+ 8Pre user guide (PDF p.8 front panel, p.23 specifications) says two 48V switches serve the mic inputs 1-4 and 5-8, one red LED each: eight inputs, switched per group of four."
+    },
+    {
+      "kind": "photo",
+      "url": "https://cdn11.bigcommerce.com/s-7exlzlf13h/images/stencil/original/products/141/513/Clarett_8Pre-front-2400-2400__08307.1685463694.jpg?c=3",
+      "note": "Front photo (front.jpg, straight-on, cropped to the face): the positions of the two front combo inputs, the two headphone jacks and the power switch are read from it (confidence photo, 2026-11-15); the pass changes the look only."
     }
   ]
 }

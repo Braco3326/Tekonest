@@ -116,11 +116,12 @@
       "edgeDropMm": 24,
       "edgeSegments": 8,
       "barrelMm": 4,
-      "barrelCentreMm": 195
+      "barrelCentreMm": 195,
+      "bodyGrey": 26
     },
     "budget": {
       "min": 1500,
-      "max": 4000
+      "max": 14000
     },
     "minFilletMm": 15,
     "projection": [
@@ -128,8 +129,773 @@
       "opposite",
       "left"
     ],
-    "projectionShiftMm": {
-      "io": 68
-    }
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          43,
+          54,
+          1100,
+          1850
+        ]
+      },
+      {
+        "face": "io",
+        "file": "rear_rect.png",
+        "crop": [
+          0,
+          0,
+          1068,
+          1806
+        ]
+      },
+      {
+        "face": "left",
+        "file": "side.png",
+        "crop": [
+          157,
+          140,
+          1135,
+          1955
+        ]
+      }
+    ]
+  },
+  "structure": {
+    "parts": [
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 143.5,
+        "yMm": 129.2,
+        "type": "xlr",
+        "params": {
+          "collarMm": 1.2,
+          "riseMm": 27,
+          "wellMm": 27,
+          "zMm": -27,
+          "diaMm": 20.5
+        },
+        "colour": "#2b2b2e",
+        "colour2": "#050506",
+        "note": "MIC/LINE A combo"
+      },
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 144.3,
+        "yMm": 100.1,
+        "type": "xlr",
+        "params": {
+          "collarMm": 1.2,
+          "riseMm": 38.4,
+          "wellMm": 38.4,
+          "zMm": -38.4,
+          "diaMm": 20.5
+        },
+        "colour": "#2b2b2e",
+        "colour2": "#050506",
+        "note": "MIX/THRU XLR A"
+      },
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 177.3,
+        "yMm": 57.7,
+        "type": "iec",
+        "params": {
+          "collarMm": 2.2,
+          "riseMm": 25.3,
+          "wellMm": 25.3,
+          "zMm": -25.3,
+          "widthMm": 18,
+          "heightMm": 12
+        },
+        "colour": "#3351a8",
+        "colour2": "#050506",
+        "note": "IEC inlet, blue shroud"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 176.3,
+        "yMm": 129.2,
+        "params": {
+          "diaMm": 24,
+          "depthMm": 14,
+          "zMm": 0
+        },
+        "colour": "#0b0b0d",
+        "note": "MIC/LINE B combo opening"
+      },
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 176.3,
+        "yMm": 129.2,
+        "type": "xlr",
+        "params": {
+          "collarMm": 1.2,
+          "riseMm": 13.8,
+          "wellMm": 13.8,
+          "zMm": -13.8,
+          "diaMm": 20.5
+        },
+        "colour": "#2b2b2e",
+        "colour2": "#050506",
+        "note": "MIC/LINE B combo"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 176.3,
+        "yMm": 99,
+        "params": {
+          "diaMm": 24,
+          "depthMm": 14,
+          "zMm": 0
+        },
+        "colour": "#0b0b0d",
+        "note": "XLR B opening"
+      },
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 176.3,
+        "yMm": 99,
+        "type": "xlr",
+        "params": {
+          "collarMm": 1.2,
+          "riseMm": 13.8,
+          "wellMm": 13.8,
+          "zMm": -13.8,
+          "diaMm": 20.5
+        },
+        "colour": "#2b2b2e",
+        "colour2": "#050506",
+        "note": "XLR B"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 143.5,
+        "yMm": 64.4,
+        "params": {
+          "diaMm": 24,
+          "depthMm": 14,
+          "zMm": 0
+        },
+        "colour": "#0b0b0d",
+        "note": "MIX OUT XLR opening"
+      },
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 143.5,
+        "yMm": 64.4,
+        "type": "xlr",
+        "params": {
+          "collarMm": 1.2,
+          "riseMm": 13.8,
+          "wellMm": 13.8,
+          "zMm": -13.8,
+          "diaMm": 20.5
+        },
+        "colour": "#2b2b2e",
+        "colour2": "#050506",
+        "note": "MIX OUT XLR"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 141.5,
+        "yMm": 161.6,
+        "params": {
+          "diaMm": 18,
+          "depthMm": 8
+        },
+        "colour": "#0a0a0c",
+        "note": "gain knob well"
+      },
+      {
+        "kind": "knob",
+        "face": "io",
+        "xMm": 141.5,
+        "yMm": 161.6,
+        "params": {
+          "diaMm": 15,
+          "heightMm": 7.7,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.1,
+          "zMm": -8
+        },
+        "colour": "#1e1e21",
+        "colour2": "#d9d9d9",
+        "note": "gain knob"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 174.7,
+        "yMm": 161.6,
+        "params": {
+          "diaMm": 18,
+          "depthMm": 8
+        },
+        "colour": "#0a0a0c",
+        "note": "gain knob well"
+      },
+      {
+        "kind": "knob",
+        "face": "io",
+        "xMm": 174.7,
+        "yMm": 161.6,
+        "params": {
+          "diaMm": 15,
+          "heightMm": 7.7,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.1,
+          "zMm": -8
+        },
+        "colour": "#1e1e21",
+        "colour2": "#d9d9d9",
+        "note": "gain knob"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 208.3,
+        "yMm": 161.6,
+        "params": {
+          "diaMm": 18,
+          "depthMm": 8
+        },
+        "colour": "#0a0a0c",
+        "note": "gain knob well"
+      },
+      {
+        "kind": "knob",
+        "face": "io",
+        "xMm": 208.3,
+        "yMm": 161.6,
+        "params": {
+          "diaMm": 15,
+          "heightMm": 7.7,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.1,
+          "zMm": -8
+        },
+        "colour": "#1e1e21",
+        "colour2": "#d9d9d9",
+        "note": "gain knob"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 231,
+        "yMm": 162.4,
+        "params": {
+          "diaMm": 14,
+          "depthMm": 6,
+          "zMm": 0
+        },
+        "colour": "#0b0b0d",
+        "note": "stereo C jack opening"
+      },
+      {
+        "kind": "socket",
+        "face": "io",
+        "xMm": 231,
+        "yMm": 162.4,
+        "type": "jack",
+        "params": {
+          "collarMm": 1.5,
+          "riseMm": 5.8,
+          "wellMm": 5.8,
+          "zMm": -5.8,
+          "diaMm": 11
+        },
+        "colour": "#9a9ea4",
+        "colour2": "#050506",
+        "note": "stereo C jack"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 207.5,
+        "yMm": 208,
+        "params": {
+          "diaMm": 10,
+          "depthMm": 2.5
+        },
+        "colour": "#0a0a0c",
+        "note": "menu button well"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 207.5,
+        "yMm": 208,
+        "params": {
+          "diaMm": 8,
+          "riseMm": 2.2,
+          "bevelMm": 0.7333333333333334,
+          "zMm": -2.5
+        },
+        "colour": "#2a2a2e",
+        "note": "menu button"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 207.5,
+        "yMm": 195.6,
+        "params": {
+          "diaMm": 10,
+          "depthMm": 2.5
+        },
+        "colour": "#0a0a0c",
+        "note": "menu button well"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 207.5,
+        "yMm": 195.6,
+        "params": {
+          "diaMm": 8,
+          "riseMm": 2.2,
+          "bevelMm": 0.7333333333333334,
+          "zMm": -2.5
+        },
+        "colour": "#2a2a2e",
+        "note": "menu button"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 229.5,
+        "yMm": 202.4,
+        "params": {
+          "diaMm": 33,
+          "depthMm": 9
+        },
+        "colour": "#0a0a0c",
+        "note": "encoder well"
+      },
+      {
+        "kind": "knob",
+        "face": "io",
+        "xMm": 229.5,
+        "yMm": 202.4,
+        "params": {
+          "diaMm": 27,
+          "heightMm": 8.5,
+          "pointer": 0,
+          "bevelMm": 1.5,
+          "taper": 0.06,
+          "zMm": -9
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#060607",
+        "note": "rotary encoder"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 199.9,
+        "yMm": 138.8,
+        "params": {
+          "diaMm": 5.5,
+          "depthMm": 1.2
+        },
+        "colour": "#0a0a0c",
+        "note": "limiter LED well"
+      },
+      {
+        "kind": "led",
+        "face": "io",
+        "xMm": 199.9,
+        "yMm": 138.8,
+        "params": {
+          "diaMm": 3.5,
+          "riseMm": 0.9,
+          "zMm": -1.2
+        },
+        "colour": "#b02a20",
+        "note": "limiter LED"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 199.9,
+        "yMm": 132,
+        "params": {
+          "diaMm": 5.5,
+          "depthMm": 1.2
+        },
+        "colour": "#0a0a0c",
+        "note": "power LED well"
+      },
+      {
+        "kind": "led",
+        "face": "io",
+        "xMm": 199.9,
+        "yMm": 132,
+        "params": {
+          "diaMm": 3.5,
+          "riseMm": 0.9,
+          "zMm": -1.2
+        },
+        "colour": "#3aa65f",
+        "note": "power LED"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 237.5,
+        "yMm": 96.4,
+        "params": {
+          "widthMm": 28,
+          "heightMm": 96,
+          "cornerMm": 2,
+          "depthMm": 2
+        },
+        "colour": "#050506",
+        "note": "vent grille"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 207,
+        "yMm": 66,
+        "params": {
+          "widthMm": 21,
+          "heightMm": 29,
+          "cornerMm": 3,
+          "depthMm": 6
+        },
+        "colour": "#0a0a0c",
+        "note": "power switch well"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 207,
+        "yMm": 66,
+        "params": {
+          "widthMm": 14.4,
+          "heightMm": 20,
+          "cornerMm": 2,
+          "riseMm": 5.5,
+          "bevelMm": 1.6,
+          "zMm": -6
+        },
+        "colour": "#111113",
+        "note": "power rocker (simulator power control)"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 128.5,
+        "yMm": 30,
+        "params": {
+          "diaMm": 6.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "panel screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 128.5,
+        "yMm": 30,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#2a2a2e",
+        "colour2": "#08080a",
+        "note": "panel screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 255,
+        "yMm": 30,
+        "params": {
+          "diaMm": 6.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "panel screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 255,
+        "yMm": 30,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#2a2a2e",
+        "colour2": "#08080a",
+        "note": "panel screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 128.5,
+        "yMm": 215,
+        "params": {
+          "diaMm": 6.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "panel screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 128.5,
+        "yMm": 215,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#2a2a2e",
+        "colour2": "#08080a",
+        "note": "panel screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 255,
+        "yMm": 215,
+        "params": {
+          "diaMm": 6.4,
+          "depthMm": 1
+        },
+        "colour": "#0a0a0c",
+        "note": "panel screw well"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 255,
+        "yMm": 215,
+        "params": {
+          "diaMm": 5,
+          "riseMm": 0.9,
+          "zMm": -1
+        },
+        "colour": "#2a2a2e",
+        "colour2": "#08080a",
+        "note": "panel screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 188,
+        "yMm": 314,
+        "params": {
+          "widthMm": 76,
+          "heightMm": 54,
+          "cornerMm": 3,
+          "depthMm": 1,
+          "zMm": 0
+        },
+        "colour": "#18181b",
+        "note": "blank heat-sink plate (no logo) recess"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 188,
+        "yMm": 314,
+        "params": {
+          "widthMm": 76,
+          "heightMm": 54,
+          "cornerMm": 3,
+          "riseMm": 0.95,
+          "bevelMm": 0.2,
+          "zMm": -1
+        },
+        "colour": "#18181b",
+        "note": "blank heat-sink plate (no logo)"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 175,
+        "yMm": 26,
+        "params": {
+          "widthMm": 74,
+          "heightMm": 30,
+          "cornerMm": 3,
+          "depthMm": 1,
+          "zMm": 0
+        },
+        "colour": "#16161a",
+        "note": "blank badge plate (no logo) recess"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 175,
+        "yMm": 26,
+        "params": {
+          "widthMm": 74,
+          "heightMm": 30,
+          "cornerMm": 3,
+          "riseMm": 0.95,
+          "bevelMm": 0.2,
+          "zMm": -1
+        },
+        "colour": "#16161a",
+        "note": "blank badge plate (no logo)"
+      },
+      {
+        "kind": "pocket",
+        "face": "right",
+        "xMm": 78,
+        "yMm": 306,
+        "params": {
+          "widthMm": 100,
+          "heightMm": 88,
+          "cornerMm": 14,
+          "depthMm": 28
+        },
+        "colour": "#0e0e10",
+        "note": "side handle recess"
+      },
+      {
+        "kind": "rod",
+        "face": "right",
+        "xMm": 78,
+        "yMm": 306,
+        "params": {
+          "x1Mm": -34,
+          "y1Mm": 0,
+          "z1Mm": -18,
+          "x2Mm": 34,
+          "y2Mm": 0,
+          "z2Mm": -18,
+          "diaMm": 18,
+          "segments": 14
+        },
+        "colour": "#141416",
+        "note": "handle grab bar"
+      },
+      {
+        "kind": "pocket",
+        "face": "left",
+        "xMm": 182,
+        "yMm": 311,
+        "params": {
+          "diaMm": 36,
+          "depthMm": 4
+        },
+        "colour": "#0e0e10",
+        "note": "M10 socket plug recess"
+      },
+      {
+        "kind": "ring",
+        "face": "left",
+        "xMm": 182,
+        "yMm": 311,
+        "params": {
+          "diaMm": 42,
+          "innerDiaMm": 36,
+          "riseMm": 1.2,
+          "floorMm": 0,
+          "zMm": -1.2
+        },
+        "colour": "#1b1b1e",
+        "colour2": "#0e0e10",
+        "note": "plug ring"
+      },
+      {
+        "kind": "pocket",
+        "face": "right",
+        "xMm": 168,
+        "yMm": 311,
+        "params": {
+          "diaMm": 36,
+          "depthMm": 4
+        },
+        "colour": "#0e0e10",
+        "note": "M10 socket plug recess"
+      },
+      {
+        "kind": "ring",
+        "face": "right",
+        "xMm": 168,
+        "yMm": 311,
+        "params": {
+          "diaMm": 42,
+          "innerDiaMm": 36,
+          "riseMm": 1.2,
+          "floorMm": 0,
+          "zMm": -1.2
+        },
+        "colour": "#1b1b1e",
+        "colour2": "#0e0e10",
+        "note": "plug ring"
+      },
+      {
+        "kind": "pocket",
+        "face": "bottom",
+        "xMm": 178,
+        "yMm": 175,
+        "params": {
+          "diaMm": 36,
+          "depthMm": 30
+        },
+        "colour": "#0b0b0d",
+        "note": "pole socket 35 mm"
+      },
+      {
+        "kind": "pocket",
+        "face": "left",
+        "xMm": 272,
+        "yMm": 306,
+        "params": {
+          "widthMm": 100,
+          "heightMm": 88,
+          "cornerMm": 14,
+          "depthMm": 28
+        },
+        "colour": "#0e0e10",
+        "note": "side handle recess"
+      },
+      {
+        "kind": "rod",
+        "face": "left",
+        "xMm": 272,
+        "yMm": 306,
+        "params": {
+          "x1Mm": -34,
+          "y1Mm": 0,
+          "z1Mm": -18,
+          "x2Mm": 34,
+          "y2Mm": 0,
+          "z2Mm": -18,
+          "diaMm": 18,
+          "segments": 14
+        },
+        "colour": "#141416",
+        "note": "handle grab bar"
+      }
+    ]
   }
 }

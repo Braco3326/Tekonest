@@ -48,6 +48,7 @@ export const CONSOLE_V2_PARAMS = [
   'slotPlates', 'slotPlateWMm', 'slotPlateHMm', 'slotPlateXMm', 'slotPlateYMm', 'slotPlatePitchMm', 'slotPlateDepthMm',
   'frontRecessWMm', 'frontRecessHMm', 'frontRecessXMm', 'frontRecessYMm', 'frontRecessDepthMm',
   'rearRecessWMm', 'rearRecessHMm', 'rearRecessXMm', 'rearRecessYMm', 'rearRecessDepthMm',
+  'bodyGrey',
 ] as const
 
 /** The corners of a console's outline are rounded with this many fillet radii (the rim bevel runs round them: an arc must be rounder than the bevel is wide). The Python builder uses the same number: CONSOLE_ARC_FACTOR. */
@@ -231,7 +232,7 @@ export function cableV2Natural(p: Readonly<Record<string, number>>): { w: number
 }
 
 /** Every shape the builder knows. Grows by one entry each time a later wave adds a shape. */
-export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box', 'revolve-oval', 'round-base-stand', 'speaker-cabinet-v2', 'cable-assembly-v2'] as const
+export const BUILD_SHAPES = ['cylinder-plug', 'trs-plug', 'rj45-plug', 'rack-box', 'stagebox-rio3224', 'revolve', 'console-wedge', 'speaker-cabinet', 'boom-arm', 'cable-assembly', 'xlr-male-plug', 'iec-inlet', 'iec-cable', 'schuko-plug', 'schuko-socket', 'locking-plug', 'usb-plug', 'dsub-plug', 'terminal-block', 'coax-plug', 'toslink-plug', 'ethercon-plug', 'curved-cabinet', 'power-strip', 'tripod-stand', 'moulded-box', 'revolve-oval', 'round-base-stand', 'speaker-cabinet-v2', 'cable-assembly-v2', 'extruded-body'] as const
 export type BuildShape = (typeof BUILD_SHAPES)[number]
 
 export interface ShapeSpec {
@@ -284,7 +285,7 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
   // An articulated microphone arm in a POSED side view (x along the width, y up, tubes in the plane z = 0): a column on a threaded rod, a shoulder joint
   // at its top, a tube up to a raised elbow (elbowDxMm to the right and elbowDyMm above the shoulder), a second tube down to the head (headDxMm to the
   // right and headDyMm BELOW the elbow), and a head with a mic post hanging headDropMm below it. The width is the column diameter (d). All params in mm.
-  'boom-arm': { kind: 'device', params: ['elbowDxMm', 'elbowDyMm', 'headDxMm', 'headDyMm', 'tubeDiaMm', 'jointDiaMm', 'columnHeightMm', 'rodLenMm', 'headDropMm'], needsMatingOuter: false },
+  'boom-arm': { kind: 'device', params: ['elbowDxMm', 'elbowDyMm', 'headDxMm', 'headDyMm', 'tubeDiaMm', 'jointDiaMm', 'columnHeightMm', 'rodLenMm', 'headDropMm', 'tubeGrey'], needsMatingOuter: false },
   // A cable assembly along z: a D-sub hood with a strain relief at the io end (+z), a trunk, and a fan-out of columns x rows XLR male plugs on a
   // pitchMm grid whose tips form the opposite face (-z). The width and height come from the plug grid, the depth is the whole length.
   'cable-assembly': { kind: 'device', params: ['hoodWidthMm', 'hoodHeightMm', 'hoodLenMm', 'plugDiaMm', 'plugLenMm', 'tailLenMm', 'trunkDiaMm', 'pitchMm', 'columns', 'rows'], needsMatingOuter: false },
@@ -319,6 +320,14 @@ export const SHAPE_SPECS: Record<BuildShape, ShapeSpec> = {
     params: ['planFrontMm', 'sideBulgeMm', 'midWidthMm', 'rearWidthMm', 'midDepthMm', 'frontRadiusMm', 'sideRadiusMm', 'backRadiusMm', 'edgeRadiusMm', 'edgeDropMm', 'edgeSegments', 'crownMm', 'barrelMm', 'barrelCentreMm', 'footMm', 'footWidthMm', 'footDepthMm', 'bodyGrey', 'wooferRingMm', 'wooferYMm', 'tweeterRingMm', 'tweeterYMm', 'ringDepthMm', 'waveguideMm', 'waveguideDepthMm'],
     needsMatingOuter: false,
     usesPorts: true,
+  },
+  // A body made of ONE convex outline seen from the front (build.outline, mm, counter-clockwise, origin on the floor in the middle: an octagon with cut corners, a rounded
+  // trapezoid) extruded through the depth, each outline corner rounded by cornerRadiusMm, with its own edge radius at the front (frontRadiusMm, frontSegments) and at the rear
+  // (rearRadiusMm, rearSegments); bodyGrey 20 to 200. Ports and recesses are structure pockets. The builder measures the smaller edge radius for the 'fillet' gate.
+  'extruded-body': {
+    kind: 'device',
+    params: ['cornerRadiusMm', 'frontRadiusMm', 'rearRadiusMm', 'frontSegments', 'rearSegments', 'bodyGrey'],
+    needsMatingOuter: false,
   },
   // A power strip lying with its outlets facing the io face: a bar along x with a rounded section (filletMm) and tapered ends (endTaperMm), one IEC C13 outlet
   // recess socketDepthMm deep per io port (the port sits on its floor, so each io port needs insetMm = socketDepthMm; the port x / y are the socket centres),
@@ -641,6 +650,7 @@ function validateConsoleWedge(spec: AssetSpecT): string[] {
   }
   whole('filletSegments', 1, 12)
   whole('slotPlates', 1, 4)
+  if (p.bodyGrey !== undefined && !(p.bodyGrey >= 20 && p.bodyGrey <= 200)) errors.push(`${id}: bodyGrey (${p.bodyGrey}) must be a grey level from 20 to 200`)
   if (p.filletSegments !== undefined && p.filletMm === undefined) errors.push(`${id}: filletSegments has no effect without filletMm`)
   if (p.filletMm !== undefined && p.filletMm * 2 >= Math.min(w, lowest)) errors.push(`${id}: filletMm (${p.filletMm}) must be smaller than half the smallest side (${Math.min(w, lowest) / 2} mm)`)
   if (p.armRestMm !== undefined) {

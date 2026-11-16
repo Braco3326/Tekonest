@@ -61,7 +61,29 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 0.8
+    "minFilletMm": 0.8,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          2,
+          232,
+          996,
+          86
+        ]
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          2,
+          232,
+          996,
+          86
+        ]
+      }
+    ]
   },
   "sources": [
     {
@@ -94,21 +116,19 @@
     "blankRects": [
       {
         "face": "io",
-        "xMm": 3,
-        "yMm": 26,
-        "wMm": 26,
-        "hMm": 15,
-        "marginMm": 3,
-        "fill": "#b8e9ef"
+        "xMm": 24,
+        "yMm": 5,
+        "wMm": 6,
+        "hMm": 36,
+        "marginMm": 1.2
       },
       {
         "face": "io",
-        "xMm": 455,
-        "yMm": 10,
-        "wMm": 26,
-        "hMm": 26,
-        "marginMm": 3,
-        "fill": "#b8e9ef"
+        "xMm": 459.5,
+        "yMm": 8.5,
+        "wMm": 7.5,
+        "hMm": 28,
+        "marginMm": 1.2
       },
       {
         "face": "opposite",

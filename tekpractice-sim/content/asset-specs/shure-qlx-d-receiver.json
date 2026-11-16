@@ -69,7 +69,32 @@
       "min": 600,
       "max": 2000
     },
-    "minFilletMm": 2
+    "minFilletMm": 2,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          153,
+          1398,
+          2993,
+          630
+        ],
+        "fill": true
+      }
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 4.4,
+        "yMm": 25.5,
+        "wMm": 29,
+        "hMm": 12,
+        "marginMm": 6
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://pubs.shure.com/view/guide/QLXD/en-US.pdf",

@@ -38,12 +38,15 @@
   "build": {
     "shape": "moulded-box",
     "params": {
-      "cornerRadiusMm": 5,
-      "edgeRadiusMm": 2.5,
-      "edgeDropMm": 2.5,
+      "cornerRadiusMm": 4,
+      "edgeRadiusMm": 2,
+      "edgeDropMm": 2,
       "bottomEdgeRadiusMm": 2,
       "edgeSegments": 8,
-      "bodyGrey": 45
+      "bodyGrey": 24,
+      "seamHeightMm": 20,
+      "seamWidthMm": 1,
+      "seamDepthMm": 0.6
     },
     "projection": [
       "top",
@@ -53,7 +56,20 @@
       "min": 500,
       "max": 2000
     },
-    "minFilletMm": 2
+    "minFilletMm": 2,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top.jpg",
+        "crop": [
+          422,
+          437,
+          1270,
+          454
+        ],
+        "fill": true
+      }
+    ]
   },
   "sources": [
     {
@@ -71,5 +87,25 @@
       "url": "https://www.getdante.com/wp-content/uploads/2025/09/AVIOInstall-ProductSalesGuide-formatted-v1.pdf",
       "note": "Port positions are GUESSES (no panel drawing). build: a moulded box, exact bounding box; the rounding is an ESTIMATE. build.projection: our own generic artwork; no photo, no logo, no lettering."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 16.5,
+        "yMm": 22.7,
+        "wMm": 43,
+        "hMm": 8.2,
+        "marginMm": 4
+      },
+      {
+        "face": "top",
+        "xMm": 126.5,
+        "yMm": 20.3,
+        "wMm": 11.5,
+        "hMm": 13,
+        "marginMm": 4
+      }
+    ]
+  }
 }

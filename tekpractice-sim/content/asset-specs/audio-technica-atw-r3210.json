@@ -59,7 +59,40 @@
       "min": 600,
       "max": 2000
     },
-    "minFilletMm": 2
+    "minFilletMm": 2,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          145,
+          819,
+          1709,
+          353
+        ],
+        "fill": true
+      }
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 5.8,
+        "yMm": 32.5,
+        "wMm": 34.5,
+        "hMm": 6.2,
+        "marginMm": 6
+      },
+      {
+        "face": "opposite",
+        "xMm": 194.5,
+        "yMm": 33.2,
+        "wMm": 13,
+        "hMm": 3.8,
+        "marginMm": 6
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.fullcompass.com/prod/548523-audio-technica-atw-r3210-3000-series-4th-gen-uhf-diversity-receiver",

@@ -1,11 +1,14 @@
 /**
  * The two shipped consoles on console-wedge v2 (Wave 3, task 3.2): what their specs declare, the ports against the modelled detail, and the
  * manifest rows. No Blender: the geometry itself is built and measured in consoleWedge.test.ts and by the gates when the assets are built.
+ * Structure rebuild 2026-11-15: both consoles carry a structure sheet (real keys, faders, knobs, sockets) and are hero-tier hybrids: their declared budget now runs up to the hero
+ * ceiling, the QL1's two option-slot plates became one rear recess with the XLR ports on its floor, and the shipped triangle counts follow the specs' own budgets.
  */
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { flatZonesFor } from '../../../tools/assets3d/flatZones'
+import { TRIANGLE_CEILING } from '../../../tools/assets3d/gates'
 import { loadSpecs } from '../../../tools/assets3d/loadSpecs'
 import { CONSOLE_V2_PARAMS, validateBuild } from '../../../tools/assets3d/shapes'
 import type { AssetSpecT } from '../../../tools/assets3d/specSchema'
@@ -18,11 +21,12 @@ describe('yamaha-ql1 on console-wedge v2', () => {
   const ql1 = spec('yamaha-ql1')
   const p = ql1.build?.params ?? {}
 
-  it('declares the v2 params, a budget up to 6000 triangles and a minimum fillet; the build block validates', () => {
+  it('declares the v2 params, a budget up to the hero ceiling (15000 triangles) and a minimum fillet; the build block validates', () => {
     expect(ql1.build?.shape).toBe('console-wedge')
     for (const name of Object.keys(p)) expect(CONSOLE_V2_PARAMS as readonly string[]).toContain(name)
-    for (const name of ['filletMm', 'armRestMm', 'cheekMm', 'baseMm', 'feetMm', 'slotPlates', 'frontRecessWMm']) expect(p[name], name).toBeGreaterThan(0)
-    expect(ql1.build?.budget?.max).toBe(6000)
+    for (const name of ['filletMm', 'armRestMm', 'cheekMm', 'baseMm', 'feetMm', 'rearRecessWMm', 'frontRecessWMm']) expect(p[name], name).toBeGreaterThan(0)
+    expect(ql1.tier).toBe('hero')
+    expect(ql1.build?.budget?.max).toBe(TRIANGLE_CEILING[ql1.tier])
     expect(ql1.build?.minFilletMm).toBeGreaterThan(0)
     expect(ql1.build?.minFilletMm).toBeLessThanOrEqual(p.filletMm)
     expect(validateBuild(ql1)).toEqual([])
@@ -33,19 +37,19 @@ describe('yamaha-ql1 on console-wedge v2', () => {
     expect(layout.topProfile).toEqual(ql1.build?.profile)
   })
 
-  it('has the two option slots where the rear photo has them: 121 x 40 mm plates at x 193.6 and 320.6 mm, no port inside them', () => {
-    expect(p.slotPlates).toBe(2)
-    const x0 = [p.slotPlateXMm, p.slotPlateXMm + p.slotPlatePitchMm]
-    expect(x0[0]).toBeCloseTo(193.6, 6)
-    expect(x0[1]).toBeCloseTo(320.6, 6)
+  it('has the rear recess where the rear photo has it (444 x 76 mm, 8 mm deep): the five XLR ports sit on its floor, the Dante and power ports lie clear of it', () => {
+    expect(p.rearRecessWMm).toBe(444)
+    expect(p.rearRecessHMm).toBe(76)
+    expect(p.rearRecessDepthMm).toBe(8)
     for (const port of ql1.ports) {
       const r = (port.openingMm ?? 24) / 2
-      for (const x of x0) {
-        const clear = port.xMm + r <= x || port.xMm - r >= x + p.slotPlateWMm || port.yMm - r >= p.slotPlateYMm + p.slotPlateHMm || port.yMm + r <= p.slotPlateYMm
-        expect(clear, `${port.portId} against the slot plate at ${x} mm`).toBe(true)
-      }
-      expect(port.insetMm, `${port.portId} sits on the rear plane`).toBeUndefined()
+      const inside = port.xMm - r >= p.rearRecessXMm && port.xMm + r <= p.rearRecessXMm + p.rearRecessWMm && port.yMm - r >= p.rearRecessYMm && port.yMm + r <= p.rearRecessYMm + p.rearRecessHMm
+      const clear = port.xMm + r <= p.rearRecessXMm || port.xMm - r >= p.rearRecessXMm + p.rearRecessWMm || port.yMm - r >= p.rearRecessYMm + p.rearRecessHMm || port.yMm + r <= p.rearRecessYMm
+      expect(inside || clear, `${port.portId} is cut by the edge of the rear recess`).toBe(true)
+      if (inside) expect(port.insetMm, `${port.portId} sits on the recess floor`).toBe(p.rearRecessDepthMm)
+      else expect(port.insetMm, `${port.portId} sits on the rear plane`).toBeUndefined()
     }
+    expect(ql1.ports.filter((q) => q.insetMm !== undefined).map((q) => q.portId).sort()).toEqual(['in-mic-1', 'in-mic-2', 'out-main-l', 'out-main-r', 'out-mix-1'])
   })
 
   it('re-measured rear ports: the connector centres on the picture crop 128,132,1731,1006 of rear.jpg (3.6987 px/mm), to the tenth of a millimetre', () => {
@@ -82,10 +86,10 @@ describe('yamaha-ql1 on console-wedge v2', () => {
     expect(ql1.ports.find((q) => q.portId === 'in-mic-1')?.yMm).toBe(ql1.ports.find((q) => q.portId === 'in-mic-2')?.yMm)
   })
 
-  it('is shipped as a hybrid with the detail and fillet gates, between 1000 and 6000 triangles', () => {
+  it('is shipped as a hybrid with the detail and fillet gates, inside its declared budget (1000 to 15000 triangles)', () => {
     const r = row('yamaha-ql1')
-    expect(r.tris).toBeGreaterThan(1000)
-    expect(r.tris).toBeLessThanOrEqual(6000)
+    expect(r.tris).toBeGreaterThan(ql1.build?.budget?.min ?? 1000)
+    expect(r.tris).toBeLessThanOrEqual(ql1.build?.budget?.max ?? TRIANGLE_CEILING[ql1.tier])
     for (const g of ['detail', 'fillet', 'portSurface', 'size']) expect(r.gates.find((x) => x.gate === g)?.ok, g).toBe(true)
   })
 })
@@ -94,10 +98,11 @@ describe('axia-iq on console-wedge v2', () => {
   const axia = spec('axia-iq')
   const p = axia.build?.params ?? {}
 
-  it('declares the v2 params, a budget of 1500 to 3500 triangles and a minimum fillet; the build block validates', () => {
+  it('declares the v2 params, a budget of 1500 triangles up to the hero ceiling (15000) and a minimum fillet; the build block validates', () => {
     expect(axia.build?.shape).toBe('console-wedge')
     for (const name of Object.keys(p)) expect(CONSOLE_V2_PARAMS as readonly string[]).toContain(name)
-    expect(axia.build?.budget).toEqual({ min: 1500, max: 3500 })
+    expect(axia.tier).toBe('hero')
+    expect(axia.build?.budget).toEqual({ min: 1500, max: TRIANGLE_CEILING[axia.tier] })
     expect(axia.build?.minFilletMm).toBeGreaterThan(0)
     expect(validateBuild(axia)).toEqual([])
   })
@@ -128,10 +133,10 @@ describe('axia-iq on console-wedge v2', () => {
     expect(axia.ports.every((q) => q.confidence === 'guess')).toBe(true)
   })
 
-  it('is shipped with the detail and fillet gates, between 1500 and 3500 triangles', () => {
+  it('is shipped with the detail and fillet gates, inside its declared budget (1500 to 15000 triangles)', () => {
     const r = row('axia-iq')
-    expect(r.tris).toBeGreaterThanOrEqual(1500)
-    expect(r.tris).toBeLessThanOrEqual(3500)
+    expect(r.tris).toBeGreaterThanOrEqual(axia.build?.budget?.min ?? 1500)
+    expect(r.tris).toBeLessThanOrEqual(axia.build?.budget?.max ?? TRIANGLE_CEILING[axia.tier])
     for (const g of ['detail', 'fillet', 'portSurface', 'size']) expect(r.gates.find((x) => x.gate === g)?.ok, g).toBe(true)
   })
 })

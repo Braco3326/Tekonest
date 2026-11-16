@@ -190,6 +190,22 @@ describe('AssetSpec build.projectionShiftMm', () => {
   })
 })
 
+describe('AssetSpec build.photos', () => {
+  const base = (): AssetSpecT => specFor(fresh(), 'qsc-k12-2')
+  const parse = (photos: unknown): boolean => AssetSpec.safeParse({ ...base(), build: { shape: 'rack-box', projection: ['io', 'opposite'], photos } }).success
+  it('accepts a photo per face with an optional pixel crop and fill', () => {
+    expect(parse([{ face: 'opposite', file: 'front.png' }])).toBe(true)
+    expect(parse([{ face: 'opposite', file: 'front.jpg', crop: [10, 20, 1990, 187], fill: true }, { face: 'top', file: 'top.jpg' }])).toBe(true)
+  })
+  it('rejects an unknown face, an empty name, a bad crop and an unknown key', () => {
+    expect(parse([{ face: 'bottom', file: 'front.png' }])).toBe(false)
+    expect(parse([{ face: 'opposite', file: '' }])).toBe(false)
+    expect(parse([{ face: 'opposite', file: 'a.png', crop: [0, 0, 0, 10] }])).toBe(false)
+    expect(parse([{ face: 'opposite', file: 'a.png', crop: [0, 0, 10] }])).toBe(false)
+    expect(parse([{ face: 'opposite', file: 'a.png', extra: 1 }])).toBe(false)
+  })
+})
+
 describe('AssetSpec texture block (blank bands)', () => {
   const base = (): AssetSpecT => specFor(fresh(), 'qsc-k12-2')
   it('accepts blank bands with and without a fill', () => {

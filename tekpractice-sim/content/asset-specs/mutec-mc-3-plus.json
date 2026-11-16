@@ -11,9 +11,9 @@
     {
       "portId": "out-wclk-1",
       "face": "io",
-      "xMm": 14,
-      "yMm": 31,
-      "confidence": "guess",
+      "xMm": 10.4,
+      "yMm": 32.3,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "out",
@@ -24,9 +24,9 @@
     {
       "portId": "out-wclk-2",
       "face": "io",
-      "xMm": 30,
-      "yMm": 31,
-      "confidence": "guess",
+      "xMm": 28.7,
+      "yMm": 32.3,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "out",
@@ -37,9 +37,9 @@
     {
       "portId": "out-wclk-3",
       "face": "io",
-      "xMm": 46,
-      "yMm": 31,
-      "confidence": "guess",
+      "xMm": 46.7,
+      "yMm": 32.3,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "out",
@@ -50,9 +50,9 @@
     {
       "portId": "out-wclk-4",
       "face": "io",
-      "xMm": 62,
-      "yMm": 31,
-      "confidence": "guess",
+      "xMm": 10.4,
+      "yMm": 16.2,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "out",
@@ -63,9 +63,9 @@
     {
       "portId": "out-wclk-5",
       "face": "io",
-      "xMm": 78,
-      "yMm": 31,
-      "confidence": "guess",
+      "xMm": 28.7,
+      "yMm": 16.2,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "out",
@@ -76,9 +76,9 @@
     {
       "portId": "out-wclk-6",
       "face": "io",
-      "xMm": 14,
-      "yMm": 11,
-      "confidence": "guess",
+      "xMm": 46.7,
+      "yMm": 16.2,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "out",
@@ -89,9 +89,9 @@
     {
       "portId": "in-wclk",
       "face": "io",
-      "xMm": 30,
-      "yMm": 11,
-      "confidence": "guess",
+      "xMm": 150.2,
+      "yMm": 16.4,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "in"
@@ -99,9 +99,9 @@
     {
       "portId": "out-spdif-rca",
       "face": "io",
-      "xMm": 46,
-      "yMm": 11,
-      "confidence": "guess",
+      "xMm": 62.9,
+      "yMm": 30,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "spdif",
       "dir": "out"
@@ -109,9 +109,9 @@
     {
       "portId": "in-spdif-rca",
       "face": "io",
-      "xMm": 62,
-      "yMm": 11,
-      "confidence": "guess",
+      "xMm": 130.1,
+      "yMm": 30,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "spdif",
       "dir": "in"
@@ -119,9 +119,9 @@
     {
       "portId": "out-spdif-opt",
       "face": "io",
-      "xMm": 78,
-      "yMm": 11,
-      "confidence": "guess",
+      "xMm": 62.9,
+      "yMm": 14.4,
+      "confidence": "photo",
       "connector": "toslink",
       "signal": "spdif",
       "dir": "out"
@@ -129,9 +129,9 @@
     {
       "portId": "in-spdif-opt",
       "face": "io",
-      "xMm": 90,
-      "yMm": 11,
-      "confidence": "guess",
+      "xMm": 130.1,
+      "yMm": 14.4,
+      "confidence": "photo",
       "connector": "toslink",
       "signal": "spdif",
       "dir": "in"
@@ -139,9 +139,9 @@
     {
       "portId": "in-aes3",
       "face": "io",
-      "xMm": 108,
-      "yMm": 21,
-      "confidence": "guess",
+      "xMm": 109.9,
+      "yMm": 20.6,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "aes3",
       "dir": "in"
@@ -149,9 +149,9 @@
     {
       "portId": "out-aes3",
       "face": "io",
-      "xMm": 134,
-      "yMm": 21,
-      "confidence": "guess",
+      "xMm": 85.9,
+      "yMm": 20.6,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -159,9 +159,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 170,
-      "yMm": 21,
-      "confidence": "guess",
+      "xMm": 178,
+      "yMm": 20.6,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -172,8 +172,8 @@
       "controlId": "power",
       "kind": "button",
       "face": "opposite",
-      "xMm": 180,
-      "yMm": 21,
+      "xMm": 23.4,
+      "yMm": 11.3,
       "axis": "z",
       "sizeMm": {
         "w": 9,
@@ -191,8 +191,8 @@
       "filletSegments": 12,
       "rearInsetMm": 6,
       "seamMm": 20,
-      "feetMm": 2.5,
-      "feetDiaMm": 10,
+      "feetMm": 5,
+      "feetDiaMm": 28,
       "plateRgb": 12106946,
       "bodyRgb": 1908514
     },
@@ -204,7 +204,31 @@
       "min": 800,
       "max": 3500
     },
-    "minFilletMm": 1.2
+    "minFilletMm": 1.2,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          105,
+          118,
+          3275,
+          702
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          103,
+          112,
+          3227,
+          690
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.markertek.com/Attachments/Manuals/MUTEC/8015-102-Manual.pdf",
@@ -225,5 +249,49 @@
     "bidir-s-pdif-coaxial-in-out-2": "out-spdif-rca",
     "bidir-s-pdif-optical-in-out-1": "in-spdif-opt",
     "bidir-s-pdif-optical-in-out-2": "out-spdif-opt"
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 10.5,
+        "yMm": 29.8,
+        "wMm": 27,
+        "hMm": 10.5,
+        "marginMm": 2
+      },
+      {
+        "face": "opposite",
+        "xMm": 19,
+        "yMm": 20.5,
+        "wMm": 15.5,
+        "hMm": 6.8,
+        "marginMm": 2
+      },
+      {
+        "face": "io",
+        "xMm": 75.5,
+        "yMm": 34,
+        "wMm": 16,
+        "hMm": 5.8,
+        "marginMm": 1.5
+      },
+      {
+        "face": "io",
+        "xMm": 91.5,
+        "yMm": 34.2,
+        "wMm": 13.5,
+        "hMm": 5.4,
+        "marginMm": 1.5
+      },
+      {
+        "face": "io",
+        "xMm": 105,
+        "yMm": 36.6,
+        "wMm": 8.5,
+        "hMm": 3,
+        "marginMm": 1.2
+      }
+    ]
   }
 }

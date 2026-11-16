@@ -11,9 +11,9 @@
     {
       "portId": "in-combo-1",
       "face": "io",
-      "xMm": 40,
-      "yMm": 78,
-      "confidence": "guess",
+      "xMm": 339.1,
+      "yMm": 58.8,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -25,9 +25,9 @@
     {
       "portId": "in-combo-2",
       "face": "io",
-      "xMm": 66.4,
-      "yMm": 78,
-      "confidence": "guess",
+      "xMm": 311.6,
+      "yMm": 58.8,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -39,9 +39,9 @@
     {
       "portId": "in-combo-3",
       "face": "io",
-      "xMm": 92.8,
-      "yMm": 78,
-      "confidence": "guess",
+      "xMm": 284.1,
+      "yMm": 58.8,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -53,9 +53,9 @@
     {
       "portId": "in-combo-4",
       "face": "io",
-      "xMm": 119.2,
-      "yMm": 78,
-      "confidence": "guess",
+      "xMm": 256.8,
+      "yMm": 58.8,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -67,9 +67,9 @@
     {
       "portId": "in-combo-5",
       "face": "io",
-      "xMm": 145.6,
-      "yMm": 78,
-      "confidence": "guess",
+      "xMm": 229.4,
+      "yMm": 58.8,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -81,9 +81,9 @@
     {
       "portId": "in-combo-6",
       "face": "io",
-      "xMm": 172,
-      "yMm": 78,
-      "confidence": "guess",
+      "xMm": 201.9,
+      "yMm": 58.8,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -95,9 +95,9 @@
     {
       "portId": "in-line-7",
       "face": "io",
-      "xMm": 40,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 175.3,
+      "yMm": 63.9,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "line-level-consumer",
       "dir": "in"
@@ -105,9 +105,9 @@
     {
       "portId": "in-line-8",
       "face": "io",
-      "xMm": 58,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 175.3,
+      "yMm": 50.3,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "line-level-consumer",
       "dir": "in"
@@ -115,9 +115,9 @@
     {
       "portId": "out-main-l",
       "face": "io",
-      "xMm": 90,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 151.5,
+      "yMm": 55.9,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -125,9 +125,9 @@
     {
       "portId": "out-main-r",
       "face": "io",
-      "xMm": 116.4,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 126.2,
+      "yMm": 55.9,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -135,9 +135,9 @@
     {
       "portId": "out-rca-l",
       "face": "io",
-      "xMm": 152,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 102.4,
+      "yMm": 63.9,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "line-level-consumer",
       "dir": "out"
@@ -145,9 +145,9 @@
     {
       "portId": "out-rca-r",
       "face": "io",
-      "xMm": 170,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 102.4,
+      "yMm": 51,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "line-level-consumer",
       "dir": "out"
@@ -155,9 +155,9 @@
     {
       "portId": "usb",
       "face": "io",
-      "xMm": 200,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 172.9,
+      "yMm": 16.9,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -165,9 +165,9 @@
     {
       "portId": "net-stream",
       "face": "io",
-      "xMm": 230,
-      "yMm": 45,
-      "confidence": "guess",
+      "xMm": 195.5,
+      "yMm": 21.6,
+      "confidence": "photo",
       "connector": "rj45",
       "signal": "ethernet-control",
       "dir": "bidir"
@@ -175,9 +175,9 @@
     {
       "portId": "out-phones",
       "face": "opposite",
-      "xMm": 30,
-      "yMm": 50,
-      "confidence": "guess",
+      "xMm": 30.5,
+      "yMm": 17.5,
+      "confidence": "photo",
       "connector": "trs-35mm",
       "signal": "headphone-level",
       "dir": "out"
@@ -192,23 +192,21 @@
         100
       ],
       [
-        40,
+        22,
         100
       ],
       [
-        110,
-        86
+        213,
+        56
       ],
       [
         242,
-        70
+        52
       ]
     ],
     "params": {
       "filletMm": 3,
       "filletSegments": 5,
-      "cheekMm": 6,
-      "baseMm": 28,
       "feetMm": 4,
       "feetWidthMm": 18,
       "feetFromSideMm": 22,
@@ -223,7 +221,18 @@
       "min": 600,
       "max": 6000
     },
-    "minFilletMm": 2.5
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rot180.png",
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear_dark.png"
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://img.audiomania.ru/data/roland_vr-6hd.pdf",
@@ -247,7 +256,48 @@
       "kind": "manual",
       "url": "https://leisuretec.co.uk/cdn/shop/files/VR-6HD_Startup_Guide.pdf",
       "note": "Mains (review fix, read 2026-11-12 by a research pass): the VR-6HD startup guide (a retailer host copy) says power comes from an external AC adaptor into the DC IN jack, with a POWER switch on the rear. No mains inlet is modelled for this device and the entry says so."
+    },
+    {
+      "kind": "photo",
+      "url": "https://static.roland.com/assets/images/products/gallery/vr-6hd_rear_gal.jpg",
+      "note": "Rear, straight-on (assets-source/roland-vr-6hd/photos/rear.jpg, 1680x449), 3D quality pass 2026-11-15: the io picture is the whole photo (the product fills it, feet to the bottom edge), 1680 px = 370 mm (0.2202 mm/px) and 449 px = 100 mm (0.2227 mm/px), y from the bottom of the feet. Connector centres read on a 1x zoom (+/- 4 px): AUDIO IN combo jacks 1 to 6 (1 rightmost seen from behind, pitch 124 px), RCA 7/L and 8/R, RCA 2/L and 2/R, XLR 1/R and 1/L (AUDIO OUT), USB STREAM, DIRECT STREAM RJ45. Now confidence photo. out-phones (front, opposite face) read on front.jpg: 30.5 mm from the left, 17.5 mm above the table. The top picture is top.jpg (crop 0,22,1617,1028, the rear jacks above the chassis cut off) turned 180 degrees so the rear is at the bottom of the face. The side profile (rear 100 mm incl. the knob height, the surface falling to about 56 mm at 213 mm and 52 mm at the front lip) is read from side-left.jpg. Sizes and catalogue unchanged."
     }
   ],
-  "powerNote": "alimentation non modélisée : l'appareil utilise un adaptateur secteur externe"
+  "powerNote": "alimentation non modélisée : l'appareil utilise un adaptateur secteur externe",
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 140,
+        "yMm": 2,
+        "wMm": 90,
+        "hMm": 19,
+        "marginMm": 3
+      },
+      {
+        "face": "top",
+        "xMm": 121,
+        "yMm": 24,
+        "wMm": 48,
+        "hMm": 14,
+        "marginMm": 3
+      },
+      {
+        "face": "top",
+        "xMm": 12,
+        "yMm": 25,
+        "wMm": 34,
+        "hMm": 13,
+        "marginMm": 3
+      },
+      {
+        "face": "io",
+        "xMm": 143,
+        "yMm": 81,
+        "wMm": 83,
+        "hMm": 11,
+        "marginMm": 3
+      }
+    ]
+  }
 }

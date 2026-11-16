@@ -116,3 +116,21 @@ export function ringDiameterOnFaceM(ringM: number, faceNormalY: number | null, s
   if (!Number.isFinite(smaller) || smaller <= 0) return ringM
   return Math.min(ringM, END_FACE_RING_SHARE * smaller)
 }
+
+/**
+ * A ring is never wider than the distance to its nearest neighbour, so two rings never overlap whatever the real pitch of the connectors is (a Thunderbolt pair
+ * 8 mm apart, XLRs 23.3 mm apart against a 23.4 mm ring). `ringsM[i]` is the table diameter of port i and `pointsM[i]` its position, both in the same unit and
+ * frame; the result has the same unit. Two circles with diameters each at most the distance between their centres touch at worst. A lone port is unchanged.
+ * Positions on different faces are far apart in 3-D, so one nearest-neighbour search over all ports does the job without knowing the faces.
+ */
+export function capRingsToNeighbours(ringsM: readonly number[], pointsM: readonly { x: number; y: number; z: number }[]): number[] {
+  return ringsM.map((ring, i) => {
+    let nearest = Infinity
+    for (let j = 0; j < pointsM.length; j++) {
+      if (j === i) continue
+      const d = Math.hypot(pointsM[i].x - pointsM[j].x, pointsM[i].y - pointsM[j].y, pointsM[i].z - pointsM[j].z)
+      if (d < nearest) nearest = d
+    }
+    return Number.isFinite(nearest) && nearest > 0 ? Math.min(ring, nearest) : ring
+  })
+}

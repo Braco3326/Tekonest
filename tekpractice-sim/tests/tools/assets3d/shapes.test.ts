@@ -216,7 +216,7 @@ describe('boom-arm (articulated mic arm in a posed side view)', () => {
   const device: Partial<AssetSpecT> = { kind: 'device', tier: 'standard', mating: undefined, realSizeMm: { w: 525, h: 543, d: 51 }, ports: [] }
   it('is a device shape that takes the pose and the tube sizes as params, and needs no profile', () => {
     expect(SHAPE_SPECS['boom-arm']).toMatchObject({ kind: 'device', needsMatingOuter: false })
-    expect([...SHAPE_SPECS['boom-arm'].params].sort()).toEqual(['columnHeightMm', 'elbowDxMm', 'elbowDyMm', 'headDropMm', 'headDxMm', 'headDyMm', 'jointDiaMm', 'rodLenMm', 'tubeDiaMm'])
+    expect([...SHAPE_SPECS['boom-arm'].params].sort()).toEqual(['columnHeightMm', 'elbowDxMm', 'elbowDyMm', 'headDropMm', 'headDxMm', 'headDyMm', 'jointDiaMm', 'rodLenMm', 'tubeDiaMm', 'tubeGrey'])
     expect(validateBuild(specWith({ shape: 'boom-arm', params: { elbowDxMm: 157, elbowDyMm: 370 } }, device))).toEqual([])
     expect(validateBuild(specWith({ shape: 'boom-arm', params: { tubeDiaMm: 0 } }, device))[0]).toMatch(/tubeDiaMm/)
   })

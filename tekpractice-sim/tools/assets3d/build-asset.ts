@@ -67,6 +67,7 @@ import { normaliseLook } from './look'
 import { parsePhotoArg, photoProjection } from './photoProjection'
 import type { PhotoArg } from './photoProjection'
 import { renderProjection, shiftPictureX } from './projection'
+import { maskPartsInPicture, partFootprints } from './structure'
 import { orientSlab } from './slab'
 import type { Projection, ProjectionFace } from './projection'
 import { checkPortSurface, checkProportionDrift, checkTextures, checkValidator, declaredGates, runGates, DATA_TEXTURE_MAX_PX, textureMaxPx, TRIANGLE_CEILING } from './gates'
@@ -456,12 +457,20 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
   }
   let generic = false
   if (scripted && opts.projectFrom === undefined && (opts.projectPhotos ?? []).length === 0) {
-    // No picture was asked for: a device that has a generic panel gets it (the picture belongs to the device, not to one command line).
+    // No picture was asked for: the spec's own photos (build.photos) and, for the other faces, the device's generic panel (the picture belongs to the device, not to one command line).
     const wanted = spec.build?.projection ?? 'io'
-    const panel = await d.genericPanelPhotos(id, Array.isArray(wanted) ? wanted : [wanted])
-    if (panel.length > 0) {
-      opts = { ...opts, projectPhotos: panel }
-      generic = true
+    const wantedFaces = Array.isArray(wanted) ? wanted : [wanted]
+    const fromSpec: PhotoArg[] = (spec.build?.photos ?? []).map((p) => ({
+      face: p.face,
+      file: join(d.paths.sourceDir, id, 'photos', p.file),
+      ...(p.crop ? { crop: p.crop } : {}),
+      ...(p.fill ? { fillBackground: true } : {}),
+    }))
+    const panel = await d.genericPanelPhotos(id, wantedFaces.filter((f) => !fromSpec.some((p) => p.face === f)))
+    const all = [...fromSpec, ...panel]
+    if (all.length > 0) {
+      opts = { ...opts, projectPhotos: all }
+      generic = fromSpec.length === 0
     }
   }
   const hybrid = scripted && (opts.projectFrom !== undefined || (opts.projectPhotos ?? []).length > 0)
@@ -552,7 +561,9 @@ export async function buildAsset(id: string, opts: BuildOpts, deps: Partial<Buil
             // a picture may be moved sideways (spec build.projectionShiftMm) so that it moves with the ports it shows
             const shifted = async (pr: Projection): Promise<Uint8Array> => {
               const mm = face === 'wrap' ? undefined : spec.build?.projectionShiftMm?.[face]
-              return mm ? shiftPictureX(pr.png, mm, pr.faceMm.w) : pr.png
+              const png = mm ? await shiftPictureX(pr.png, mm, pr.faceMm.w) : pr.png
+              // the parts of the structure sheet are modelled: their printed copies in the picture are painted out
+              return spec.structure && face !== 'wrap' ? maskPartsInPicture(png, pr.faceMm, partFootprints(spec, face)) : png
             }
             if (photo) {
               projections.push({ face, png: await shifted(await d.photoProjection(photo, face, spec.realSizeMm)) })

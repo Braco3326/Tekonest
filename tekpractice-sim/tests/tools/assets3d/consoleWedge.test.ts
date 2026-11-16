@@ -36,13 +36,14 @@ const OLD_WEDGES: { id: string; size: { w: number; h: number; d: number }; profi
 /** A console spec of the given size and profile (ports and controls are replaced: the builder only reads them through plan.ports and plan.flatZones). */
 function wedgeSpec(id: string, size: { w: number; h: number; d: number }, profile: Profile, params: Record<string, number>, over: Partial<AssetSpecT> = {}): AssetSpecT {
   const base = loadSpecs().find((s) => s.id === 'yamaha-ql1') as AssetSpecT
-  return { ...base, id, realSizeMm: size, ports: [], controls: [], texture: undefined, build: { shape: 'console-wedge', profile, params }, ...over }
+  // structure rebuild 2026-11-15: yamaha-ql1 now carries a structure block (42 parts); these synthetic plain/v2 wedges must not inherit it (the regression pins the SHAPE code, not the real device)
+  return { ...base, id, realSizeMm: size, ports: [], controls: [], texture: undefined, structure: undefined, build: { shape: 'console-wedge', profile, params }, ...over }
 }
 
 const QL1 = { w: 468, h: 272, d: 562 }
 const AXIA = { w: 519.3, h: 111.2, d: 482.9 }
 
-/** The params the shipped QL1 is built with (kept in step with its spec by a test of consoleWedgeSpecs.test.ts). */
+/** The v2 params the QL1 was built with before the structure rebuild of 2026-11-15 (its option-slot plates have since become a rear recess in the spec): kept as a fixed v2 test case of the shape code. */
 const QL1_V2: Record<string, number> = { filletMm: 3.5, filletSegments: 5, armRestMm: 14, cheekMm: 5, baseMm: 30, feetMm: 12.7, feetWidthMm: 21.6, feetFromSideMm: 41.8, feetFromEndMm: 28, slotPlates: 2, slotPlateWMm: 121, slotPlateHMm: 40, slotPlateXMm: 193.6, slotPlateYMm: 15.7, slotPlatePitchMm: 127, slotPlateDepthMm: 1.2, frontRecessWMm: 100.6, frontRecessHMm: 22, frontRecessXMm: 335.6, frontRecessYMm: 18, frontRecessDepthMm: 2 }
 
 describe('console-wedge params (no Blender)', () => {
@@ -267,9 +268,10 @@ describe(`console-wedge v2 with real Blender (${BLENDER ? `using ${BLENDER}` : '
 
     it.skipIf(!BLENDER)('runBuilder passes the control layout of the device: the QL1 layout leaves every v2 detail alone; on the Axia a bridge corner rounder than 12 mm reaches the meters and is refused', async () => {
       const ql1 = loadSpecs().find((s) => s.id === 'yamaha-ql1') as AssetSpecT
-      await expect(runBuilder({ ...ql1, build: { shape: 'console-wedge', profile: QL1_OLD_PROFILE, params: QL1_V2 } }, join(dir, 'ql1-layout.glb'))).resolves.toBeTruthy()
+      // structure rebuild 2026-11-15: the shipped QL1 spec as it is (its own build block with the rear recess, plus its structure parts): the old QL1_V2 params no longer match its ports (they carry an insetMm)
+      await expect(runBuilder(ql1, join(dir, 'ql1-layout.glb'))).resolves.toBeTruthy()
       const axia = loadSpecs().find((s) => s.id === 'axia-iq') as AssetSpecT
-      const tiered = (params: Record<string, number>): AssetSpecT => ({ ...axia, ports: [], build: { shape: 'console-wedge', profile: AXIA_OLD_PROFILE, params: { tierYMm: 82, tierWMm: 440, ...params } } }) // 440: the bridge tier of the shipped spec (Wave 5: the encoders of strip 1 reach x 460.5, a 380 tier ended at 449.6)
+      const tiered = (params: Record<string, number>): AssetSpecT => ({ ...axia, structure: undefined, ports: [], build: { shape: 'console-wedge', profile: AXIA_OLD_PROFILE, params: { tierYMm: 82, tierWMm: 440, ...params } } }) // 440: the bridge tier of the shipped spec (Wave 5: the encoders of strip 1 reach x 460.5, a 380 tier ended at 449.6)
       await expect(runBuilder(tiered({ filletMm: 5, armRestMm: 26 }), join(dir, 'axia-ok.glb'))).resolves.toBeTruthy()
       // the meters start 12.5 mm from the rear edge of the bridge: a 10 mm fillet makes the rear-top corner 16 mm round
       await expect(runBuilder(tiered({ filletMm: 10, armRestMm: 26 }), join(dir, 'axia-round.glb'))).rejects.toThrow(/flat zone of a control/)

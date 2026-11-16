@@ -157,19 +157,19 @@
     "profile": [
       [
         0,
-        60
+        54
       ],
       [
-        40,
-        60
+        8,
+        59
       ],
       [
-        200,
-        52
+        18,
+        60
       ],
       [
         270,
-        48
+        30
       ]
     ],
     "params": {
@@ -189,7 +189,13 @@
       "min": 600,
       "max": 6000
     },
-    "minFilletMm": 2.5
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rot180.png"
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://edge.rode.com//pdf/products/1177/RODECaster%20PRO%20II_DataSheet_04_FINAL%20ARTWORK-WEB.pdf",
@@ -209,5 +215,25 @@
       "url": "https://rode.com/en-us/user-guides/rodecaster-pro-ii/how-to-get-started-with-the-rodecaster-pro-ii",
       "note": "Phantom power (review fix, read 2026-11-12 by a research pass): the RODECaster Pro II getting-started guide says the channel setup screen can switch phantom power, but no page read states how many of the four combo inputs have it, so the four ports claim no phantom supply (phantom to-check)."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 265,
+        "yMm": 22,
+        "wMm": 31,
+        "hMm": 12.5,
+        "marginMm": 3
+      },
+      {
+        "face": "top",
+        "xMm": 9,
+        "yMm": 57,
+        "wMm": 62,
+        "hMm": 28,
+        "marginMm": 3
+      }
+    ]
+  }
 }

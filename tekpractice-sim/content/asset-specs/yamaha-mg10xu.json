@@ -1,7 +1,7 @@
 {
   "id": "yamaha-mg10xu",
   "kind": "device",
-  "tier": "standard",
+  "tier": "hero",
   "realSizeMm": {
     "w": 244,
     "h": 71,
@@ -151,19 +151,23 @@
     "profile": [
       [
         0,
+        64
+      ],
+      [
+        9,
         71
       ],
       [
-        30,
-        71
+        80,
+        62
       ],
       [
-        110,
-        60
+        96,
+        53
       ],
       [
         294,
-        45
+        32
       ]
     ],
     "params": {
@@ -180,9 +184,15 @@
     ],
     "budget": {
       "min": 600,
-      "max": 6000
+      "max": 15000
     },
-    "minFilletMm": 2.5
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rot180.png"
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://nl.yamaha.com/files/download/other_assets/2/1507032/MG10XU_technical_specifications_En_B0.pdf",
@@ -212,5 +222,781 @@
   "portAliases": {
     "in-stereo-line-inputs-ch-5-6-to-9-10-l-r-1": "in-line-l",
     "in-stereo-line-inputs-ch-5-6-to-9-10-l-r-2": "in-line-r"
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 9,
+        "yMm": 82,
+        "wMm": 59,
+        "hMm": 26,
+        "marginMm": 3
+      }
+    ]
+  },
+  "structure": {
+    "topSeenFromFront": false,
+    "parts": [
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 222.51,
+        "yMm": 262.4,
+        "count": 7,
+        "params": {
+          "diaMm": 12,
+          "heightMm": 11,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#f2f2f0",
+        "colour2": "#222222",
+        "note": "LEVEL knob (channels 1-4 and 5/6, 7/8, 9/10)"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 222.51,
+        "yMm": 235.93,
+        "count": 7,
+        "params": {
+          "diaMm": 10,
+          "heightMm": 10,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#e2401f",
+        "colour2": "#1a1a1a",
+        "note": "PAN / BAL knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 222.51,
+        "yMm": 216.83,
+        "count": 7,
+        "params": {
+          "diaMm": 10,
+          "heightMm": 10,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#f2f2f0",
+        "colour2": "#222222",
+        "note": "FX knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 222.51,
+        "yMm": 198.45,
+        "count": 7,
+        "params": {
+          "diaMm": 10,
+          "heightMm": 10,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#1fa55a",
+        "colour2": "#111111",
+        "note": "LOW EQ knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 222.51,
+        "yMm": 180.08,
+        "count": 4,
+        "params": {
+          "diaMm": 10,
+          "heightMm": 10,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#1fa55a",
+        "colour2": "#111111",
+        "note": "MID EQ knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 222.51,
+        "yMm": 160.97,
+        "count": 7,
+        "params": {
+          "diaMm": 10,
+          "heightMm": 10,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#1fa55a",
+        "colour2": "#111111",
+        "note": "HIGH EQ knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 222.51,
+        "yMm": 130.83,
+        "count": 2,
+        "params": {
+          "diaMm": 14,
+          "heightMm": 11,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#e8d86a",
+        "colour2": "#222222",
+        "note": "COMP knob (channels 1-2)"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 222.51,
+        "yMm": 104.37,
+        "count": 4,
+        "params": {
+          "diaMm": 11,
+          "heightMm": 11,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#f2f2f0",
+        "colour2": "#222222",
+        "note": "GAIN knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 26.98,
+        "yMm": 262.4,
+        "params": {
+          "diaMm": 12,
+          "heightMm": 11,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#e2401f",
+        "colour2": "#1a1a1a",
+        "note": "STEREO LEVEL knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 50.41,
+        "yMm": 262.4,
+        "params": {
+          "diaMm": 12,
+          "heightMm": 11,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#f2f2f0",
+        "colour2": "#222222",
+        "note": "FX RTN LEVEL knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 26.98,
+        "yMm": 227.11,
+        "params": {
+          "diaMm": 12,
+          "heightMm": 11,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#f2f2f0",
+        "colour2": "#222222",
+        "note": "MONITOR/PHONES knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 52.54,
+        "yMm": 166.11,
+        "params": {
+          "diaMm": 9,
+          "heightMm": 10,
+          "pointer": 1,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#f2f2f0",
+        "colour2": "#222222",
+        "note": "PARAMETER knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 51.12,
+        "yMm": 144.06,
+        "params": {
+          "diaMm": 10,
+          "heightMm": 6,
+          "pointer": 0,
+          "bevelMm": 0.8,
+          "taper": 0.08
+        },
+        "colour": "#1b1c1f",
+        "colour2": "#555555",
+        "note": "PROGRAM encoder"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 71,
+        "yMm": 246.96,
+        "points": [
+          [
+            -3.2,
+            -2.55
+          ],
+          [
+            3.2,
+            -2.55
+          ],
+          [
+            3.2,
+            2.55
+          ],
+          [
+            -3.2,
+            2.55
+          ]
+        ],
+        "params": {
+          "riseMm": 1.8,
+          "bevelMm": 0.5
+        },
+        "colour": "#d6382a",
+        "note": "TO ST / TO MON switch"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 51.12,
+        "yMm": 242.55,
+        "points": [
+          [
+            -3.2,
+            -2.55
+          ],
+          [
+            3.2,
+            -2.55
+          ],
+          [
+            3.2,
+            2.55
+          ],
+          [
+            -3.2,
+            2.55
+          ]
+        ],
+        "params": {
+          "riseMm": 1.8,
+          "bevelMm": 0.5
+        },
+        "colour": "#4a4c50",
+        "note": "FX ON switch"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 19.88,
+        "yMm": 213.44,
+        "points": [
+          [
+            -2.85,
+            -2.55
+          ],
+          [
+            2.85,
+            -2.55
+          ],
+          [
+            2.85,
+            2.55
+          ],
+          [
+            -2.85,
+            2.55
+          ]
+        ],
+        "params": {
+          "riseMm": 1.8,
+          "bevelMm": 0.5
+        },
+        "colour": "#4a4c50",
+        "note": "STEREO MUTE key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 79.52,
+        "yMm": 119.81,
+        "points": [
+          [
+            -3,
+            -2.75
+          ],
+          [
+            3,
+            -2.75
+          ],
+          [
+            3,
+            2.75
+          ],
+          [
+            -3,
+            2.75
+          ]
+        ],
+        "params": {
+          "riseMm": 1.8,
+          "bevelMm": 0.5
+        },
+        "colour": "#4a4c50",
+        "note": "USB / LINE switch"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 155.49,
+        "yMm": 131.57,
+        "points": [
+          [
+            -3.1,
+            -2.6
+          ],
+          [
+            3.1,
+            -2.6
+          ],
+          [
+            3.1,
+            2.6
+          ],
+          [
+            -3.1,
+            2.6
+          ]
+        ],
+        "params": {
+          "riseMm": 1.8,
+          "bevelMm": 0.5
+        },
+        "colour": "#d6382a",
+        "note": "PHANTOM +48V switch"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 215.84,
+        "yMm": 68.65,
+        "count": 4,
+        "points": [
+          [
+            -3,
+            -2.5
+          ],
+          [
+            3,
+            -2.5
+          ],
+          [
+            3,
+            2.5
+          ],
+          [
+            -3,
+            2.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.8,
+          "bevelMm": 0.5
+        },
+        "colour": "#46484c",
+        "note": "HPF key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 225.78,
+        "yMm": 68.65,
+        "count": 4,
+        "points": [
+          [
+            -4.5,
+            -7
+          ],
+          [
+            4.5,
+            -7
+          ],
+          [
+            4.5,
+            7
+          ],
+          [
+            -4.5,
+            7
+          ]
+        ],
+        "params": {
+          "riseMm": 0.8,
+          "bevelMm": 0.3
+        },
+        "colour": "#8d9096",
+        "note": "PAD plate"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 225.78,
+        "yMm": 68.65,
+        "count": 4,
+        "points": [
+          [
+            -3,
+            -2.5
+          ],
+          [
+            3,
+            -2.5
+          ],
+          [
+            3,
+            2.5
+          ],
+          [
+            -3,
+            2.5
+          ]
+        ],
+        "params": {
+          "riseMm": 2.6,
+          "bevelMm": 0.5
+        },
+        "colour": "#46484c",
+        "note": "PAD key"
+      },
+      {
+        "kind": "led",
+        "face": "top",
+        "xMm": 230.75,
+        "yMm": 249.17,
+        "count": 4,
+        "params": {
+          "diaMm": 3,
+          "riseMm": 0.8
+        },
+        "colour": "#e0302a",
+        "note": "PEAK LEDs"
+      },
+      {
+        "kind": "socket",
+        "type": "xlr",
+        "face": "top",
+        "xMm": 220.1,
+        "yMm": 36.46,
+        "count": 4,
+        "params": {
+          "diaMm": 19,
+          "collarMm": 1.8,
+          "riseMm": 3
+        },
+        "colour": "#25262a",
+        "colour2": "#08080a",
+        "note": "MIC/LINE combo XLR-TRS 1-4"
+      },
+      {
+        "kind": "socket",
+        "type": "xlr",
+        "face": "top",
+        "xMm": 22.01,
+        "yMm": 42.34,
+        "count": 2,
+        "params": {
+          "diaMm": 19,
+          "collarMm": 1.8,
+          "riseMm": 3
+        },
+        "colour": "#25262a",
+        "colour2": "#08080a",
+        "note": "STEREO OUT male XLR"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 17.75,
+        "yMm": 68.35,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "PHONES jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 35.5,
+        "yMm": 68.35,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "STEREO OUT R jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 51.83,
+        "yMm": 68.35,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "STEREO OUT L jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 71,
+        "yMm": 69.09,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "MONITOR OUT R jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 71,
+        "yMm": 52.92,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "MONITOR OUT L jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 71,
+        "yMm": 30.87,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "FX SEND jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 125.67,
+        "yMm": 24.26,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "FOOT SW jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 88.75,
+        "yMm": 70.56,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "LINE input jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 88.75,
+        "yMm": 51.45,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "LINE input jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 107.21,
+        "yMm": 70.56,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "LINE input jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 107.21,
+        "yMm": 51.45,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "LINE input jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 124.96,
+        "yMm": 70.56,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "LINE input jack"
+      },
+      {
+        "kind": "socket",
+        "type": "jack",
+        "face": "top",
+        "xMm": 124.96,
+        "yMm": 51.45,
+        "params": {
+          "diaMm": 9.5,
+          "collarMm": 1.2,
+          "riseMm": 3
+        },
+        "colour": "#b9bcc2",
+        "colour2": "#08080a",
+        "note": "LINE input jack"
+      },
+      {
+        "kind": "socket",
+        "type": "rca",
+        "face": "top",
+        "xMm": 106.5,
+        "yMm": 120.54,
+        "params": {
+          "diaMm": 8.5,
+          "collarMm": 1.6,
+          "riseMm": 3
+        },
+        "colour": "#e5e5e0",
+        "colour2": "#08080a",
+        "note": "RCA input"
+      },
+      {
+        "kind": "socket",
+        "type": "rca",
+        "face": "top",
+        "xMm": 120.7,
+        "yMm": 120.54,
+        "params": {
+          "diaMm": 8.5,
+          "collarMm": 1.6,
+          "riseMm": 3
+        },
+        "colour": "#c9332a",
+        "colour2": "#08080a",
+        "note": "RCA input"
+      },
+      {
+        "kind": "socket",
+        "type": "rca",
+        "face": "top",
+        "xMm": 106.5,
+        "yMm": 103.64,
+        "params": {
+          "diaMm": 8.5,
+          "collarMm": 1.6,
+          "riseMm": 3
+        },
+        "colour": "#e5e5e0",
+        "colour2": "#08080a",
+        "note": "RCA input"
+      },
+      {
+        "kind": "socket",
+        "type": "rca",
+        "face": "top",
+        "xMm": 120.7,
+        "yMm": 103.64,
+        "params": {
+          "diaMm": 8.5,
+          "collarMm": 1.6,
+          "riseMm": 3
+        },
+        "colour": "#c9332a",
+        "colour2": "#08080a",
+        "note": "RCA input"
+      }
+    ]
   }
 }

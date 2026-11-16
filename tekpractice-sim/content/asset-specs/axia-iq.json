@@ -213,9 +213,9 @@
       ]
     ],
     "params": {
-      "filletMm": 5,
+      "filletMm": 8,
       "filletSegments": 8,
-      "armRestMm": 26,
+      "armRestMm": 27,
       "tierYMm": 82,
       "tierWMm": 440,
       "feetMm": 6,
@@ -226,26 +226,910 @@
       "rearRecessHMm": 34,
       "rearRecessXMm": 38,
       "rearRecessYMm": 9,
-      "rearRecessDepthMm": 2.5
+      "rearRecessDepthMm": 2.5,
+      "bodyGrey": 40
     },
     "projection": [
       "top"
     ],
     "budget": {
       "min": 1500,
-      "max": 3500
+      "max": 15000
     },
-    "minFilletMm": 4
+    "minFilletMm": 4,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_dark.png"
+      }
+    ]
   },
   "texture": {
     "blankRects": [
       {
         "face": "top",
-        "xMm": 82,
-        "yMm": 62,
-        "wMm": 30,
-        "hMm": 14,
-        "marginMm": 5
+        "xMm": 79,
+        "yMm": 58,
+        "wMm": 40,
+        "hMm": 25,
+        "marginMm": 4
+      }
+    ]
+  },
+  "structure": {
+    "parts": [
+      {
+        "kind": "fader",
+        "face": "top",
+        "xMm": 152.8,
+        "yMm": 199.3,
+        "count": 8,
+        "pitchXMm": 42.5,
+        "params": {
+          "slotLenMm": 128,
+          "slotWidthMm": 3,
+          "capWidthMm": 14,
+          "capLenMm": 28,
+          "capHeightMm": 12,
+          "posFrac": 0.15,
+          "bevelMm": 2
+        },
+        "colour": "#2a2c30",
+        "colour2": "#050506",
+        "note": "channel fader 1..8 (100 mm travel)"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 149.8,
+        "yMm": 328.6,
+        "count": 8,
+        "pitchXMm": 42.5,
+        "points": [
+          [
+            -7.75,
+            -8.5
+          ],
+          [
+            7.75,
+            -8.5
+          ],
+          [
+            7.75,
+            8.5
+          ],
+          [
+            -7.75,
+            8.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.8,
+          "bevelMm": 0.6
+        },
+        "colour": "#d8d8d4",
+        "note": "ON key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 149.8,
+        "yMm": 354.7,
+        "count": 8,
+        "pitchXMm": 42.5,
+        "points": [
+          [
+            -7.75,
+            -8.5
+          ],
+          [
+            7.75,
+            -8.5
+          ],
+          [
+            7.75,
+            8.5
+          ],
+          [
+            -7.75,
+            8.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.8,
+          "bevelMm": 0.6
+        },
+        "colour": "#e4e4e0",
+        "note": "OFF key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 142.4,
+        "yMm": 307.7,
+        "count": 8,
+        "pitchXMm": 42.5,
+        "points": [
+          [
+            -5.5,
+            -6.5
+          ],
+          [
+            5.5,
+            -6.5
+          ],
+          [
+            5.5,
+            6.5
+          ],
+          [
+            -5.5,
+            6.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "PREVIEW key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 161.9,
+        "yMm": 307.7,
+        "count": 8,
+        "pitchXMm": 42.5,
+        "points": [
+          [
+            -5.5,
+            -6.5
+          ],
+          [
+            5.5,
+            -6.5
+          ],
+          [
+            5.5,
+            6.5
+          ],
+          [
+            -5.5,
+            6.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "SOFT key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 152.8,
+        "yMm": 285.9,
+        "count": 8,
+        "pitchXMm": 42.5,
+        "points": [
+          [
+            -12,
+            -10
+          ],
+          [
+            12,
+            -10
+          ],
+          [
+            12,
+            10
+          ],
+          [
+            -12,
+            10
+          ]
+        ],
+        "params": {
+          "riseMm": 0.8,
+          "bevelMm": 0.3,
+          "textured": 1
+        },
+        "colour": "#16171a",
+        "note": "source OLED display"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 148.3,
+        "yMm": 113.1,
+        "count": 8,
+        "pitchXMm": 42.5,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "PHONE / PGM key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 165.8,
+        "yMm": 113.1,
+        "count": 8,
+        "pitchXMm": 42.5,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "PHONE / PGM key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 148.3,
+        "yMm": 93.5,
+        "count": 8,
+        "pitchXMm": 42.5,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "PHONE / PGM key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 165.8,
+        "yMm": 93.5,
+        "count": 8,
+        "pitchXMm": 42.5,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "PHONE / PGM key"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 156.7,
+        "yMm": 73.9,
+        "count": 8,
+        "pitchXMm": 42.5,
+        "params": {
+          "diaMm": 20,
+          "heightMm": 14,
+          "pointer": 0,
+          "bevelMm": 1.5,
+          "taper": 0.1
+        },
+        "colour": "#1b1c1f",
+        "colour2": "#e8e8e8",
+        "note": "strip OPTIONS encoder"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 64,
+        "yMm": 340.3,
+        "params": {
+          "diaMm": 21,
+          "heightMm": 13,
+          "pointer": 0,
+          "bevelMm": 1.5,
+          "taper": 0.1
+        },
+        "colour": "#1b1c1f",
+        "colour2": "#e8e8e8",
+        "note": "HEADPHONES knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 107.1,
+        "yMm": 340.3,
+        "params": {
+          "diaMm": 21,
+          "heightMm": 13,
+          "pointer": 0,
+          "bevelMm": 1.5,
+          "taper": 0.1
+        },
+        "colour": "#1b1c1f",
+        "colour2": "#e8e8e8",
+        "note": "MONITORS knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 65.3,
+        "yMm": 279,
+        "params": {
+          "diaMm": 21,
+          "heightMm": 13,
+          "pointer": 0,
+          "bevelMm": 1.5,
+          "taper": 0.1
+        },
+        "colour": "#1b1c1f",
+        "colour2": "#e8e8e8",
+        "note": "monitor level knob"
+      },
+      {
+        "kind": "knob",
+        "face": "top",
+        "xMm": 70.5,
+        "yMm": 157.5,
+        "params": {
+          "diaMm": 21,
+          "heightMm": 13,
+          "pointer": 0,
+          "bevelMm": 1.5,
+          "taper": 0.1
+        },
+        "colour": "#1b1c1f",
+        "colour2": "#e8e8e8",
+        "note": "monitor knob"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 99.3,
+        "yMm": 315.5,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 117.5,
+        "yMm": 315.5,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 99.3,
+        "yMm": 296,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 117.5,
+        "yMm": 296,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 99.3,
+        "yMm": 275,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 117.5,
+        "yMm": 275,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 64,
+        "yMm": 203,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 117.5,
+        "yMm": 203,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 72.4,
+        "yMm": 130,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 114.1,
+        "yMm": 130,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 64,
+        "yMm": 94.7,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 83.1,
+        "yMm": 94.7,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 105.8,
+        "yMm": 94.7,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 124.1,
+        "yMm": 94.7,
+        "points": [
+          [
+            -5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            -5.5
+          ],
+          [
+            5.5,
+            5.5
+          ],
+          [
+            -5.5,
+            5.5
+          ]
+        ],
+        "params": {
+          "riseMm": 1.4,
+          "bevelMm": 0.6
+        },
+        "colour": "#dcdcd8",
+        "note": "monitor section key"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 88.8,
+        "yMm": 252.9,
+        "points": [
+          [
+            -12,
+            -9.5
+          ],
+          [
+            12,
+            -9.5
+          ],
+          [
+            12,
+            9.5
+          ],
+          [
+            -12,
+            9.5
+          ]
+        ],
+        "params": {
+          "riseMm": 0.8,
+          "bevelMm": 0.3,
+          "textured": 1
+        },
+        "colour": "#16171a",
+        "note": "monitor OLED display"
+      },
+      {
+        "kind": "prism",
+        "face": "top",
+        "xMm": 90.1,
+        "yMm": 203.2,
+        "points": [
+          [
+            -12,
+            -9.5
+          ],
+          [
+            12,
+            -9.5
+          ],
+          [
+            12,
+            9.5
+          ],
+          [
+            -12,
+            9.5
+          ]
+        ],
+        "params": {
+          "riseMm": 0.8,
+          "bevelMm": 0.3,
+          "textured": 1
+        },
+        "colour": "#16171a",
+        "note": "monitor OLED display"
       }
     ]
   }

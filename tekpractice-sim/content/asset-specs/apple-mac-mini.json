@@ -11,9 +11,9 @@
     {
       "portId": "net",
       "face": "io",
-      "xMm": 26,
-      "yMm": 25,
-      "confidence": "guess",
+      "xMm": 53.5,
+      "yMm": 22.5,
+      "confidence": "photo",
       "connector": "rj45",
       "signal": "ethernet-control",
       "dir": "bidir"
@@ -21,9 +21,9 @@
     {
       "portId": "tb-1",
       "face": "io",
-      "xMm": 72,
-      "yMm": 25,
-      "confidence": "guess",
+      "xMm": 87.6,
+      "yMm": 22.5,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -31,9 +31,9 @@
     {
       "portId": "tb-2",
       "face": "io",
-      "xMm": 90,
-      "yMm": 25,
-      "confidence": "guess",
+      "xMm": 95.6,
+      "yMm": 22.5,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -41,9 +41,9 @@
     {
       "portId": "tb-3",
       "face": "io",
-      "xMm": 108,
-      "yMm": 25,
-      "confidence": "guess",
+      "xMm": 104.4,
+      "yMm": 22.5,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -51,9 +51,9 @@
     {
       "portId": "usb-c-front-1",
       "face": "opposite",
-      "xMm": 44,
-      "yMm": 14,
-      "confidence": "guess",
+      "xMm": 26.3,
+      "yMm": 22.5,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -61,9 +61,9 @@
     {
       "portId": "usb-c-front-2",
       "face": "opposite",
-      "xMm": 60,
-      "yMm": 14,
-      "confidence": "guess",
+      "xMm": 41.2,
+      "yMm": 22.5,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -71,9 +71,9 @@
     {
       "portId": "out-phones",
       "face": "opposite",
-      "xMm": 84,
-      "yMm": 14,
-      "confidence": "guess",
+      "xMm": 99.9,
+      "yMm": 22.5,
+      "confidence": "photo",
       "connector": "trs-35mm",
       "signal": "headphone-level",
       "dir": "out"
@@ -81,24 +81,48 @@
   ],
   "controls": [],
   "build": {
-    "shape": "rack-box",
+    "shape": "moulded-box",
     "params": {
-      "earThicknessMm": 14,
-      "plateFilletMm": 6,
-      "filletMm": 6,
-      "filletSegments": 12,
-      "plateRgb": 13225169,
-      "bodyRgb": 13225169
+      "cornerRadiusMm": 16,
+      "edgeRadiusMm": 3,
+      "edgeDropMm": 3,
+      "bottomEdgeRadiusMm": 3,
+      "edgeSegments": 8,
+      "bodyGrey": 195
     },
     "projection": [
       "opposite",
-      "io"
+      "io",
+      "top"
     ],
     "budget": {
       "min": 600,
       "max": 2000
     },
-    "minFilletMm": 5
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "fill": true
+      },
+      {
+        "face": "top",
+        "file": "top.jpg",
+        "crop": [
+          8,
+          8,
+          725,
+          725
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.apple.com/mac-mini/specs/",
@@ -108,5 +132,17 @@
       "url": "https://www.apple.com/mac-mini/specs/",
       "note": "Apple Mac mini tech specs (opened 2026-11-12): 2.0 x 5.0 x 5.0 in (H x W x D) = 50 x 127 x 127 mm, 0.67 kg (M6) / 0.73 kg (M5 Pro), silver. Front: two USB-C (USB 3, up to 10 Gb/s) and a 3.5 mm headphone jack. Back: one 2.5 Gb Ethernet, one HDMI, three Thunderbolt (USB-C) ports, and a power socket whose inlet type the page does not name (two-prong cord). HDMI and the power socket have no catalogue connector or signal and are not ports (HDMI is drawn on the picture only); Thunderbolt uses the usb-c connector with the usb-audio signal. Positions are GUESSES (no drawing read). A plain filleted box (the form has no other detail in the sources)."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 45,
+        "yMm": 45,
+        "wMm": 37,
+        "hMm": 46,
+        "marginMm": 3
+      }
+    ]
+  }
 }

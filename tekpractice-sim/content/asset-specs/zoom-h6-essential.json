@@ -106,12 +106,12 @@
       "edgeDropMm": 4,
       "bottomEdgeRadiusMm": 3,
       "edgeSegments": 8,
-      "recessWMm": 50,
+      "recessWMm": 50.5,
       "recessHMm": 38,
-      "recessXMm": 14,
-      "recessYMm": 78,
+      "recessXMm": 13.5,
+      "recessYMm": 8.5,
       "recessDepthMm": 1,
-      "bodyGrey": 55
+      "bodyGrey": 30
     },
     "projection": [
       "top",
@@ -123,7 +123,20 @@
       "min": 600,
       "max": 2000
     },
-    "minFilletMm": 2.5
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top.jpg",
+        "crop": [
+          150,
+          742,
+          1062,
+          2176
+        ],
+        "fill": true
+      }
+    ]
   },
   "sources": [
     {
@@ -146,5 +159,25 @@
       "url": "https://zoomcorp.com/en/us/handheld-recorders/handheld-recorders/h6essential/",
       "note": "Port positions are GUESSES (confidence guess): no panel drawing was opened, so the four XLR on the two long sides and the three small connectors on the short end are our layout. build: a moulded box with a screen recess in the top face, exact bounding box; the rounding is an ESTIMATE. build.projection: our own generic artwork (screen, keys, vents, connectors); no photo, no logo, no lettering."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 25,
+        "yMm": 48.5,
+        "wMm": 38,
+        "hMm": 10,
+        "marginMm": 4
+      },
+      {
+        "face": "top",
+        "xMm": 23.5,
+        "yMm": 111,
+        "wMm": 30.5,
+        "hMm": 11,
+        "marginMm": 4
+      }
+    ]
+  }
 }

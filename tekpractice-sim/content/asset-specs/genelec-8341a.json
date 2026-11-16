@@ -103,19 +103,24 @@
     "shape": "curved-cabinet",
     "params": {
       "planFrontMm": 232,
-      "sideBulgeMm": 2.5,
-      "rearWidthMm": 224,
+      "rearWidthMm": 204,
       "frontRadiusMm": 28,
-      "backRadiusMm": 34,
+      "backRadiusMm": 48,
       "edgeRadiusMm": 20,
       "edgeDropMm": 26,
       "edgeSegments": 8,
       "barrelMm": 20,
       "barrelCentreMm": 200,
       "tweeterRingMm": 60,
-      "tweeterYMm": 262,
+      "tweeterYMm": 188,
       "waveguideMm": 104,
-      "waveguideDepthMm": 12
+      "waveguideDepthMm": 12,
+      "bodyGrey": 58,
+      "footMm": 30,
+      "footWidthMm": 150,
+      "footDepthMm": 130,
+      "midDepthMm": 110,
+      "midWidthMm": 232
     },
     "budget": {
       "min": 1500,
@@ -125,6 +130,18 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_rect.png",
+        "crop": [
+          0,
+          0,
+          948,
+          1404
+        ]
+      }
     ]
   },
   "sources": [
@@ -148,5 +165,17 @@
       "url": "https://www.genelec.com/8341a",
       "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with drivers drawn at the datasheet sizes; no photo copy, no brand mark, no lettering. Colour: a studio-monitor default (the page lists white, dark grey, black and raw finishes), lifted for the creation lighting."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 84,
+        "yMm": 56,
+        "wMm": 56,
+        "hMm": 21,
+        "marginMm": 5
+      }
+    ]
+  }
 }

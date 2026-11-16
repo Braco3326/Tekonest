@@ -22,6 +22,7 @@ import { defaultExec } from './runFixup'
 import type { FixupDeps } from './runFixup'
 import { validateBuild } from './shapes'
 import type { AssetSpecT } from './specSchema'
+import { expandStructure, validateStructure } from './structure'
 
 /** A picture of one face of a Meshy model to map onto the scripted shape (tools/assets3d/projection.ts makes it). */
 export interface BuildProjection {
@@ -76,7 +77,7 @@ const STDERR_TAIL = 2000
  */
 export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDeps = {}, projection?: BuildProjection | BuildProjection[]): Promise<BuilderMeasure> {
   if (!spec.build) throw new Error(`${spec.id}: no build block in the spec, so it cannot be built with --scripted`)
-  const errors = validateBuild(spec)
+  const errors = [...validateBuild(spec), ...validateStructure(spec)]
   if (errors.length > 0) throw new Error(errors.join('; '))
   if (!/\.glb$/i.test(outGlb)) throw new Error(`the builder output must be a .glb file, got ${outGlb}`)
 
@@ -90,11 +91,15 @@ export async function runBuilder(spec: AssetSpecT, outGlb: string, deps: FixupDe
     id: spec.id,
     kind: spec.kind,
     shape: spec.build.shape,
-    sizeMm: spec.realSizeMm,
+    // a structure sheet may build the body lower than the overall height: the parts on top bring it up to realSizeMm.h
+    sizeMm: { ...spec.realSizeMm, ...(spec.structure?.bodyWidthMm !== undefined ? { w: spec.structure.bodyWidthMm } : {}), ...(spec.structure?.bodyHeightMm !== undefined ? { h: spec.structure.bodyHeightMm } : {}), ...(spec.structure?.bodyDepthMm !== undefined ? { d: spec.structure.bodyDepthMm } : {}) },
     ...(spec.mating?.outerMm !== undefined ? { matingOuterMm: spec.mating.outerMm } : {}),
     params: spec.build.params ?? {},
+    // the structure sheet: real parts (knobs, faders, buttons, sockets, keys...) the builder models on the faces
+    ...(spec.structure ? { parts: expandStructure(spec) } : {}),
     ...(spec.build.profile ? { profile: spec.build.profile } : {}),
     ...(spec.build.colours ? { colours: spec.build.colours } : {}),
+    ...(spec.build.outline ? { outline: spec.build.outline } : {}),
     // a shape that keeps the controls rig's areas flat needs where they are (the device's control layout; none = no zones)
     ...(SHAPE_SPECS[spec.build.shape].usesFlatZones ? { flatZones: flatZonesFor(spec.id) } : {}),
     // a shape that cuts a pocket behind each inset port needs where they are (io face only: that is the face it cuts)
