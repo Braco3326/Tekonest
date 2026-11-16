@@ -67,7 +67,8 @@
     "shape": "speaker-cabinet-v2",
     "params": {
       "edgeRadiusMm": 6,
-      "edgeSegments": 4
+      "edgeSegments": 4,
+      "bodyGrey": 28
     },
     "budget": {
       "min": 100,
@@ -77,6 +78,27 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [15, 118, 657, 1337],
+        "fill": true
+      }
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 87,
+        "yMm": 33,
+        "wMm": 55,
+        "hMm": 42,
+        "marginMm": 4,
+        "fill": "#0c0c0e"
+      }
     ]
   },
   "sources": [

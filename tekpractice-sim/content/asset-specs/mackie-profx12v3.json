@@ -274,7 +274,13 @@
       "min": 800,
       "max": 6000
     },
-    "minFilletMm": 2.5
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rot180.png"
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://thomannmusic.com/mackie_profx12v3.htm",
@@ -289,5 +295,18 @@
       "url": "https://mackie.com/img/file_resources/PROFXV3+_SERIES_SS.pdf",
       "note": "Mackie ProFXv3+ series specification sheet (read as text): ProFX12v3+ 4.0 x 13.0 x 14.8 in = 102 x 330 x 376 mm, 7.9 lb = 3.6 kg; 1/4 in and XLR main outputs, 1/4 in sub outputs, aux outputs, USB 2.0 (2 in 4 out), stereo 1/8 in input, headphone output, 3-pin IEC line cord."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 28,
+        "yMm": 114,
+        "wMm": 72,
+        "hMm": 25,
+        "marginMm": 3,
+        "fill": "#1e1e20"
+      }
+    ]
+  }
 }

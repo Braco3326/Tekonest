@@ -81,6 +81,24 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "io",
+        "file": "front.jpg",
+        "fill": true
+      },
+      {
+        "face": "opposite",
+        "file": "rear.jpg",
+        "crop": [
+          95,
+          45,
+          1810,
+          895
+        ],
+        "fill": true
+      }
     ]
   },
   "texture": {
@@ -140,6 +158,70 @@
         "wMm": 42,
         "hMm": 18,
         "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 207,
+        "yMm": 191,
+        "wMm": 46,
+        "hMm": 12,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 163,
+        "yMm": 177,
+        "wMm": 55,
+        "hMm": 7,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 163,
+        "yMm": 30.5,
+        "wMm": 74,
+        "hMm": 5,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 163,
+        "yMm": 22.5,
+        "wMm": 76,
+        "hMm": 5,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 308,
+        "yMm": 159.5,
+        "wMm": 56,
+        "hMm": 5.5,
+        "marginMm": 3
+      },
+      {
+        "face": "opposite",
+        "xMm": 214,
+        "yMm": 162,
+        "wMm": 68,
+        "hMm": 4.6,
+        "marginMm": 2
+      },
+      {
+        "face": "opposite",
+        "xMm": 214,
+        "yMm": 152.5,
+        "wMm": 68,
+        "hMm": 4.6,
+        "marginMm": 2
+      },
+      {
+        "face": "opposite",
+        "xMm": 214,
+        "yMm": 134.4,
+        "wMm": 68,
+        "hMm": 4.6,
+        "marginMm": 2
       }
     ]
   },
@@ -174,5 +256,429 @@
       "url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
       "note": "Wave 5 re-measure of the two rear ports on the rear picture (rear.jpg crop 94,47,1812,890 over 480 x 220 mm, 3.775 px/mm across and 4.05 up; the picture is 1812 px wide in a 2048 px atlas, so the face maps u over 0.885 of it: read on the atlas rows and converted with 3.775 px/mm, checked against the GLB rear-plate UVs): the first positions were on the SECONDARY etherCON and 9 mm right of IEC inlet A. PRIMARY etherCON (40.7, 184.3), IEC inlet A opening (71.3, 54.8). The scripted etherCON and IEC housings of the shape moved with them (they stood 9 to 29 mm beside the printed connectors). +/- 0.7 mm."
     }
-  ]
+  ],
+  "structure": {
+    "parts": [
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 166.7,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": -3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": -3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 166.7,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": 3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": 3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 166.7,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -4.4,
+          "z1Mm": -0.6,
+          "x2Mm": 0,
+          "y2Mm": -4.4,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 120.2,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": -3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": -3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 120.2,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": 3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": 3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 120.2,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -4.4,
+          "z1Mm": -0.6,
+          "x2Mm": 0,
+          "y2Mm": -4.4,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 73.8,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": -3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": -3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 73.8,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": 3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": 3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 73.8,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -4.4,
+          "z1Mm": -0.6,
+          "x2Mm": 0,
+          "y2Mm": -4.4,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 27.3,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": -3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": -3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 27.3,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": 3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": 3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 53.8,
+        "yMm": 27.3,
+        "count": 8,
+        "pitchXMm": 23.45,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -4.4,
+          "z1Mm": -0.6,
+          "x2Mm": 0,
+          "y2Mm": -4.4,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "female XLR contact"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 252,
+        "yMm": 73.8,
+        "count": 8,
+        "pitchXMm": 25.13,
+        "params": {
+          "x1Mm": -3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": -3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "male XLR output pin"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 252,
+        "yMm": 73.8,
+        "count": 8,
+        "pitchXMm": 25.13,
+        "params": {
+          "x1Mm": 3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": 3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "male XLR output pin"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 252,
+        "yMm": 73.8,
+        "count": 8,
+        "pitchXMm": 25.13,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -4.4,
+          "z1Mm": -0.6,
+          "x2Mm": 0,
+          "y2Mm": -4.4,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "male XLR output pin"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 252,
+        "yMm": 27.3,
+        "count": 8,
+        "pitchXMm": 25.13,
+        "params": {
+          "x1Mm": -3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": -3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "male XLR output pin"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 252,
+        "yMm": 27.3,
+        "count": 8,
+        "pitchXMm": 25.13,
+        "params": {
+          "x1Mm": 3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": 3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "male XLR output pin"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 252,
+        "yMm": 27.3,
+        "count": 8,
+        "pitchXMm": 25.13,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -4.4,
+          "z1Mm": -0.6,
+          "x2Mm": 0,
+          "y2Mm": -4.4,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "male XLR output pin"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 252,
+        "yMm": 120.2,
+        "count": 4,
+        "pitchXMm": 25.1,
+        "params": {
+          "x1Mm": -3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": -3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "AES/EBU male XLR pin"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 252,
+        "yMm": 120.2,
+        "count": 4,
+        "pitchXMm": 25.1,
+        "params": {
+          "x1Mm": 3.8,
+          "y1Mm": 2.2,
+          "z1Mm": -0.6,
+          "x2Mm": 3.8,
+          "y2Mm": 2.2,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "AES/EBU male XLR pin"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 252,
+        "yMm": 120.2,
+        "count": 4,
+        "pitchXMm": 25.1,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": -4.4,
+          "z1Mm": -0.6,
+          "x2Mm": 0,
+          "y2Mm": -4.4,
+          "z2Mm": 0.25,
+          "diaMm": 2,
+          "segments": 6
+        },
+        "colour": "#b9a669",
+        "note": "AES/EBU male XLR pin"
+      }
+    ]
+  }
 }

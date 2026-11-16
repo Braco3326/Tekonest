@@ -11,9 +11,9 @@
     {
       "portId": "in-combo-1",
       "face": "opposite",
-      "xMm": 24,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 27.1,
+      "yMm": 22.3,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -26,9 +26,9 @@
     {
       "portId": "in-combo-2",
       "face": "opposite",
-      "xMm": 51,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 54.8,
+      "yMm": 22.3,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -41,9 +41,9 @@
     {
       "portId": "out-main-1",
       "face": "io",
-      "xMm": 19.2,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 97.9,
+      "yMm": 18.6,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -51,9 +51,9 @@
     {
       "portId": "out-main-2",
       "face": "io",
-      "xMm": 36.6,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 126.8,
+      "yMm": 18.6,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -61,9 +61,9 @@
     {
       "portId": "out-phones",
       "face": "io",
-      "xMm": 54,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 157.4,
+      "yMm": 18.6,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "headphone-level",
       "dir": "out"
@@ -71,9 +71,9 @@
     {
       "portId": "usb",
       "face": "io",
-      "xMm": 69.6,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 23.4,
+      "yMm": 13.6,
+      "confidence": "photo",
       "connector": "usb-c",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -83,8 +83,8 @@
   "build": {
     "shape": "rack-box",
     "params": {
-      "earThicknessMm": 10,
-      "plateFilletMm": 4.4,
+      "earThicknessMm": 6,
+      "plateFilletMm": 2.7,
       "filletMm": 5,
       "filletSegments": 10,
       "feetMm": 3,
@@ -100,7 +100,19 @@
       "min": 500,
       "max": 2000
     },
-    "minFilletMm": 4
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.png",
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://manualmachine.com/presonus/studio24c/8126865-user-manual",
@@ -120,5 +132,25 @@
       "url": "https://pae-web.presonusmusic.com/downloads/products/pdf/STUDIO24c_OwnersManual_EN_25052022.pdf",
       "note": "Phantom power (review fix, read 2026-11-12 by a research pass): the Studio 24c owner's manual (PDF p.5) says the 48V button switches phantom power on and off for ALL microphone inputs (one global switch) and that both input channels have combo jacks."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 9,
+        "yMm": 35.8,
+        "wMm": 58.5,
+        "hMm": 6.7,
+        "marginMm": 2
+      },
+      {
+        "face": "io",
+        "xMm": 11,
+        "yMm": 34.6,
+        "wMm": 70,
+        "hMm": 5.8,
+        "marginMm": 2
+      }
+    ]
+  }
 }

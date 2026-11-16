@@ -162,8 +162,8 @@
       "ventPitchMm": 8,
       "ventDepthMm": 1.5,
       "ventFromRearMm": 20,
-      "plateRgb": 3356219,
-      "bodyRgb": 1842464
+      "plateRgb": 13158600,
+      "bodyRgb": 2368548
     },
     "projection": [
       "opposite",
@@ -173,7 +173,14 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1.5
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.soundonsound.com/reviews/tc-electronic-m3000",
@@ -208,5 +215,17 @@
       "url": "https://www.manualsdir.com/manuals/280323/tc-electronic-m3000.html?page=10",
       "note": "Mains (review fix, read 2026-11-12 by a research pass, a manualsdir copy of the manual): the rear panel lists a power input and a rear power switch, and the manual says to leave the rear switch on and use the front Easy-Touch switch. The connector type is not named on the page read: iec-c14 is assumed (plan assumedConnectors power-in). The simulator's Alimentation control stands for the switches. Positions: guesses."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 36.5,
+        "yMm": 17.6,
+        "wMm": 58,
+        "hMm": 10.2,
+        "marginMm": 2
+      }
+    ]
+  }
 }

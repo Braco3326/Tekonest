@@ -11,9 +11,9 @@
     {
       "portId": "in-omni-1",
       "face": "io",
-      "xMm": 60,
-      "yMm": 260,
-      "confidence": "guess",
+      "xMm": 432.8,
+      "yMm": 137.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -25,9 +25,9 @@
     {
       "portId": "in-omni-2",
       "face": "io",
-      "xMm": 86.4,
-      "yMm": 260,
-      "confidence": "guess",
+      "xMm": 408.9,
+      "yMm": 137.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -39,9 +39,9 @@
     {
       "portId": "in-omni-3",
       "face": "io",
-      "xMm": 112.8,
-      "yMm": 260,
-      "confidence": "guess",
+      "xMm": 385.1,
+      "yMm": 137.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -53,9 +53,9 @@
     {
       "portId": "in-omni-4",
       "face": "io",
-      "xMm": 139.2,
-      "yMm": 260,
-      "confidence": "guess",
+      "xMm": 361.3,
+      "yMm": 137.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -67,9 +67,9 @@
     {
       "portId": "in-omni-5",
       "face": "io",
-      "xMm": 165.6,
-      "yMm": 260,
-      "confidence": "guess",
+      "xMm": 337.5,
+      "yMm": 137.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -81,9 +81,9 @@
     {
       "portId": "in-omni-6",
       "face": "io",
-      "xMm": 192,
-      "yMm": 260,
-      "confidence": "guess",
+      "xMm": 313.7,
+      "yMm": 137.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -95,9 +95,9 @@
     {
       "portId": "in-omni-7",
       "face": "io",
-      "xMm": 218.4,
-      "yMm": 260,
-      "confidence": "guess",
+      "xMm": 289.8,
+      "yMm": 137.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -109,9 +109,9 @@
     {
       "portId": "in-omni-8",
       "face": "io",
-      "xMm": 244.8,
-      "yMm": 260,
-      "confidence": "guess",
+      "xMm": 266,
+      "yMm": 137.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -123,9 +123,9 @@
     {
       "portId": "out-omni-1",
       "face": "io",
-      "xMm": 60,
-      "yMm": 225,
-      "confidence": "guess",
+      "xMm": 435,
+      "yMm": 86.5,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -133,9 +133,9 @@
     {
       "portId": "out-omni-2",
       "face": "io",
-      "xMm": 86.4,
-      "yMm": 225,
-      "confidence": "guess",
+      "xMm": 410.9,
+      "yMm": 86.5,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -143,9 +143,9 @@
     {
       "portId": "out-omni-3",
       "face": "io",
-      "xMm": 112.8,
-      "yMm": 225,
-      "confidence": "guess",
+      "xMm": 386.9,
+      "yMm": 86.5,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -153,9 +153,9 @@
     {
       "portId": "out-omni-4",
       "face": "io",
-      "xMm": 139.2,
-      "yMm": 225,
-      "confidence": "guess",
+      "xMm": 362.9,
+      "yMm": 86.5,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -163,9 +163,9 @@
     {
       "portId": "out-omni-5",
       "face": "io",
-      "xMm": 165.6,
-      "yMm": 225,
-      "confidence": "guess",
+      "xMm": 338.8,
+      "yMm": 86.5,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -173,9 +173,9 @@
     {
       "portId": "out-omni-6",
       "face": "io",
-      "xMm": 192,
-      "yMm": 225,
-      "confidence": "guess",
+      "xMm": 314.8,
+      "yMm": 86.5,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -183,9 +183,9 @@
     {
       "portId": "out-omni-7",
       "face": "io",
-      "xMm": 218.4,
-      "yMm": 225,
-      "confidence": "guess",
+      "xMm": 290.7,
+      "yMm": 86.5,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -193,9 +193,9 @@
     {
       "portId": "out-omni-8",
       "face": "io",
-      "xMm": 244.8,
-      "yMm": 225,
-      "confidence": "guess",
+      "xMm": 266.7,
+      "yMm": 86.5,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -203,9 +203,9 @@
     {
       "portId": "out-aes",
       "face": "io",
-      "xMm": 60,
-      "yMm": 190,
-      "confidence": "guess",
+      "xMm": 411.5,
+      "yMm": 161.3,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -213,9 +213,9 @@
     {
       "portId": "net-dante-1",
       "face": "io",
-      "xMm": 120,
-      "yMm": 190,
-      "confidence": "guess",
+      "xMm": 281.2,
+      "yMm": 46.5,
+      "confidence": "photo",
       "connector": "ethercon",
       "signal": "aoip",
       "dir": "bidir",
@@ -226,9 +226,9 @@
     {
       "portId": "net-dante-2",
       "face": "io",
-      "xMm": 150,
-      "yMm": 190,
-      "confidence": "guess",
+      "xMm": 308.1,
+      "yMm": 46.5,
+      "confidence": "photo",
       "connector": "ethercon",
       "signal": "aoip",
       "dir": "bidir"
@@ -236,9 +236,9 @@
     {
       "portId": "net-ctl",
       "face": "io",
-      "xMm": 195,
-      "yMm": 190,
-      "confidence": "guess",
+      "xMm": 380.8,
+      "yMm": 44.2,
+      "confidence": "photo",
       "connector": "rj45",
       "signal": "ethernet-control",
       "dir": "bidir"
@@ -246,9 +246,9 @@
     {
       "portId": "in-wclk",
       "face": "io",
-      "xMm": 235,
-      "yMm": 190,
-      "confidence": "guess",
+      "xMm": 341.6,
+      "yMm": 155,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "in"
@@ -256,9 +256,9 @@
     {
       "portId": "out-wclk",
       "face": "io",
-      "xMm": 255,
-      "yMm": 190,
-      "confidence": "guess",
+      "xMm": 317,
+      "yMm": 155,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "out"
@@ -266,9 +266,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 960,
-      "yMm": 120,
-      "confidence": "guess",
+      "xMm": 721.8,
+      "yMm": 77.9,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -299,8 +299,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "io",
-      "xMm": 900,
-      "yMm": 120,
+      "xMm": 722.9,
+      "yMm": 122.5,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -361,7 +361,23 @@
       "min": 1000,
       "max": 6000
     },
-    "minFilletMm": 4
+    "minFilletMm": 4,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rot180.png"
+      },
+      {
+        "face": "io",
+        "file": "rear_dark.png",
+        "crop": [
+          78,
+          655,
+          2825,
+          785
+        ]
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.rentex.com/wp-content/uploads/2020/01/CL5-Data-Sheet.pdf",
@@ -375,6 +391,58 @@
       "kind": "datasheet",
       "url": "https://www.rentex.com/wp-content/uploads/2020/01/CL5-Data-Sheet.pdf",
       "note": "Yamaha CL5 technical data sheet (dealer-hosted copy of the manufacturer sheet), opened 2026-11-12: 1053 (W) x 299 (H) x 667 (D) mm, 36 kg, 34 motorised 100 mm faders, AC inlet V-lock type (the IEC letter is not named: iec-c14 assumed, plan assumedConnectors power-in). The CL owner manual (data.yamaha.com), opened the same day, documents the panels: rear OMNI IN 1-8 (XLR-3-31 female, +48 V per input), OMNI OUT 1-8 (XLR-3-32 male), DIGITAL OUT AES/EBU (XLR male), Dante PRIMARY and SECONDARY on etherCON, NETWORK (RJ45, CL Editor and StageMix), word clock in and out (BNC), MIDI, GPI (D-sub), lamp XLR4 x3, three mini-YGDAI slots, a power switch beside AC IN; front talkback (XLR female) and stereo phones; USB on the top panel. Not modelled: MIDI, GPI, lamp, slots, USB, the redundant DC input. 8 of 8 omni inputs and outputs are modelled (the unit has more only through slots and Dante). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, faders, knobs and screens drawn without lettering, no photo, no logo. Every port and control position is a guess (confidence guess) and the side profile is an estimate drawn from the three outer sizes (no drawing opened). Connector genders not stated by the source follow the convention input = female, output = male."
+    },
+    {
+      "kind": "photo",
+      "url": "https://usa.yamaha.com/files/photoviewer_mixer_CL5_rear_tcm152-1685113.jpg",
+      "note": "Rear, straight-on (assets-source/yamaha-cl5/photos/rear.jpg, 3001x1985), 3D quality pass 2026-11-15: the io picture is the crop 78,655,2825,785 (product bounds, background painted dark), 2825 px = 1053 mm and 785 px = 299 mm, y from the bottom of the feet (px 1439). Connector centres read on the 2000 px preview (+/- 5 px = +/- 4 mm): OMNI IN 1 to 8 (top XLR row, 1 rightmost seen from behind, pitch 42.6 px), OMNI OUT 1 to 8 (second row), DIGITAL OUT AES/EBU, PRIMARY and SECONDARY etherCON (Dante), NETWORK RJ45, WORD CLOCK OUT and IN BNC, IEC inlet, power rocker. Now confidence photo. The top picture is the overhead top.jpg (crop 73,87,1859,1140, background painted dark) turned 180 degrees so the rear is at the bottom of the face. Sizes and catalogue unchanged."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 485,
+        "yMm": 104,
+        "wMm": 70,
+        "hMm": 22,
+        "marginMm": 4,
+        "depthMm": 60
+      },
+      {
+        "face": "top",
+        "xMm": 778,
+        "yMm": 169,
+        "wMm": 212,
+        "hMm": 34,
+        "marginMm": 5,
+        "depthMm": 90
+      },
+      {
+        "face": "top",
+        "xMm": 36,
+        "yMm": 171,
+        "wMm": 142,
+        "hMm": 26,
+        "marginMm": 4,
+        "depthMm": 90
+      },
+      {
+        "face": "io",
+        "xMm": 38,
+        "yMm": 220,
+        "wMm": 180,
+        "hMm": 48,
+        "marginMm": 5
+      },
+      {
+        "face": "io",
+        "xMm": 503,
+        "yMm": 230,
+        "wMm": 114,
+        "hMm": 33,
+        "marginMm": 4
+      }
+    ]
+  }
 }

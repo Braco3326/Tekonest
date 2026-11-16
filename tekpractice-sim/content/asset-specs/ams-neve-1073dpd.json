@@ -11,9 +11,9 @@
     {
       "portId": "in-mic-1",
       "face": "io",
-      "xMm": 50,
+      "xMm": 343.3,
       "yMm": 22,
-      "confidence": "guess",
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -25,9 +25,9 @@
     {
       "portId": "in-mic-2",
       "face": "io",
-      "xMm": 76,
+      "xMm": 311.3,
       "yMm": 22,
-      "confidence": "guess",
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -39,9 +39,9 @@
     {
       "portId": "in-line-1",
       "face": "io",
-      "xMm": 102,
+      "xMm": 371.8,
       "yMm": 22,
-      "confidence": "guess",
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -49,9 +49,9 @@
     {
       "portId": "in-line-2",
       "face": "io",
-      "xMm": 128,
+      "xMm": 284.9,
       "yMm": 22,
-      "confidence": "guess",
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -59,9 +59,9 @@
     {
       "portId": "out-line-1",
       "face": "io",
-      "xMm": 154,
+      "xMm": 402.2,
       "yMm": 22,
-      "confidence": "guess",
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -69,9 +69,9 @@
     {
       "portId": "out-line-2",
       "face": "io",
-      "xMm": 180,
+      "xMm": 255,
       "yMm": 22,
-      "confidence": "guess",
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -79,9 +79,9 @@
     {
       "portId": "out-aes-1",
       "face": "io",
-      "xMm": 206,
+      "xMm": 119.3,
       "yMm": 22,
-      "confidence": "guess",
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -89,9 +89,9 @@
     {
       "portId": "out-aes-2",
       "face": "io",
-      "xMm": 232,
+      "xMm": 142.4,
       "yMm": 22,
-      "confidence": "guess",
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -99,9 +99,9 @@
     {
       "portId": "in-wclk",
       "face": "io",
-      "xMm": 270,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 78.6,
+      "yMm": 15.9,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "in"
@@ -109,9 +109,9 @@
     {
       "portId": "out-wclk",
       "face": "io",
-      "xMm": 288,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 97.6,
+      "yMm": 15.9,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "out"
@@ -119,9 +119,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 420,
+      "xMm": 37.9,
       "yMm": 22,
-      "confidence": "guess",
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -132,8 +132,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "opposite",
-      "xMm": 455,
-      "yMm": 22,
+      "xMm": 440.5,
+      "yMm": 21.6,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -145,8 +145,8 @@
       "controlId": "phantom-48v",
       "kind": "button",
       "face": "opposite",
-      "xMm": 100,
-      "yMm": 22,
+      "xMm": 102.4,
+      "yMm": 15.9,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -173,8 +173,8 @@
       "ventPitchMm": 8,
       "ventDepthMm": 1.5,
       "ventFromRearMm": 20,
-      "plateRgb": 3356219,
-      "bodyRgb": 1842464
+      "plateRgb": 3496578,
+      "bodyRgb": 2770280
     },
     "projection": [
       "opposite",
@@ -184,7 +184,29 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1.5
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          22,
+          24,
+          1723,
+          156
+        ]
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          196,
+          201,
+          3019,
+          289
+        ]
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.ams-neve.com/1073dpd/",
@@ -204,5 +226,18 @@
       "url": "https://www.ams-neve.com/wp-content/uploads/2021/08/1073dpadpdusermanual-1-1-.pdf",
       "note": "1073DPA and 1073DPD User Guide issue 3, opened 2026-11-12 (read as text): rear panel mic in 1 and 2 (XLR), line in 1 and 2 (XLR/TRS combos, modelled as their XLR half), line out 1 and 2 (XLR), ADC in 1 and 2 (TRS inserts, not modelled), AES out 1 and 2 (XLR), AES sync in, word clock in and out (BNC), DSD out (BNC, no signal type), IEC mains connector (type letter not named: iec-c14 assumed, plan assumedConnectors power-in); front panel gain, trim, 48 V and input selector; a mains switch exists but its panel is not stated (drawn on the front). The DPD has no EQ. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 387,
+        "yMm": 13,
+        "wMm": 42,
+        "hMm": 19.5,
+        "marginMm": 3,
+        "fill": "#4872ad"
+      }
+    ]
+  }
 }

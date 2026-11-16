@@ -75,17 +75,42 @@
     "params": {
       "cornerRadiusMm": 8,
       "edgeRadiusMm": 3,
-      "edgeSegments": 8
+      "edgeSegments": 8,
+      "bodyGrey": 38
     },
     "projection": [
       "top",
+      "opposite",
       "io"
     ],
     "budget": {
       "min": 500,
       "max": 2000
     },
-    "minFilletMm": 2.5
+    "minFilletMm": 2.5,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rotated_clean.png",
+        "crop": [
+          0,
+          0,
+          1305,
+          1027
+        ]
+      },
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          60,
+          55,
+          1880,
+          573
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://zoomcorp.com/manuals/f8n_pro-en/",
@@ -115,5 +140,25 @@
       "url": "https://zoomcorp.com/en/us/field-recorders/field-recorders/f8n-pro/",
       "note": "Phantom power (review fix, read 2026-11-12 by a research pass, through a summarising fetch tool, not the raw page): the Zoom F8n Pro page lists inputs 1-8 with +24 / +48 V phantom, 10 mA maximum per channel. How the supply is switched was not confirmed."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 30.5,
+        "yMm": 51.5,
+        "wMm": 116,
+        "hMm": 20,
+        "marginMm": 4
+      },
+      {
+        "face": "top",
+        "xMm": 68,
+        "yMm": 74,
+        "wMm": 44.5,
+        "hMm": 21,
+        "marginMm": 4
+      }
+    ]
+  }
 }

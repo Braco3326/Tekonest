@@ -11,9 +11,9 @@
     {
       "portId": "in-xlr-l",
       "face": "io",
-      "xMm": 50,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 445.2,
+      "yMm": 21.8,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -21,9 +21,9 @@
     {
       "portId": "in-xlr-r",
       "face": "io",
-      "xMm": 76,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 372,
+      "yMm": 21.8,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -31,9 +31,9 @@
     {
       "portId": "in-trs-l",
       "face": "io",
-      "xMm": 108,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 418.8,
+      "yMm": 27.8,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -41,9 +41,9 @@
     {
       "portId": "in-trs-r",
       "face": "io",
-      "xMm": 126,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 399.6,
+      "yMm": 27.8,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -51,9 +51,9 @@
     {
       "portId": "out-xlr-l",
       "face": "io",
-      "xMm": 150,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 346.8,
+      "yMm": 21.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -61,9 +61,9 @@
     {
       "portId": "out-xlr-r",
       "face": "io",
-      "xMm": 176,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 276,
+      "yMm": 21.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -71,9 +71,9 @@
     {
       "portId": "out-trs-l",
       "face": "io",
-      "xMm": 208,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 323.5,
+      "yMm": 27.8,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -81,9 +81,9 @@
     {
       "portId": "out-trs-r",
       "face": "io",
-      "xMm": 226,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 304.8,
+      "yMm": 27.8,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -91,9 +91,9 @@
     {
       "portId": "in-aes",
       "face": "io",
-      "xMm": 252,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 249.6,
+      "yMm": 21.8,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "aes3",
       "dir": "in"
@@ -101,9 +101,9 @@
     {
       "portId": "out-aes",
       "face": "io",
-      "xMm": 278,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 217.2,
+      "yMm": 21.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -111,9 +111,9 @@
     {
       "portId": "in-wclk",
       "face": "io",
-      "xMm": 308,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 198,
+      "yMm": 15.8,
+      "confidence": "photo",
       "connector": "bnc",
       "signal": "wordclock",
       "dir": "in"
@@ -121,9 +121,9 @@
     {
       "portId": "usb-host",
       "face": "io",
-      "xMm": 330,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 177.6,
+      "yMm": 13.9,
+      "confidence": "photo",
       "connector": "usb-b",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -131,9 +131,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 420,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 45.6,
+      "yMm": 19.9,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -144,8 +144,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "opposite",
-      "xMm": 455,
-      "yMm": 22,
+      "xMm": 435.6,
+      "yMm": 22.3,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -184,7 +184,19 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1.5
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://usa.yamaha.com/files/download/other_assets/1/323961/spx2000_en_om_f0.pdf",
@@ -209,5 +221,41 @@
       "url": "https://my.yamaha.com/en/business/audio/products/processors/spx2000/specs.html",
       "note": "Yamaha Malaysia SPX2000 specifications page, opened 2026-11-12: same size and connector table as the manual. The two datasheet PDF links of the plan answered 404."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 27.5,
+        "yMm": 35,
+        "wMm": 31.5,
+        "hMm": 8,
+        "marginMm": 1.5
+      },
+      {
+        "face": "opposite",
+        "xMm": 405.8,
+        "yMm": 36,
+        "wMm": 44.2,
+        "hMm": 7,
+        "marginMm": 1
+      },
+      {
+        "face": "io",
+        "xMm": 72.5,
+        "yMm": 29.8,
+        "wMm": 41.5,
+        "hMm": 9.7,
+        "marginMm": 1.5
+      },
+      {
+        "face": "io",
+        "xMm": 84,
+        "yMm": 4.3,
+        "wMm": 30,
+        "hMm": 3.4,
+        "marginMm": 1
+      }
+    ]
+  }
 }

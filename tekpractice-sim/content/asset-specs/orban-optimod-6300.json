@@ -137,7 +137,7 @@
       "ventFromRearMm": 30,
       "ventColPitchMm": 70,
       "plateRgb": 1908257,
-      "bodyRgb": 2763566
+      "bodyRgb": 10132638
     },
     "projection": [
       "opposite",
@@ -147,7 +147,40 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1.5
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.webp",
+        "crop": [
+          0,
+          128,
+          2500,
+          224
+        ],
+        "fill": true
+      }
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 18,
+        "yMm": 19,
+        "wMm": 44.5,
+        "hMm": 22.5,
+        "marginMm": 5
+      },
+      {
+        "face": "opposite",
+        "xMm": 146.3,
+        "yMm": 34.6,
+        "wMm": 20.5,
+        "hMm": 6.4,
+        "marginMm": 5
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.orban.com/specifications-optimod6300",

@@ -11,9 +11,9 @@
     {
       "portId": "in-analog-1",
       "face": "io",
-      "xMm": 70,
-      "yMm": 310,
-      "confidence": "guess",
+      "xMm": 76,
+      "yMm": 87,
+      "confidence": "photo",
       "insetMm": 3,
       "openingMm": 20,
       "connector": "xlr3-f",
@@ -23,9 +23,9 @@
     {
       "portId": "in-analog-2",
       "face": "io",
-      "xMm": 125,
-      "yMm": 310,
-      "confidence": "guess",
+      "xMm": 107,
+      "yMm": 87,
+      "confidence": "photo",
       "insetMm": 3,
       "openingMm": 20,
       "connector": "xlr3-f",
@@ -35,9 +35,9 @@
     {
       "portId": "out-analog-1",
       "face": "io",
-      "xMm": 205,
-      "yMm": 310,
-      "confidence": "guess",
+      "xMm": 139,
+      "yMm": 87,
+      "confidence": "photo",
       "insetMm": 3,
       "openingMm": 20,
       "connector": "xlr3-m",
@@ -49,9 +49,9 @@
     {
       "portId": "out-analog-2",
       "face": "io",
-      "xMm": 260,
-      "yMm": 310,
-      "confidence": "guess",
+      "xMm": 171,
+      "yMm": 87,
+      "confidence": "photo",
       "insetMm": 3,
       "openingMm": 20,
       "connector": "xlr3-m",
@@ -63,9 +63,9 @@
     {
       "portId": "in-aes",
       "face": "io",
-      "xMm": 70,
-      "yMm": 240,
-      "confidence": "guess",
+      "xMm": 88,
+      "yMm": 165,
+      "confidence": "photo",
       "insetMm": 3,
       "openingMm": 14,
       "connector": "bnc",
@@ -75,9 +75,9 @@
     {
       "portId": "out-aes",
       "face": "io",
-      "xMm": 125,
-      "yMm": 240,
-      "confidence": "guess",
+      "xMm": 88,
+      "yMm": 145,
+      "confidence": "photo",
       "insetMm": 3,
       "openingMm": 14,
       "connector": "bnc",
@@ -89,9 +89,9 @@
     {
       "portId": "net",
       "face": "io",
-      "xMm": 230,
-      "yMm": 240,
-      "confidence": "guess",
+      "xMm": 138,
+      "yMm": 153,
+      "confidence": "photo",
       "insetMm": 3,
       "openingMm": 14,
       "connector": "rj45",
@@ -101,9 +101,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 110,
-      "yMm": 165,
-      "confidence": "guess",
+      "xMm": 258,
+      "yMm": 71,
+      "confidence": "photo",
       "insetMm": 3,
       "openingMm": 24,
       "connector": "iec-c14",
@@ -116,8 +116,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "io",
-      "xMm": 260,
-      "yMm": 165,
+      "xMm": 258,
+      "yMm": 96,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -131,8 +131,9 @@
   "build": {
     "shape": "speaker-cabinet-v2",
     "params": {
-      "edgeRadiusMm": 8,
-      "edgeSegments": 4
+      "edgeRadiusMm": 13,
+      "edgeSegments": 6,
+      "bodyGrey": 90
     },
     "budget": {
       "min": 100,
@@ -142,6 +143,16 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_dark.png"
+      },
+      {
+        "face": "io",
+        "file": "rear_dark.png"
+      }
     ]
   },
   "sources": [
@@ -154,6 +165,39 @@
       "kind": "datasheet",
       "url": "https://www.neumann.com/en-en/products/monitors/kh-750-dsp/",
       "note": "Neumann KH 750 DSP page read 2026-11-12: \"383 x 330 x 383 mm\" (H x W x D), 19.5 kg, backplate: two electronically balanced XLR inputs, two electronically balanced XLR outputs (high-passed, a daisy chain for subwoofer arrays), one BNC input (75 ohm, AES3 or S/PDIF) and one BNC output (75 ohm, AES3), \"a standard IP network connector\" for MA 1 control, a universal switched-mode supply 100-240 V (the mains connector is not described), a 10 in long-throw woofer behind a black metal grille, sealed wood cabinet with an aluminium electronics panel; also a toggle switch for operation and calibration, input gain, output level, phase, low cut. Modelled: all eight connectors. Not stated: the XLR genders (convention: inputs female, outputs male), the network connector (RJ45 assumed) and the mains inlet (iec-c14 assumed): the plan row carries assumedConnectors net and power-in, both non-audio ports. The BNC pair is AES3 on 75 ohm BNC (aes3 signal). The page does not say the cabinet is rounded (radius 8 mm is our estimate). The `power` switch is the simulator power control, not the page's toggle. Positions are guesses."
+    },
+    {
+      "kind": "photo",
+      "url": "https://assets.sennheiser.com/assets/KH_750_DSPx1_desktop_KH-750-DSP-Back_Neumann-Studio-Subwoofer_G.jpg",
+      "note": "Neumann rear photo (assets-source rear.webp, straight-on, 1600x1893). Cropped to the cabinet (aspect 0.863 against 330 x 383 mm) and read on a 20 mm grid: the four XLR (inputs left, outputs right) sit on one row at y 87 mm and x 76, 107, 139 and 171 mm; the BNC input and output at x 88 mm, y 165 and 145 mm; the RJ45 at x 138 mm, y 153 mm; the IEC inlet at x 258 mm, y 71 mm and the mains rocker above it at x 258 mm, y 96 mm. Positions +/- 3 mm. Only xMm and yMm changed; the openings, connectors and sizes are from the datasheet read above."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 23,
+        "yMm": 316,
+        "wMm": 34,
+        "hMm": 34,
+        "marginMm": 4
+      },
+      {
+        "face": "io",
+        "xMm": 196,
+        "yMm": 296,
+        "wMm": 30,
+        "hMm": 30,
+        "marginMm": 3
+      },
+      {
+        "face": "io",
+        "xMm": 221,
+        "yMm": 297,
+        "wMm": 54,
+        "hMm": 12,
+        "marginMm": 3
+      }
+    ]
+  }
 }

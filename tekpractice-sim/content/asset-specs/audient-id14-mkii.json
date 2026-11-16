@@ -121,9 +121,9 @@
     {
       "portId": "in-inst",
       "face": "opposite",
-      "xMm": 130,
-      "yMm": 31,
-      "confidence": "guess",
+      "xMm": 21,
+      "yMm": 18,
+      "confidence": "photo",
       "connector": "ts-quarter",
       "signal": "instrument-hiz",
       "dir": "in"
@@ -131,26 +131,97 @@
   ],
   "controls": [],
   "build": {
-    "shape": "rack-box",
+    "shape": "console-wedge",
     "params": {
-      "earThicknessMm": 10,
-      "plateFilletMm": 4.4,
-      "filletMm": 5,
-      "filletSegments": 10,
+      "filletMm": 2,
+      "filletSegments": 6,
       "feetMm": 3,
-      "feetDiaMm": 12,
-      "plateRgb": 2763824,
-      "bodyRgb": 1776671
+      "feetWidthMm": 16
     },
     "projection": [
-      "opposite",
-      "io"
+      "top",
+      "io",
+      "opposite"
     ],
     "budget": {
       "min": 500,
       "max": 2000
     },
-    "minFilletMm": 4
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rot180.png",
+        "crop": [
+          50,
+          33,
+          705,
+          482
+        ],
+        "fill": true
+      },
+      {
+        "face": "opposite",
+        "file": "front_tall.png",
+        "crop": [
+          0,
+          0,
+          720,
+          258
+        ],
+        "fill": true
+      }
+    ],
+    "profile": [
+      [
+        0,
+        58
+      ],
+      [
+        12,
+        62
+      ],
+      [
+        50,
+        60
+      ],
+      [
+        85,
+        50
+      ],
+      [
+        108,
+        46
+      ],
+      [
+        116,
+        42
+      ],
+      [
+        120,
+        37
+      ]
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 113.5,
+        "yMm": 18.5,
+        "wMm": 33,
+        "hMm": 6.5,
+        "marginMm": 3
+      },
+      {
+        "face": "top",
+        "xMm": 30,
+        "yMm": 10,
+        "wMm": 18,
+        "hMm": 8,
+        "marginMm": 3
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.thomann.de/be/audient_id14_mkii.htm",

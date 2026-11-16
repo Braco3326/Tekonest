@@ -11,9 +11,9 @@
     {
       "portId": "in-combo-1",
       "face": "io",
-      "xMm": 40,
-      "yMm": 130,
-      "confidence": "guess",
+      "xMm": 417.7,
+      "yMm": 96.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -26,9 +26,9 @@
     {
       "portId": "in-combo-2",
       "face": "io",
-      "xMm": 66.4,
-      "yMm": 130,
-      "confidence": "guess",
+      "xMm": 390.4,
+      "yMm": 96.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -41,9 +41,9 @@
     {
       "portId": "in-combo-3",
       "face": "io",
-      "xMm": 92.8,
-      "yMm": 130,
-      "confidence": "guess",
+      "xMm": 363.5,
+      "yMm": 96.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -56,9 +56,9 @@
     {
       "portId": "in-combo-4",
       "face": "io",
-      "xMm": 119.2,
-      "yMm": 130,
-      "confidence": "guess",
+      "xMm": 336.7,
+      "yMm": 96.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -71,9 +71,9 @@
     {
       "portId": "in-mic-1",
       "face": "io",
-      "xMm": 160,
-      "yMm": 130,
-      "confidence": "guess",
+      "xMm": 417.7,
+      "yMm": 127.3,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -86,9 +86,9 @@
     {
       "portId": "in-mic-2",
       "face": "io",
-      "xMm": 186.4,
-      "yMm": 130,
-      "confidence": "guess",
+      "xMm": 390.4,
+      "yMm": 127.3,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -101,9 +101,9 @@
     {
       "portId": "in-mic-3",
       "face": "io",
-      "xMm": 212.8,
-      "yMm": 130,
-      "confidence": "guess",
+      "xMm": 363.5,
+      "yMm": 127.3,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -116,9 +116,9 @@
     {
       "portId": "in-mic-4",
       "face": "io",
-      "xMm": 239.2,
-      "yMm": 130,
-      "confidence": "guess",
+      "xMm": 336.7,
+      "yMm": 127.3,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in",
@@ -131,9 +131,9 @@
     {
       "portId": "in-talkback",
       "face": "io",
-      "xMm": 290,
-      "yMm": 130,
-      "confidence": "guess",
+      "xMm": 201.2,
+      "yMm": 127.3,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "mic-level",
       "dir": "in"
@@ -141,9 +141,9 @@
     {
       "portId": "out-main-l",
       "face": "io",
-      "xMm": 40,
-      "yMm": 95,
-      "confidence": "guess",
+      "xMm": 198.8,
+      "yMm": 95.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -151,9 +151,9 @@
     {
       "portId": "out-main-r",
       "face": "io",
-      "xMm": 66.4,
-      "yMm": 95,
-      "confidence": "guess",
+      "xMm": 171.9,
+      "yMm": 95.8,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -161,9 +161,9 @@
     {
       "portId": "out-main-c",
       "face": "io",
-      "xMm": 92.8,
-      "yMm": 95,
-      "confidence": "guess",
+      "xMm": 171.9,
+      "yMm": 127.3,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -171,9 +171,9 @@
     {
       "portId": "out-mix-1",
       "face": "io",
-      "xMm": 140,
-      "yMm": 95,
-      "confidence": "guess",
+      "xMm": 417.7,
+      "yMm": 61.1,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -181,9 +181,9 @@
     {
       "portId": "out-mix-2",
       "face": "io",
-      "xMm": 166.4,
-      "yMm": 95,
-      "confidence": "guess",
+      "xMm": 390.4,
+      "yMm": 61.1,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -191,9 +191,9 @@
     {
       "portId": "out-mix-3",
       "face": "io",
-      "xMm": 192.8,
-      "yMm": 95,
-      "confidence": "guess",
+      "xMm": 363.5,
+      "yMm": 61.1,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -201,9 +201,9 @@
     {
       "portId": "out-mix-4",
       "face": "io",
-      "xMm": 219.2,
-      "yMm": 95,
-      "confidence": "guess",
+      "xMm": 336.7,
+      "yMm": 61.1,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -211,9 +211,9 @@
     {
       "portId": "out-aes",
       "face": "io",
-      "xMm": 260,
-      "yMm": 95,
-      "confidence": "guess",
+      "xMm": 117.5,
+      "yMm": 127.3,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -221,9 +221,9 @@
     {
       "portId": "out-mon-l",
       "face": "io",
-      "xMm": 40,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 198.8,
+      "yMm": 67.6,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -231,9 +231,9 @@
     {
       "portId": "out-mon-r",
       "face": "io",
-      "xMm": 58,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 198.8,
+      "yMm": 53.5,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -241,9 +241,9 @@
     {
       "portId": "in-aux-1",
       "face": "io",
-      "xMm": 90,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 145.8,
+      "yMm": 67.6,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -251,9 +251,9 @@
     {
       "portId": "in-aux-2",
       "face": "io",
-      "xMm": 108,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 145.8,
+      "yMm": 53.5,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -261,9 +261,9 @@
     {
       "portId": "in-aux-3",
       "face": "io",
-      "xMm": 126,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 171.9,
+      "yMm": 67.6,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -271,9 +271,9 @@
     {
       "portId": "in-aux-4",
       "face": "io",
-      "xMm": 144,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 171.9,
+      "yMm": 53.5,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -281,9 +281,9 @@
     {
       "portId": "in-tape-l",
       "face": "io",
-      "xMm": 180,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 111.7,
+      "yMm": 67.6,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "line-level-consumer",
       "dir": "in"
@@ -291,9 +291,9 @@
     {
       "portId": "in-tape-r",
       "face": "io",
-      "xMm": 198,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 111.7,
+      "yMm": 53.5,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "line-level-consumer",
       "dir": "in"
@@ -301,9 +301,9 @@
     {
       "portId": "out-tape-l",
       "face": "io",
-      "xMm": 216,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 125.7,
+      "yMm": 67.6,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "line-level-consumer",
       "dir": "out"
@@ -311,9 +311,9 @@
     {
       "portId": "out-tape-r",
       "face": "io",
-      "xMm": 234,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 125.7,
+      "yMm": 53.5,
+      "confidence": "photo",
       "connector": "rca",
       "signal": "line-level-consumer",
       "dir": "out"
@@ -321,9 +321,9 @@
     {
       "portId": "net-avb",
       "face": "io",
-      "xMm": 270,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 88.5,
+      "yMm": 125.1,
+      "confidence": "photo",
       "connector": "ethercon",
       "signal": "aoip",
       "dir": "bidir"
@@ -331,9 +331,9 @@
     {
       "portId": "net-ctl",
       "face": "io",
-      "xMm": 296,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 58.6,
+      "yMm": 143.6,
+      "confidence": "photo",
       "connector": "rj45",
       "signal": "ethernet-control",
       "dir": "bidir"
@@ -341,9 +341,9 @@
     {
       "portId": "usb",
       "face": "io",
-      "xMm": 322,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 31.3,
+      "yMm": 145.8,
+      "confidence": "photo",
       "connector": "usb-b",
       "signal": "usb-audio",
       "dir": "bidir"
@@ -351,9 +351,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 410,
-      "yMm": 60,
-      "confidence": "guess",
+      "xMm": 69.2,
+      "yMm": 31.8,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -361,9 +361,9 @@
     {
       "portId": "out-phones",
       "face": "opposite",
-      "xMm": 60,
-      "yMm": 48,
-      "confidence": "guess",
+      "xMm": 415,
+      "yMm": 13,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "headphone-level",
       "dir": "out"
@@ -374,8 +374,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "io",
-      "xMm": 350,
-      "yMm": 60,
+      "xMm": 30.6,
+      "yMm": 33.9,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -392,29 +392,23 @@
         165
       ],
       [
-        40,
+        20,
         165
       ],
       [
-        130,
-        130
-      ],
-      [
-        300,
-        95
+        229,
+        81
       ],
       [
         584,
-        70
+        22
       ]
     ],
     "params": {
-      "filletMm": 5,
+      "filletMm": 4,
       "filletSegments": 5,
-      "armRestMm": 14,
-      "cheekMm": 6,
-      "baseMm": 20,
-      "feetMm": 10,
+      "armRestMm": 8,
+      "feetMm": 5,
       "feetWidthMm": 22,
       "feetFromSideMm": 40,
       "feetFromEndMm": 40
@@ -428,7 +422,25 @@
       "min": 1000,
       "max": 6000
     },
-    "minFilletMm": 4
+    "minFilletMm": 4,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rot180.png",
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.png",
+        "crop": [
+          66,
+          62,
+          2870,
+          1140
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf",
@@ -452,6 +464,31 @@
       "kind": "manual",
       "url": "https://www.fmicassets.com/Damroot/Original/10153/OM_StudioLive-Series-III-Console-Mixers_EN.pdf",
       "note": "Phantom power (review fix, read 2026-11-12 by a research pass): the StudioLive Series III SE owner's manual (SE 16 I/O table PDF p.16, phantom PDF p.19) says phantom is individually switchable per microphone input: 16 mic inputs (8 combo, 8 XLR); the eight modelled ports are a subset."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.fmicassets.com/Damroot/eCommPNG/10110/2779200308_pre_aud_bck_1_nr.png",
+      "note": "Rear, straight-on (assets-source/presonus-studiolive-iii-se-16/photos/rear.png, 3000x1207), 3D quality pass 2026-11-15: the io picture is the crop 66,62,2870,1140 of this photo (the black rear panel from the vent row to the feet), 2870 px = 447 mm and 1140 px = 165 mm, y from the bottom. Connector centres read on the 2000 px preview (+/- 10 px = +/- 2 mm): Mic 1 to 4 (top row, Mic 1 rightmost seen from behind, pitch 115 px), Mic/Line 9 to 12 below them (modelled as in-combo-1 to 4), Mono Sum (out-main-c), Main Output Right and Left, Talkback, AES Out, Mix 1 to 4 XLR, Monitor Out L and R, Aux 1 and 2 L and R (in-aux-1 to 4), Tape In and Out RCA, Audio Network etherCON (net-avb), Control RJ45 (net-ctl), USB-B, IEC inlet and the rocker at the left edge. Which catalogue id maps to which jack of the same family is a choice; positions are the photo ones, now confidence photo. The top picture is top.png turned 180 degrees (rear at the bottom of the face). The side profile (rear 165 mm, upper deck kink about 229 mm from the rear at 81 mm, front lip 22 mm) is read from side.png. Sizes and catalogue unchanged."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "top",
+        "xMm": 295,
+        "yMm": 36,
+        "wMm": 96,
+        "hMm": 24,
+        "marginMm": 4
+      },
+      {
+        "face": "io",
+        "xMm": 14,
+        "yMm": 80,
+        "wMm": 88,
+        "hMm": 19,
+        "marginMm": 4
+      }
+    ]
+  }
 }

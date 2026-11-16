@@ -11,9 +11,9 @@
     {
       "portId": "in-send-1",
       "face": "io",
-      "xMm": 56,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 233.5,
+      "yMm": 25.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -21,9 +21,9 @@
     {
       "portId": "in-send-2",
       "face": "io",
-      "xMm": 83,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 267.9,
+      "yMm": 25.9,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -31,9 +31,9 @@
     {
       "portId": "out-recv-1",
       "face": "io",
-      "xMm": 110,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 302.1,
+      "yMm": 25.9,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -41,9 +41,9 @@
     {
       "portId": "out-recv-2",
       "face": "io",
-      "xMm": 137,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 336.4,
+      "yMm": 25.9,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -51,9 +51,9 @@
     {
       "portId": "in-aes",
       "face": "io",
-      "xMm": 164,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 233.5,
+      "yMm": 62.6,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "aes3",
       "dir": "in"
@@ -61,9 +61,9 @@
     {
       "portId": "out-aes",
       "face": "io",
-      "xMm": 191,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 267.9,
+      "yMm": 62.6,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out"
@@ -71,9 +71,9 @@
     {
       "portId": "net",
       "face": "io",
-      "xMm": 213.5,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 181.5,
+      "yMm": 17.3,
+      "confidence": "photo",
       "connector": "rj45",
       "signal": "aoip",
       "dir": "bidir"
@@ -81,9 +81,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 424,
-      "yMm": 44.5,
-      "confidence": "guess",
+      "xMm": 425.5,
+      "yMm": 40.9,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -93,9 +93,9 @@
     {
       "controlId": "power",
       "kind": "button",
-      "face": "opposite",
-      "xMm": 40,
-      "yMm": 44.5,
+      "face": "io",
+      "xMm": 426,
+      "yMm": 51.7,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -123,8 +123,8 @@
       "ventColPitchMm": 60,
       "ventDepthMm": 1.5,
       "ventFromRearMm": 30,
-      "plateRgb": 2500909,
-      "bodyRgb": 1579292
+      "plateRgb": 13619151,
+      "bodyRgb": 11579568
     },
     "projection": [
       "opposite",
@@ -134,7 +134,31 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1
+    "minFilletMm": 1,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          27,
+          86,
+          969,
+          176
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "crop": [
+          61,
+          38,
+          899,
+          167
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://telosalliance.com/Telos/XSTREAM",
@@ -164,5 +188,41 @@
       "url": "https://telosalliance.com/Telos/XSTREAM",
       "note": "Telos Zephyr Xstream product page and manual pages 16, 18, 57 and 58 (read by a research pass 2026-11-12): rear panel two XLR/TRS combo send inputs, two XLR receive outputs, AES/EBU I/O (the count is not stated: one input and one output modelled), an Ethernet / Livewire RJ-45, an IEC AC inlet 100-240 V (the page says IEC without a type: C14 is listed in the plan as assumedConnectors), a headphone jack on the front; also an RS-232 DB9, 8 in / 8 out contact closures, ISDN U and S/T jacks with no catalogue signal (not ports). 483 x 318 x 89 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 29,
+        "yMm": 40,
+        "wMm": 31,
+        "hMm": 9.2,
+        "marginMm": 2
+      },
+      {
+        "face": "opposite",
+        "xMm": 375.5,
+        "yMm": 6,
+        "wMm": 55,
+        "hMm": 8.3,
+        "marginMm": 2
+      },
+      {
+        "face": "io",
+        "xMm": 339,
+        "yMm": 51.5,
+        "wMm": 44,
+        "hMm": 28.8,
+        "marginMm": 2
+      },
+      {
+        "face": "io",
+        "xMm": 164.5,
+        "yMm": 74.5,
+        "wMm": 21.5,
+        "hMm": 5.8,
+        "marginMm": 1.5
+      }
+    ]
+  }
 }

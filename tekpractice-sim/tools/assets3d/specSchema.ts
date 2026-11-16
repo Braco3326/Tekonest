@@ -11,6 +11,7 @@
 import { z } from 'zod'
 import { PortFlag } from '../schemas'
 import { BUILD_SHAPES } from './shapes'
+import { Structure } from './structure'
 
 const PositiveMm = z.number().finite().positive()
 const CoordMm = z.number().finite().min(0)
@@ -85,10 +86,17 @@ export const BuildSpec = z.object({
   shape: z.enum(BUILD_SHAPES).describe('Shape the scripted builder makes for this asset (tools/assets3d/shapes.ts).'),
   params: z.record(z.string(), z.number().finite()).optional().describe('Extra shape dimensions in millimetres (names per shape in SHAPE_SPECS). Sizes come from realSizeMm, never from here.'),
   profile: z.array(Station).min(4).optional().describe('Shapes revolve and console-wedge (and revolve-oval): the profile, at least four stations with strictly increasing positions; revolve: [axial mm from the base, diameter mm], first at 0, last at the height, widest = the width; revolve-oval: [axial mm, width mm, depth mm], widest = the width, deepest = the depth.'),
+  outline: z.array(z.tuple([z.number().finite(), z.number().finite()])).min(3).max(64).optional().describe('Shape extruded-body only: the convex front outline in millimetres, counter-clockwise, origin on the floor in the middle (x from -w/2 to w/2, y from 0 to h).'),
   colours: z.array(ZoneColour).min(1).optional().describe('Shape revolve only: colour zones along the axis (first at 0, strictly increasing), sRGB hex of the real part.'),
   projection: z.union([ProjectionFaceEnum, z.array(ProjectionFaceEnum).min(1).max(4)]).optional().describe('The face(s) that take their picture from a Meshy model (asset:build --scripted --project <fixed.glb>); default io. Each picture is mapped planar onto the scripted faces that look that way; a face given twice or two faces looking the same way is refused.'),
   budget: TriangleBudget.optional().describe("Triangles the finished GLB must have, from the class floor to the ceiling (gate 'detail'), e.g. speaker 1500 to 4000. Absent = no check."),
   minFilletMm: z.number().finite().positive().optional().describe("The smallest edge fillet, in millimetres, the builder must have built (gate 'fillet'; the builder measures it and writes it into the GLB extras). Absent = no check."),
+  photos: z.array(z.object({
+    face: ProjectionFaceEnum,
+    file: z.string().min(1).describe('File name in assets-source/<id>/photos (a straight-on manufacturer photo).'),
+    crop: z.tuple([z.number().int().min(0), z.number().int().min(0), z.number().int().positive(), z.number().int().positive()]).optional().describe('[left, top, width, height] in pixels of the ORIGINAL photo: the straight-on face inside it (see photoProjection).'),
+    fill: z.boolean().optional().describe('Repaint the white corners of a rounded casing (photoProjection fillBackground).'),
+  }).strict()).max(4).optional().describe('Faces whose picture is a straight-on reference photo instead of the generic drawn panel. A rebuild with no --project-photo uses these, and the generic panel for the other faces.'),
   projectionShiftMm: z.object({ io: z.number().finite(), opposite: z.number().finite(), top: z.number().finite(), left: z.number().finite(), right: z.number().finite() }).partial().strict().optional().describe("Millimetres to move the picture of a projected face sideways (face-local x, positive = right) before it is mapped: for a cabinet whose real panel sits where the Meshy model has it off-centre, so the picture moves with the ports."),
 }).strict().superRefine((b, ctx) => {
   const { profile, colours } = b
@@ -136,6 +144,7 @@ export const AssetSpec = z.object({
   mating: Mating.optional(),
   build: BuildSpec.optional(),
   texture: TextureSpec.optional(),
+  structure: Structure.optional().describe('The structure sheet: the real parts (knobs, faders, buttons, ports, keys, screws, feet) that the builder MODELS as geometry on the faces; a photo is only for printed graphics. See docs/3d-structure-rebuild.md.'),
   portsDocumented: z.boolean().optional().describe('true when the ports of this spec are the connector set the datasheet documents (set by the person who fills the spec in, with portsSource). Only a device with portsDocumented true can be promoted into the verified catalogue; without it the device stays a Bêta proposal (beta-modelled).'),
   portsSource: z.string().regex(/^https?:\/\/\S+$/, 'portsSource is an http(s) URL').optional().describe('The page that documents the connector set (a manufacturer page or manual).'),
   powerNote: z.string().min(3).optional().describe('One French sentence about the mains of this device that the catalogue entry\'s realWorld.notes carries (findings 5 and 16): what the sheet says when no inlet or no switch is modelled (« alimentation non modélisée (source non lue) », « pas d\'interrupteur secteur selon le manuel »).'),

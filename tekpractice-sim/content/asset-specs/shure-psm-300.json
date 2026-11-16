@@ -11,9 +11,9 @@
     {
       "portId": "in-1",
       "face": "io",
-      "xMm": 30,
-      "yMm": 21.5,
-      "confidence": "guess",
+      "xMm": 133.8,
+      "yMm": 17.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -21,9 +21,9 @@
     {
       "portId": "in-2",
       "face": "io",
-      "xMm": 58,
-      "yMm": 21.5,
-      "confidence": "guess",
+      "xMm": 152.9,
+      "yMm": 17.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "in"
@@ -31,9 +31,9 @@
     {
       "portId": "out-loop-1",
       "face": "io",
-      "xMm": 100,
-      "yMm": 21.5,
-      "confidence": "guess",
+      "xMm": 95.5,
+      "yMm": 17.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -41,9 +41,9 @@
     {
       "portId": "out-loop-2",
       "face": "io",
-      "xMm": 128,
-      "yMm": 21.5,
-      "confidence": "guess",
+      "xMm": 113.8,
+      "yMm": 17.3,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "line-level-pro",
       "dir": "out"
@@ -79,7 +79,31 @@
       "min": 600,
       "max": 2000
     },
-    "minFilletMm": 2
+    "minFilletMm": 2,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          2,
+          1743,
+          3289,
+          698
+        ],
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.webp",
+        "crop": [
+          125,
+          1141,
+          2230,
+          471
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://content-files.shure.com/Pubs/PSM300/PSM300_Spec_Sheet.pdf",
@@ -100,5 +124,36 @@
       "note": "Mains (review fix, read 2026-11-12 by a research pass): the PSM 300 guide says the P3T transmitter has a Power Input jack fed by the external PS24 supply and no IEC inlet. No mains inlet is modelled for this device and the entry says so."
     }
   ],
-  "powerNote": "alimentation non modélisée : l'appareil utilise une alimentation externe PS24"
+  "powerNote": "alimentation non modélisée : l'appareil utilise une alimentation externe PS24",
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 2,
+        "yMm": 34.6,
+        "wMm": 74.5,
+        "hMm": 5.9,
+        "marginMm": 2,
+        "fill": "#5e6065"
+      },
+      {
+        "face": "opposite",
+        "xMm": 174.5,
+        "yMm": 35.3,
+        "wMm": 22.5,
+        "hMm": 5.6,
+        "marginMm": 2,
+        "fill": "#66686f"
+      },
+      {
+        "face": "io",
+        "xMm": 133.5,
+        "yMm": 29.2,
+        "wMm": 21,
+        "hMm": 5.2,
+        "marginMm": 2,
+        "fill": "#3a3e44"
+      }
+    ]
+  }
 }

@@ -91,9 +91,9 @@
     {
       "portId": "out-phones",
       "face": "opposite",
-      "xMm": 120,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 42.9,
+      "yMm": 22.6,
+      "confidence": "photo",
       "connector": "trs-quarter",
       "signal": "headphone-level",
       "dir": "out"
@@ -104,8 +104,8 @@
       "controlId": "power",
       "kind": "button",
       "face": "opposite",
-      "xMm": 40,
-      "yMm": 22,
+      "xMm": 433,
+      "yMm": 29.4,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -143,7 +143,40 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1.5
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          3,
+          4,
+          794,
+          71
+        ],
+        "fill": true
+      }
+    ]
+  },
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 81.5,
+        "yMm": 31.4,
+        "wMm": 11.5,
+        "hMm": 7.4,
+        "marginMm": 1
+      },
+      {
+        "face": "opposite",
+        "xMm": 410.5,
+        "yMm": 4,
+        "wMm": 40.5,
+        "hMm": 6,
+        "marginMm": 1
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://docs.cloud.sennheiser.com/en-us/digital-6000/digital-6000/specs-em6000.html",
@@ -162,6 +195,11 @@
       "kind": "datasheet",
       "url": "https://docs.cloud.sennheiser.com/en-us/digital-6000/digital-6000/specs-em6000.html",
       "note": "Sennheiser EM 6000 specifications page (opened 2026-11-12): two XLR-3 and two 6.3 mm balanced audio outputs, an XLR-3 AES3 output, BNC word clock in and out, a 6.3 mm headphone output, 3-pin IEC/EN 60320-1 mains inlet 100-240 V. The page also lists one RJ45; a search summary says only the EM 6000 DANTE has network ports, so the RJ45 is left out (conflict). The BNC antenna inputs and daisy-chain outputs have no catalogue signal. 483 x 373 x 44 mm (datasheet, size ok). Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened."
+    },
+    {
+      "kind": "photo",
+      "url": "https://thumbs.static-thomann.de/thumb/orig/pics/bdb/_41/416692/13680451_800.jpg",
+      "note": "Front photo (front.jpg, 800 px wide dealer image, straight-on, cropped to the face): the headphone jack and the power button positions are read from it (confidence photo, 2026-11-15); the pass changes the look only."
     }
   ],
   "portAliases": {

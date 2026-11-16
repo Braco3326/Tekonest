@@ -132,8 +132,8 @@
       "ventPitchMm": 8,
       "ventDepthMm": 1.5,
       "ventFromRearMm": 20,
-      "plateRgb": 3356219,
-      "bodyRgb": 1842464
+      "plateRgb": 6183002,
+      "bodyRgb": 10197917
     },
     "projection": [
       "opposite",
@@ -143,7 +143,20 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1
+    "minFilletMm": 1,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          622,
+          217,
+          780,
+          276
+        ],
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://docs.telosalliance.com/docs/chapter-1-installation",
@@ -174,5 +187,25 @@
       "note": "Mains switch (review fix, read 2026-11-12 by a research pass, a manualsdir copy): the Omnia.11 manual says the unit is powered up by connecting the AC cord and states there is no power switch. The simulator's Alimentation control is not a switch of the real unit."
     }
   ],
-  "powerNote": "Pas d'interrupteur secteur selon le manuel (on coupe en retirant le cordon) : la commande Alimentation est celle du simulateur"
+  "powerNote": "Pas d'interrupteur secteur selon le manuel (on coupe en retirant le cordon) : la commande Alimentation est celle du simulateur",
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 226,
+        "yMm": 161.5,
+        "wMm": 31,
+        "hMm": 15.5,
+        "marginMm": 2
+      },
+      {
+        "face": "opposite",
+        "xMm": 408,
+        "yMm": 120.5,
+        "wMm": 17.5,
+        "hMm": 18,
+        "marginMm": 3
+      }
+    ]
+  }
 }

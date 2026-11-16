@@ -1,7 +1,7 @@
 {
   "id": "adam-audio-s3h",
   "kind": "device",
-  "tier": "standard",
+  "tier": "hero",
   "realSizeMm": {
     "w": 585,
     "h": 280,
@@ -11,51 +11,51 @@
     {
       "portId": "in-analog",
       "face": "io",
-      "xMm": 100,
-      "yMm": 190,
-      "confidence": "guess",
-      "insetMm": 3,
-      "openingMm": 20,
+      "xMm": 431.1,
+      "yMm": 137.8,
+      "confidence": "photo",
+      "openingMm": 22.4,
       "connector": "xlr3-f",
       "signal": "line-level-pro",
-      "dir": "in"
+      "dir": "in",
+      "insetMm": 23
     },
     {
       "portId": "in-aes",
       "face": "io",
-      "xMm": 160,
-      "yMm": 190,
-      "confidence": "guess",
-      "insetMm": 3,
-      "openingMm": 20,
+      "xMm": 431.1,
+      "yMm": 114.4,
+      "confidence": "photo",
+      "openingMm": 22.4,
       "connector": "xlr3-f",
       "signal": "aes3",
-      "dir": "in"
+      "dir": "in",
+      "insetMm": 23
     },
     {
       "portId": "out-aes",
       "face": "io",
-      "xMm": 220,
-      "yMm": 190,
-      "confidence": "guess",
-      "insetMm": 3,
-      "openingMm": 20,
+      "xMm": 431.1,
+      "yMm": 91.1,
+      "confidence": "photo",
+      "openingMm": 22.4,
       "connector": "xlr3-m",
       "signal": "aes3",
       "dir": "out",
-      "thruOf": "in-aes"
+      "thruOf": "in-aes",
+      "insetMm": 23
     },
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 420,
-      "yMm": 190,
-      "confidence": "guess",
-      "insetMm": 3,
+      "xMm": 155.9,
+      "yMm": 79.4,
+      "confidence": "photo",
       "openingMm": 24,
       "connector": "iec-c14",
       "signal": "mains-power",
-      "dir": "in"
+      "dir": "in",
+      "insetMm": 15
     }
   ],
   "controls": [
@@ -63,12 +63,12 @@
       "controlId": "power",
       "kind": "switch",
       "face": "io",
-      "xMm": 500,
-      "yMm": 190,
+      "xMm": 157.7,
+      "yMm": 107.8,
       "axis": "z",
       "sizeMm": {
-        "w": 12,
-        "h": 18,
+        "w": 19,
+        "h": 10,
         "d": 6
       }
     }
@@ -76,20 +76,63 @@
   "portsDocumented": true,
   "portsSource": "https://www.adam-audio.com/content/uploads/2018/03/adam-audio-s-series-quick-start-guide-english.pdf",
   "build": {
-    "shape": "speaker-cabinet-v2",
+    "shape": "extruded-body",
     "params": {
-      "edgeRadiusMm": 8,
-      "edgeSegments": 4
+      "cornerRadiusMm": 28,
+      "frontRadiusMm": 26,
+      "rearRadiusMm": 6,
+      "frontSegments": 12,
+      "rearSegments": 1,
+      "bodyGrey": 30
     },
+    "outline": [
+      [
+        -252.5,
+        0
+      ],
+      [
+        252.5,
+        0
+      ],
+      [
+        292.5,
+        20
+      ],
+      [
+        292.5,
+        260
+      ],
+      [
+        252.5,
+        280
+      ],
+      [
+        -252.5,
+        280
+      ],
+      [
+        -292.5,
+        260
+      ],
+      [
+        -292.5,
+        20
+      ]
+    ],
     "budget": {
-      "min": 100,
-      "max": 4000
+      "min": 3000,
+      "max": 15000
     },
-    "minFilletMm": 5.6,
     "projection": [
-      "io",
-      "opposite"
-    ]
+      "io"
+    ],
+    "photos": [
+      {
+        "face": "io",
+        "file": "rear-plate-clean.png"
+      }
+    ],
+    "minFilletMm": 5
   },
   "sources": [
     {
@@ -106,6 +149,2618 @@
       "kind": "datasheet",
       "url": "https://adam-audio.com/s-serie/s3h",
       "note": "ADAM Audio S3H page read 2026-11-12: 280 x 585 x 380 mm (H x W x D), 26.6 kg, drivers as above, 550 W maximum power consumption."
+    },
+    {
+      "kind": "photo",
+      "url": "https://www.adam-audio.com/content/uploads/magic360/S3H/big/rotation25.jpg",
+      "note": "Manufacturer 360 viewer frames (assets-source/adam-audio-s3h/photos, SOURCES.md): straight rear (rotation25) gives the connector plate and port positions at 1.99 px/mm against the 585 mm width; straight front (rotation01) gives the driver, plate and bass-reflex port layout at 1.97 px/mm; the side frame (rotation13) and the rear frame silhouette give the edge shapes: long edges a facet of about 35 x 21 mm with fillets of about 14 mm, front shell edge about 29 x 28 mm, rear edge small. The model uses a single edge radius of 30 mm (speaker-cabinet-v2), which is the nearest the shape allows. Rear connector plate and port positions replace the earlier oblique estimates."
     }
-  ]
+  ],
+  "structure": {
+    "bodyDepthMm": 374,
+    "parts": [
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 118.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 152,
+          "depthMm": 4
+        },
+        "colour": "#141416",
+        "note": "woofer funnel step r 76"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 118.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 132,
+          "depthMm": 12
+        },
+        "colour": "#2b2c31",
+        "note": "woofer funnel step r 66"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 118.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 112,
+          "depthMm": 20
+        },
+        "colour": "#34353b",
+        "note": "woofer funnel step r 56"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 118.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 90,
+          "depthMm": 28
+        },
+        "colour": "#2b2c31",
+        "note": "woofer funnel step r 45"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 118.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 66,
+          "depthMm": 38
+        },
+        "colour": "#34353b",
+        "note": "woofer funnel step r 33"
+      },
+      {
+        "kind": "ball",
+        "face": "opposite",
+        "xMm": 118.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 109,
+          "zMm": -83.5
+        },
+        "colour": "#3b3c42",
+        "note": "woofer dust cap dome 60 mm"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 118.5,
+        "yMm": 163.5,
+        "points": [
+          [
+            93,
+            0
+          ],
+          [
+            90.67,
+            20.69
+          ],
+          [
+            83.79,
+            40.35
+          ],
+          [
+            72.71,
+            57.98
+          ],
+          [
+            57.98,
+            72.71
+          ],
+          [
+            40.35,
+            83.79
+          ],
+          [
+            20.69,
+            90.67
+          ],
+          [
+            0,
+            93
+          ],
+          [
+            -20.69,
+            90.67
+          ],
+          [
+            -40.35,
+            83.79
+          ],
+          [
+            -57.98,
+            72.71
+          ],
+          [
+            -72.71,
+            57.98
+          ],
+          [
+            -83.79,
+            40.35
+          ],
+          [
+            -90.67,
+            20.69
+          ],
+          [
+            -93,
+            0
+          ],
+          [
+            -76,
+            0
+          ],
+          [
+            -74.09,
+            16.91
+          ],
+          [
+            -68.47,
+            32.98
+          ],
+          [
+            -59.42,
+            47.39
+          ],
+          [
+            -47.39,
+            59.42
+          ],
+          [
+            -32.98,
+            68.47
+          ],
+          [
+            -16.91,
+            74.09
+          ],
+          [
+            0,
+            76
+          ],
+          [
+            16.91,
+            74.09
+          ],
+          [
+            32.98,
+            68.47
+          ],
+          [
+            47.39,
+            59.42
+          ],
+          [
+            59.42,
+            47.39
+          ],
+          [
+            68.47,
+            32.98
+          ],
+          [
+            74.09,
+            16.91
+          ],
+          [
+            76,
+            0
+          ]
+        ],
+        "params": {
+          "riseMm": 3,
+          "bevelMm": 0.6
+        },
+        "colour": "#1f1f22",
+        "note": "woofer bezel ring (half), 3 mm proud"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 118.5,
+        "yMm": 163.5,
+        "points": [
+          [
+            -93,
+            0
+          ],
+          [
+            -90.67,
+            -20.69
+          ],
+          [
+            -83.79,
+            -40.35
+          ],
+          [
+            -72.71,
+            -57.98
+          ],
+          [
+            -57.98,
+            -72.71
+          ],
+          [
+            -40.35,
+            -83.79
+          ],
+          [
+            -20.69,
+            -90.67
+          ],
+          [
+            0,
+            -93
+          ],
+          [
+            20.69,
+            -90.67
+          ],
+          [
+            40.35,
+            -83.79
+          ],
+          [
+            57.98,
+            -72.71
+          ],
+          [
+            72.71,
+            -57.98
+          ],
+          [
+            83.79,
+            -40.35
+          ],
+          [
+            90.67,
+            -20.69
+          ],
+          [
+            93,
+            0
+          ],
+          [
+            76,
+            0
+          ],
+          [
+            74.09,
+            -16.91
+          ],
+          [
+            68.47,
+            -32.98
+          ],
+          [
+            59.42,
+            -47.39
+          ],
+          [
+            47.39,
+            -59.42
+          ],
+          [
+            32.98,
+            -68.47
+          ],
+          [
+            16.91,
+            -74.09
+          ],
+          [
+            0,
+            -76
+          ],
+          [
+            -16.91,
+            -74.09
+          ],
+          [
+            -32.98,
+            -68.47
+          ],
+          [
+            -47.39,
+            -59.42
+          ],
+          [
+            -59.42,
+            -47.39
+          ],
+          [
+            -68.47,
+            -32.98
+          ],
+          [
+            -74.09,
+            -16.91
+          ],
+          [
+            -76,
+            0
+          ]
+        ],
+        "params": {
+          "riseMm": 3,
+          "bevelMm": 0.6
+        },
+        "colour": "#1f1f22",
+        "note": "woofer bezel ring (half), 3 mm proud"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 204.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 161.5,
+        "yMm": 237.98,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 75.5,
+        "yMm": 237.98,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 32.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 75.5,
+        "yMm": 89.02,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 161.5,
+        "yMm": 89.02,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 467.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 152,
+          "depthMm": 4
+        },
+        "colour": "#141416",
+        "note": "woofer funnel step r 76"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 467.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 132,
+          "depthMm": 12
+        },
+        "colour": "#2b2c31",
+        "note": "woofer funnel step r 66"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 467.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 112,
+          "depthMm": 20
+        },
+        "colour": "#34353b",
+        "note": "woofer funnel step r 56"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 467.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 90,
+          "depthMm": 28
+        },
+        "colour": "#2b2c31",
+        "note": "woofer funnel step r 45"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 467.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 66,
+          "depthMm": 38
+        },
+        "colour": "#34353b",
+        "note": "woofer funnel step r 33"
+      },
+      {
+        "kind": "ball",
+        "face": "opposite",
+        "xMm": 467.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 109,
+          "zMm": -83.5
+        },
+        "colour": "#3b3c42",
+        "note": "woofer dust cap dome 60 mm"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 467.5,
+        "yMm": 163.5,
+        "points": [
+          [
+            93,
+            0
+          ],
+          [
+            90.67,
+            20.69
+          ],
+          [
+            83.79,
+            40.35
+          ],
+          [
+            72.71,
+            57.98
+          ],
+          [
+            57.98,
+            72.71
+          ],
+          [
+            40.35,
+            83.79
+          ],
+          [
+            20.69,
+            90.67
+          ],
+          [
+            0,
+            93
+          ],
+          [
+            -20.69,
+            90.67
+          ],
+          [
+            -40.35,
+            83.79
+          ],
+          [
+            -57.98,
+            72.71
+          ],
+          [
+            -72.71,
+            57.98
+          ],
+          [
+            -83.79,
+            40.35
+          ],
+          [
+            -90.67,
+            20.69
+          ],
+          [
+            -93,
+            0
+          ],
+          [
+            -76,
+            0
+          ],
+          [
+            -74.09,
+            16.91
+          ],
+          [
+            -68.47,
+            32.98
+          ],
+          [
+            -59.42,
+            47.39
+          ],
+          [
+            -47.39,
+            59.42
+          ],
+          [
+            -32.98,
+            68.47
+          ],
+          [
+            -16.91,
+            74.09
+          ],
+          [
+            0,
+            76
+          ],
+          [
+            16.91,
+            74.09
+          ],
+          [
+            32.98,
+            68.47
+          ],
+          [
+            47.39,
+            59.42
+          ],
+          [
+            59.42,
+            47.39
+          ],
+          [
+            68.47,
+            32.98
+          ],
+          [
+            74.09,
+            16.91
+          ],
+          [
+            76,
+            0
+          ]
+        ],
+        "params": {
+          "riseMm": 3,
+          "bevelMm": 0.6
+        },
+        "colour": "#1f1f22",
+        "note": "woofer bezel ring (half), 3 mm proud"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 467.5,
+        "yMm": 163.5,
+        "points": [
+          [
+            -93,
+            0
+          ],
+          [
+            -90.67,
+            -20.69
+          ],
+          [
+            -83.79,
+            -40.35
+          ],
+          [
+            -72.71,
+            -57.98
+          ],
+          [
+            -57.98,
+            -72.71
+          ],
+          [
+            -40.35,
+            -83.79
+          ],
+          [
+            -20.69,
+            -90.67
+          ],
+          [
+            0,
+            -93
+          ],
+          [
+            20.69,
+            -90.67
+          ],
+          [
+            40.35,
+            -83.79
+          ],
+          [
+            57.98,
+            -72.71
+          ],
+          [
+            72.71,
+            -57.98
+          ],
+          [
+            83.79,
+            -40.35
+          ],
+          [
+            90.67,
+            -20.69
+          ],
+          [
+            93,
+            0
+          ],
+          [
+            76,
+            0
+          ],
+          [
+            74.09,
+            -16.91
+          ],
+          [
+            68.47,
+            -32.98
+          ],
+          [
+            59.42,
+            -47.39
+          ],
+          [
+            47.39,
+            -59.42
+          ],
+          [
+            32.98,
+            -68.47
+          ],
+          [
+            16.91,
+            -74.09
+          ],
+          [
+            0,
+            -76
+          ],
+          [
+            -16.91,
+            -74.09
+          ],
+          [
+            -32.98,
+            -68.47
+          ],
+          [
+            -47.39,
+            -59.42
+          ],
+          [
+            -59.42,
+            -47.39
+          ],
+          [
+            -68.47,
+            -32.98
+          ],
+          [
+            -74.09,
+            -16.91
+          ],
+          [
+            -76,
+            0
+          ]
+        ],
+        "params": {
+          "riseMm": 3,
+          "bevelMm": 0.6
+        },
+        "colour": "#1f1f22",
+        "note": "woofer bezel ring (half), 3 mm proud"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 553.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 510.5,
+        "yMm": 237.98,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 424.5,
+        "yMm": 237.98,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 381.5,
+        "yMm": 163.5,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 424.5,
+        "yMm": 89.02,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 510.5,
+        "yMm": 89.02,
+        "params": {
+          "diaMm": 5.4,
+          "riseMm": 1.6
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "bezel screw, 6 on a 172 mm circle"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 294.2,
+        "yMm": 208.6,
+        "points": [
+          [
+            69.3,
+            29.8
+          ],
+          [
+            64.91,
+            40.41
+          ],
+          [
+            54.3,
+            44.8
+          ],
+          [
+            -54.3,
+            44.8
+          ],
+          [
+            -64.91,
+            40.41
+          ],
+          [
+            -69.3,
+            29.8
+          ],
+          [
+            -69.3,
+            -29.8
+          ],
+          [
+            -64.91,
+            -40.41
+          ],
+          [
+            -54.3,
+            -44.8
+          ],
+          [
+            54.3,
+            -44.8
+          ],
+          [
+            64.91,
+            -40.41
+          ],
+          [
+            69.3,
+            -29.8
+          ],
+          [
+            69.3,
+            29.8
+          ],
+          [
+            39.5,
+            -11.25
+          ],
+          [
+            34.81,
+            -22.56
+          ],
+          [
+            23.5,
+            -27.25
+          ],
+          [
+            -23.5,
+            -27.25
+          ],
+          [
+            -34.81,
+            -22.56
+          ],
+          [
+            -39.5,
+            -11.25
+          ],
+          [
+            -39.5,
+            11.25
+          ],
+          [
+            -34.81,
+            22.56
+          ],
+          [
+            -23.5,
+            27.25
+          ],
+          [
+            23.5,
+            27.25
+          ],
+          [
+            34.81,
+            22.56
+          ],
+          [
+            39.5,
+            11.25
+          ],
+          [
+            39.5,
+            -11.25
+          ]
+        ],
+        "params": {
+          "riseMm": 1.7,
+          "bevelMm": 0.3
+        },
+        "colour": "#18181b",
+        "note": "tweeter plate with the horn opening cut out"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 294.2,
+        "yMm": 208.6,
+        "params": {
+          "widthMm": 79,
+          "heightMm": 54.5,
+          "cornerMm": 16,
+          "depthMm": 4
+        },
+        "colour": "#0a0a0c",
+        "note": "horn mouth"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 294.2,
+        "yMm": 208.6,
+        "params": {
+          "widthMm": 68,
+          "heightMm": 44,
+          "cornerMm": 12,
+          "depthMm": 9
+        },
+        "colour": "#0a0a0c",
+        "note": "horn step"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 294.2,
+        "yMm": 208.6,
+        "params": {
+          "widthMm": 56,
+          "heightMm": 32,
+          "cornerMm": 9,
+          "depthMm": 14
+        },
+        "colour": "#0a0a0c",
+        "note": "horn throat, ribbon sits on its floor (12 mm behind the lip)"
+      },
+      {
+        "kind": "button",
+        "face": "opposite",
+        "xMm": 294.2,
+        "yMm": 220.8,
+        "count": 4,
+        "cols": 1,
+        "pitchYMm": -8.6,
+        "params": {
+          "widthMm": 26.6,
+          "heightMm": 4.4,
+          "cornerMm": 1.1,
+          "riseMm": 2.1,
+          "bevelMm": 0.5,
+          "zMm": -14
+        },
+        "colour": "#b8742a",
+        "note": "ribbon: 4 folded slats, amber copper, at the bottom of the horn"
+      },
+      {
+        "kind": "led",
+        "face": "opposite",
+        "xMm": 294.7,
+        "yMm": 244.4,
+        "params": {
+          "diaMm": 3.8,
+          "riseMm": 0.9
+        },
+        "colour": "#eef2ee",
+        "note": "status LED"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 239.2,
+        "yMm": 241,
+        "count": 4,
+        "cols": 2,
+        "pitchXMm": 110,
+        "pitchYMm": -65,
+        "params": {
+          "diaMm": 4.8,
+          "riseMm": 1.5
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "tweeter plate screws"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 293.4,
+        "yMm": 96.4,
+        "points": [
+          [
+            80.5,
+            44
+          ],
+          [
+            75.52,
+            56.02
+          ],
+          [
+            63.5,
+            61
+          ],
+          [
+            -63.5,
+            61
+          ],
+          [
+            -75.52,
+            56.02
+          ],
+          [
+            -80.5,
+            44
+          ],
+          [
+            -80.5,
+            -44
+          ],
+          [
+            -75.52,
+            -56.02
+          ],
+          [
+            -63.5,
+            -61
+          ],
+          [
+            63.5,
+            -61
+          ],
+          [
+            75.52,
+            -56.02
+          ],
+          [
+            80.5,
+            -44
+          ],
+          [
+            80.5,
+            44
+          ],
+          [
+            47.42,
+            -20.52
+          ],
+          [
+            36.36,
+            -37.06
+          ],
+          [
+            19.82,
+            -48.12
+          ],
+          [
+            0.3,
+            -52
+          ],
+          [
+            -19.22,
+            -48.12
+          ],
+          [
+            -35.76,
+            -37.06
+          ],
+          [
+            -46.82,
+            -20.52
+          ],
+          [
+            -50.7,
+            -1
+          ],
+          [
+            -46.82,
+            18.52
+          ],
+          [
+            -35.76,
+            35.06
+          ],
+          [
+            -19.22,
+            46.12
+          ],
+          [
+            0.3,
+            50
+          ],
+          [
+            19.82,
+            46.12
+          ],
+          [
+            36.36,
+            35.06
+          ],
+          [
+            47.42,
+            18.52
+          ],
+          [
+            51.3,
+            -1
+          ],
+          [
+            47.42,
+            -20.52
+          ]
+        ],
+        "params": {
+          "riseMm": 1.7,
+          "bevelMm": 0.3
+        },
+        "colour": "#18181b",
+        "note": "midrange plate with the waveguide opening cut out"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 293.7,
+        "yMm": 95.4,
+        "params": {
+          "diaMm": 95,
+          "depthMm": 3
+        },
+        "colour": "#141416",
+        "note": "midrange waveguide step r 47.5"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 293.7,
+        "yMm": 95.4,
+        "params": {
+          "diaMm": 84,
+          "depthMm": 9
+        },
+        "colour": "#1b1b20",
+        "note": "midrange waveguide step r 42"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 293.7,
+        "yMm": 95.4,
+        "params": {
+          "diaMm": 73,
+          "depthMm": 15
+        },
+        "colour": "#141416",
+        "note": "midrange waveguide step r 36.5"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 293.7,
+        "yMm": 95.4,
+        "params": {
+          "diaMm": 62,
+          "depthMm": 21
+        },
+        "colour": "#1b1b20",
+        "note": "midrange waveguide step r 31"
+      },
+      {
+        "kind": "ball",
+        "face": "opposite",
+        "xMm": 293.7,
+        "yMm": 95.4,
+        "params": {
+          "diaMm": 64.78,
+          "zMm": -36.38
+        },
+        "colour": "#3b3c42",
+        "note": "3 inch dome, base 57 mm, 17 mm high on the waveguide floor"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 293.7,
+        "yMm": 95.4,
+        "points": [
+          [
+            53.5,
+            0
+          ],
+          [
+            52.16,
+            11.9
+          ],
+          [
+            48.2,
+            23.21
+          ],
+          [
+            41.83,
+            33.36
+          ],
+          [
+            33.36,
+            41.83
+          ],
+          [
+            23.21,
+            48.2
+          ],
+          [
+            11.9,
+            52.16
+          ],
+          [
+            0,
+            53.5
+          ],
+          [
+            -11.9,
+            52.16
+          ],
+          [
+            -23.21,
+            48.2
+          ],
+          [
+            -33.36,
+            41.83
+          ],
+          [
+            -41.83,
+            33.36
+          ],
+          [
+            -48.2,
+            23.21
+          ],
+          [
+            -52.16,
+            11.9
+          ],
+          [
+            -53.5,
+            0
+          ],
+          [
+            -47.5,
+            0
+          ],
+          [
+            -46.31,
+            10.57
+          ],
+          [
+            -42.8,
+            20.61
+          ],
+          [
+            -37.14,
+            29.62
+          ],
+          [
+            -29.62,
+            37.14
+          ],
+          [
+            -20.61,
+            42.8
+          ],
+          [
+            -10.57,
+            46.31
+          ],
+          [
+            0,
+            47.5
+          ],
+          [
+            10.57,
+            46.31
+          ],
+          [
+            20.61,
+            42.8
+          ],
+          [
+            29.62,
+            37.14
+          ],
+          [
+            37.14,
+            29.62
+          ],
+          [
+            42.8,
+            20.61
+          ],
+          [
+            46.31,
+            10.57
+          ],
+          [
+            47.5,
+            0
+          ]
+        ],
+        "params": {
+          "riseMm": 3,
+          "bevelMm": 0.5
+        },
+        "colour": "#1a1a1d",
+        "note": "midrange gasket ring (half)"
+      },
+      {
+        "kind": "prism",
+        "face": "opposite",
+        "xMm": 293.7,
+        "yMm": 95.4,
+        "points": [
+          [
+            -53.5,
+            0
+          ],
+          [
+            -52.16,
+            -11.9
+          ],
+          [
+            -48.2,
+            -23.21
+          ],
+          [
+            -41.83,
+            -33.36
+          ],
+          [
+            -33.36,
+            -41.83
+          ],
+          [
+            -23.21,
+            -48.2
+          ],
+          [
+            -11.9,
+            -52.16
+          ],
+          [
+            0,
+            -53.5
+          ],
+          [
+            11.9,
+            -52.16
+          ],
+          [
+            23.21,
+            -48.2
+          ],
+          [
+            33.36,
+            -41.83
+          ],
+          [
+            41.83,
+            -33.36
+          ],
+          [
+            48.2,
+            -23.21
+          ],
+          [
+            52.16,
+            -11.9
+          ],
+          [
+            53.5,
+            0
+          ],
+          [
+            47.5,
+            0
+          ],
+          [
+            46.31,
+            -10.57
+          ],
+          [
+            42.8,
+            -20.61
+          ],
+          [
+            37.14,
+            -29.62
+          ],
+          [
+            29.62,
+            -37.14
+          ],
+          [
+            20.61,
+            -42.8
+          ],
+          [
+            10.57,
+            -46.31
+          ],
+          [
+            0,
+            -47.5
+          ],
+          [
+            -10.57,
+            -46.31
+          ],
+          [
+            -20.61,
+            -42.8
+          ],
+          [
+            -29.62,
+            -37.14
+          ],
+          [
+            -37.14,
+            -29.62
+          ],
+          [
+            -42.8,
+            -20.61
+          ],
+          [
+            -46.31,
+            -10.57
+          ],
+          [
+            -47.5,
+            0
+          ]
+        ],
+        "params": {
+          "riseMm": 3,
+          "bevelMm": 0.5
+        },
+        "colour": "#1a1a1d",
+        "note": "midrange gasket ring (half)"
+      },
+      {
+        "kind": "screw",
+        "face": "opposite",
+        "xMm": 229.2,
+        "yMm": 146.2,
+        "count": 4,
+        "cols": 2,
+        "pitchXMm": 128.4,
+        "pitchYMm": -98,
+        "params": {
+          "diaMm": 4.8,
+          "riseMm": 1.5
+        },
+        "colour": "#1a1a1c",
+        "colour2": "#050506",
+        "note": "midrange plate screws"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 42.11,
+        "yMm": 49.2,
+        "params": {
+          "widthMm": 23.41,
+          "heightMm": 42.01,
+          "cornerMm": 8,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 61.77,
+        "yMm": 49.19,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 41.98,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 82.68,
+        "yMm": 48.07,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 39.74,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 103.59,
+        "yMm": 46.95,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 37.51,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 124.51,
+        "yMm": 45.83,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 35.27,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 145.42,
+        "yMm": 44.68,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 32.97,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 166.33,
+        "yMm": 40.46,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 24.52,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 185.99,
+        "yMm": 33.28,
+        "params": {
+          "widthMm": 23.41,
+          "heightMm": 10.16,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 542.89,
+        "yMm": 49.2,
+        "params": {
+          "widthMm": 23.41,
+          "heightMm": 42.01,
+          "cornerMm": 8,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 523.23,
+        "yMm": 49.19,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 41.98,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 502.32,
+        "yMm": 48.07,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 39.74,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 481.41,
+        "yMm": 46.95,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 37.51,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 460.49,
+        "yMm": 45.83,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 35.27,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 439.58,
+        "yMm": 44.68,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 32.97,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 418.67,
+        "yMm": 40.46,
+        "params": {
+          "widthMm": 25.91,
+          "heightMm": 24.52,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "opposite",
+        "xMm": 399.01,
+        "yMm": 33.28,
+        "params": {
+          "widthMm": 23.41,
+          "heightMm": 10.16,
+          "cornerMm": 3,
+          "depthMm": 45
+        },
+        "colour": "#0b0b0d",
+        "note": "bass-reflex tunnel slice"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 431.1,
+        "yMm": 137.8,
+        "count": 3,
+        "cols": 1,
+        "pitchYMm": -23.35,
+        "params": {
+          "diaMm": 22.4,
+          "depthMm": 20
+        },
+        "colour": "#0b0b0d",
+        "note": "XLR cavities, 20 mm deep"
+      },
+      {
+        "kind": "socket",
+        "type": "xlr",
+        "face": "io",
+        "xMm": 431.1,
+        "yMm": 137.8,
+        "count": 2,
+        "cols": 1,
+        "pitchYMm": -23.35,
+        "params": {
+          "diaMm": 19.5,
+          "collarMm": 1.4,
+          "riseMm": 20.1,
+          "wellMm": 20.1,
+          "zMm": -19.8
+        },
+        "colour": "#4a4c51",
+        "colour2": "#0b0b0d",
+        "note": "XLR female shells (analog in, AES3 in)"
+      },
+      {
+        "kind": "socket",
+        "type": "xlr",
+        "face": "io",
+        "xMm": 431.1,
+        "yMm": 91.10000000000001,
+        "params": {
+          "diaMm": 19.5,
+          "collarMm": 1.4,
+          "riseMm": 20.1,
+          "wellMm": 20.1,
+          "zMm": -19.8
+        },
+        "colour": "#8b8e94",
+        "colour2": "#0b0b0d",
+        "note": "XLR male shell, AES3 out (bright)"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 431.1,
+        "yMm": 91.10000000000001,
+        "params": {
+          "x1Mm": 0,
+          "y1Mm": 5.07,
+          "z1Mm": 0.1,
+          "x2Mm": 0,
+          "y2Mm": 5.07,
+          "z2Mm": 9,
+          "diaMm": 2.4,
+          "segments": 8,
+          "zMm": -19.8
+        },
+        "colour": "#c3c6cc",
+        "note": "XLR male pin, 9 mm"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 431.1,
+        "yMm": 91.10000000000001,
+        "params": {
+          "x1Mm": -4.5,
+          "y1Mm": -2.9,
+          "z1Mm": 0.1,
+          "x2Mm": -4.5,
+          "y2Mm": -2.9,
+          "z2Mm": 9,
+          "diaMm": 2.4,
+          "segments": 8,
+          "zMm": -19.8
+        },
+        "colour": "#c3c6cc",
+        "note": "XLR male pin, 9 mm"
+      },
+      {
+        "kind": "rod",
+        "face": "io",
+        "xMm": 431.1,
+        "yMm": 91.10000000000001,
+        "params": {
+          "x1Mm": 4.5,
+          "y1Mm": -2.9,
+          "z1Mm": 0.1,
+          "x2Mm": 4.5,
+          "y2Mm": -2.9,
+          "z2Mm": 9,
+          "diaMm": 2.4,
+          "segments": 8,
+          "zMm": -19.8
+        },
+        "colour": "#c3c6cc",
+        "note": "XLR male pin, 9 mm"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 437.3,
+        "yMm": 71.3,
+        "params": {
+          "widthMm": 12.2,
+          "heightMm": 11.2,
+          "cornerMm": 0.8,
+          "depthMm": 9
+        },
+        "colour": "#0b0b0d",
+        "note": "USB-B opening, 9 mm deep"
+      },
+      {
+        "kind": "socket",
+        "type": "usbb",
+        "face": "io",
+        "xMm": 437.3,
+        "yMm": 71.3,
+        "params": {
+          "widthMm": 10.6,
+          "heightMm": 9.6,
+          "collarMm": 0.8,
+          "riseMm": 9.1,
+          "wellMm": 9.1,
+          "zMm": -8.8
+        },
+        "colour": "#b5b8be",
+        "colour2": "#0b0b0d",
+        "note": "USB-B metal shell"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 437.3,
+        "yMm": 71.3,
+        "points": [
+          [
+            -5.3,
+            4.8
+          ],
+          [
+            -5.3,
+            2.4
+          ],
+          [
+            -2.9,
+            4.8
+          ]
+        ],
+        "params": {
+          "riseMm": 9.1,
+          "bevelMm": 0.1,
+          "zMm": -8.8
+        },
+        "colour": "#b5b8be",
+        "note": "USB-B chamfered corner (left)"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 437.3,
+        "yMm": 71.3,
+        "points": [
+          [
+            5.3,
+            4.8
+          ],
+          [
+            2.9,
+            4.8
+          ],
+          [
+            5.3,
+            2.4
+          ]
+        ],
+        "params": {
+          "riseMm": 9.1,
+          "bevelMm": 0.1,
+          "zMm": -8.8
+        },
+        "colour": "#b5b8be",
+        "note": "USB-B chamfered corner (right)"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 437.3,
+        "yMm": 70.5,
+        "points": [
+          [
+            -3.75,
+            -1.1
+          ],
+          [
+            3.75,
+            -1.1
+          ],
+          [
+            3.75,
+            1.1
+          ],
+          [
+            -3.75,
+            1.1
+          ]
+        ],
+        "params": {
+          "riseMm": 7,
+          "bevelMm": 0.1,
+          "zMm": -8.8
+        },
+        "colour": "#202024",
+        "note": "USB-B tongue 7.5 x 2.2 mm"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 155.9,
+        "yMm": 79.4,
+        "params": {
+          "widthMm": 27.7,
+          "heightMm": 19.7,
+          "cornerMm": 1.6,
+          "depthMm": 12
+        },
+        "colour": "#08080a",
+        "note": "IEC inlet recess, 12 mm"
+      },
+      {
+        "kind": "socket",
+        "type": "iec",
+        "face": "io",
+        "xMm": 155.9,
+        "yMm": 79.4,
+        "params": {
+          "widthMm": 24.7,
+          "heightMm": 16.7,
+          "collarMm": 1.5,
+          "riseMm": 12.1,
+          "wellMm": 12.1,
+          "zMm": -11.8
+        },
+        "colour": "#2f3033",
+        "colour2": "#08080a",
+        "note": "IEC C14 inlet shroud"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 155.9,
+        "yMm": 82.7,
+        "points": [
+          [
+            -1.1,
+            -3
+          ],
+          [
+            1.1,
+            -3
+          ],
+          [
+            1.1,
+            3
+          ],
+          [
+            -1.1,
+            3
+          ]
+        ],
+        "params": {
+          "riseMm": 8,
+          "bevelMm": 0.2,
+          "zMm": -11.8
+        },
+        "colour": "#c3c6cc",
+        "note": "IEC blade, 8 mm"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 150.5,
+        "yMm": 77.2,
+        "points": [
+          [
+            -1.1,
+            -3
+          ],
+          [
+            1.1,
+            -3
+          ],
+          [
+            1.1,
+            3
+          ],
+          [
+            -1.1,
+            3
+          ]
+        ],
+        "params": {
+          "riseMm": 8,
+          "bevelMm": 0.2,
+          "zMm": -11.8
+        },
+        "colour": "#c3c6cc",
+        "note": "IEC blade, 8 mm"
+      },
+      {
+        "kind": "prism",
+        "face": "io",
+        "xMm": 161.3,
+        "yMm": 77.2,
+        "points": [
+          [
+            -1.1,
+            -3
+          ],
+          [
+            1.1,
+            -3
+          ],
+          [
+            1.1,
+            3
+          ],
+          [
+            -1.1,
+            3
+          ]
+        ],
+        "params": {
+          "riseMm": 8,
+          "bevelMm": 0.2,
+          "zMm": -11.8
+        },
+        "colour": "#c3c6cc",
+        "note": "IEC blade, 8 mm"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 155.9,
+        "yMm": 106.5,
+        "params": {
+          "widthMm": 30.2,
+          "heightMm": 34.5,
+          "cornerMm": 3,
+          "riseMm": 1.2,
+          "bevelMm": 0.5
+        },
+        "colour": "#3b3c40",
+        "note": "IEC inlet module bezel"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 155.9,
+        "yMm": 108.3,
+        "params": {
+          "widthMm": 23.5,
+          "heightMm": 12.5,
+          "cornerMm": 1.2,
+          "riseMm": 1.8,
+          "bevelMm": 0.3
+        },
+        "colour": "#151517",
+        "note": "rocker frame"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 157.7,
+        "yMm": 107.8,
+        "params": {
+          "widthMm": 18.6,
+          "heightMm": 10,
+          "cornerMm": 1.2,
+          "riseMm": 3,
+          "bevelMm": 1.2
+        },
+        "colour": "#0e0e10",
+        "note": "power rocker switch, 3 mm proud (the simulator power control)"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 155.9,
+        "yMm": 93.9,
+        "params": {
+          "widthMm": 24.5,
+          "heightMm": 12,
+          "cornerMm": 1,
+          "riseMm": 2,
+          "bevelMm": 0.4,
+          "frameMm": 0
+        },
+        "colour": "#232326",
+        "note": "fuse drawer, 2 mm lip"
+      },
+      {
+        "kind": "knob",
+        "face": "io",
+        "xMm": 431.1,
+        "yMm": 172.9,
+        "params": {
+          "diaMm": 19.3,
+          "heightMm": 2.4,
+          "bevelMm": 0.9,
+          "taper": 0.04,
+          "pointer": 0
+        },
+        "colour": "#131315",
+        "note": "rotary push encoder (flush black knob)"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 431.3,
+        "yMm": 202,
+        "params": {
+          "widthMm": 38,
+          "heightMm": 20,
+          "cornerMm": 2.5,
+          "riseMm": 0.5,
+          "bevelMm": 0.2
+        },
+        "colour": "#09090b",
+        "note": "display window (black glass)"
+      },
+      {
+        "kind": "button",
+        "face": "io",
+        "xMm": 408.5,
+        "yMm": 87.2,
+        "params": {
+          "widthMm": 15,
+          "heightMm": 34,
+          "cornerMm": 5,
+          "riseMm": 0.5,
+          "bevelMm": 0.2
+        },
+        "colour": "#1c1c1f",
+        "note": "expansion slot cover"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 292.8,
+        "yMm": 240.6,
+        "count": 3,
+        "cols": 1,
+        "pitchYMm": -6.3,
+        "params": {
+          "widthMm": 324,
+          "heightMm": 3.4,
+          "cornerMm": 1.7,
+          "depthMm": 3
+        },
+        "colour": "#050506",
+        "note": "upper vent grille"
+      },
+      {
+        "kind": "pocket",
+        "face": "io",
+        "xMm": 292.8,
+        "yMm": 55.1,
+        "count": 3,
+        "cols": 1,
+        "pitchYMm": -6.3,
+        "params": {
+          "widthMm": 324,
+          "heightMm": 3.4,
+          "cornerMm": 1.7,
+          "depthMm": 3
+        },
+        "colour": "#050506",
+        "note": "lower vent grille"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 143.1,
+        "yMm": 254.3,
+        "count": 5,
+        "cols": 5,
+        "pitchXMm": 74.7,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 142.6,
+        "yMm": 29.1,
+        "count": 5,
+        "cols": 5,
+        "pitchXMm": 74.5,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 119.1,
+        "yMm": 216,
+        "count": 3,
+        "cols": 1,
+        "pitchYMm": -74.2,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 465.2,
+        "yMm": 214.8,
+        "count": 3,
+        "cols": 1,
+        "pitchYMm": -74.5,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 136.3,
+        "yMm": 220.3,
+        "count": 2,
+        "cols": 2,
+        "pitchXMm": 64.4,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 399.1,
+        "yMm": 219.5,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 136.3,
+        "yMm": 131.1,
+        "count": 2,
+        "cols": 2,
+        "pitchXMm": 64.4,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 398.4,
+        "yMm": 130.1,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 183.6,
+        "yMm": 112.5,
+        "count": 2,
+        "cols": 1,
+        "pitchYMm": -44.8,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 410.7,
+        "yMm": 109.8,
+        "count": 2,
+        "cols": 1,
+        "pitchYMm": -44.6,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 405.9,
+        "yMm": 201,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 415.5,
+        "yMm": 109.3,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "screw",
+        "face": "io",
+        "xMm": 156.9,
+        "yMm": 121.2,
+        "count": 2,
+        "cols": 1,
+        "pitchYMm": -56.4,
+        "params": {
+          "diaMm": 4.4,
+          "riseMm": 0.9
+        },
+        "colour": "#3a3b3e",
+        "colour2": "#17171a",
+        "note": "plate screw"
+      },
+      {
+        "kind": "pocket",
+        "face": "left",
+        "xMm": 36,
+        "yMm": 140,
+        "params": {
+          "widthMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5,
+          "heightMm": 223.72
+        },
+        "colour": "#050506",
+        "note": "seam groove, side flat"
+      },
+      {
+        "kind": "pocket",
+        "face": "left",
+        "xMm": 36,
+        "yMm": 257.42,
+        "params": {
+          "widthMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5,
+          "heightMm": 14.66
+        },
+        "colour": "#050506",
+        "note": "seam groove, rolled corner upper"
+      },
+      {
+        "kind": "pocket",
+        "face": "left",
+        "xMm": 36,
+        "yMm": 22.58,
+        "params": {
+          "widthMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5,
+          "heightMm": 14.66
+        },
+        "colour": "#050506",
+        "note": "seam groove, rolled corner lower"
+      },
+      {
+        "kind": "pocket",
+        "face": "left",
+        "xMm": 36,
+        "yMm": 272.39,
+        "params": {
+          "widthMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5,
+          "heightMm": 39.14
+        },
+        "colour": "#050506",
+        "note": "seam groove, facet upper"
+      },
+      {
+        "kind": "pocket",
+        "face": "left",
+        "xMm": 36,
+        "yMm": 7.61,
+        "params": {
+          "widthMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5,
+          "heightMm": 39.14
+        },
+        "colour": "#050506",
+        "note": "seam groove, facet lower"
+      },
+      {
+        "kind": "pocket",
+        "face": "right",
+        "xMm": 344,
+        "yMm": 140,
+        "params": {
+          "widthMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5,
+          "heightMm": 223.72
+        },
+        "colour": "#050506",
+        "note": "seam groove, side flat"
+      },
+      {
+        "kind": "pocket",
+        "face": "right",
+        "xMm": 344,
+        "yMm": 257.42,
+        "params": {
+          "widthMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5,
+          "heightMm": 14.66
+        },
+        "colour": "#050506",
+        "note": "seam groove, rolled corner upper"
+      },
+      {
+        "kind": "pocket",
+        "face": "right",
+        "xMm": 344,
+        "yMm": 22.58,
+        "params": {
+          "widthMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5,
+          "heightMm": 14.66
+        },
+        "colour": "#050506",
+        "note": "seam groove, rolled corner lower"
+      },
+      {
+        "kind": "pocket",
+        "face": "right",
+        "xMm": 344,
+        "yMm": 272.39,
+        "params": {
+          "widthMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5,
+          "heightMm": 39.14
+        },
+        "colour": "#050506",
+        "note": "seam groove, facet upper"
+      },
+      {
+        "kind": "pocket",
+        "face": "right",
+        "xMm": 344,
+        "yMm": 7.61,
+        "params": {
+          "widthMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5,
+          "heightMm": 39.14
+        },
+        "colour": "#050506",
+        "note": "seam groove, facet lower"
+      },
+      {
+        "kind": "pocket",
+        "face": "top",
+        "xMm": 292.5,
+        "yMm": 344,
+        "params": {
+          "widthMm": 510.11,
+          "heightMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5
+        },
+        "colour": "#050506",
+        "note": "seam groove, top"
+      },
+      {
+        "kind": "pocket",
+        "face": "bottom",
+        "xMm": 292.5,
+        "yMm": 344,
+        "params": {
+          "widthMm": 510.11,
+          "heightMm": 1.4,
+          "cornerMm": 0.6,
+          "depthMm": 1.5
+        },
+        "colour": "#050506",
+        "note": "seam groove, bottom"
+      }
+    ]
+  }
 }

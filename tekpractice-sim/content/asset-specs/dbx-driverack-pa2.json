@@ -164,7 +164,13 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1.5
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png"
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.dbxpro.com/en/products/driverack-pa2",
@@ -179,5 +185,27 @@
       "url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-a_fr-pdf",
       "note": "dbx DriveRack PA2 manual as listed by the knowledge base (not opened in this run)."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 5.5,
+        "yMm": 14.5,
+        "wMm": 34,
+        "hMm": 19,
+        "marginMm": 4,
+        "fill": "#1d1d20"
+      },
+      {
+        "face": "opposite",
+        "xMm": 439,
+        "yMm": 16.5,
+        "wMm": 42,
+        "hMm": 14,
+        "marginMm": 4,
+        "fill": "#1d1d20"
+      }
+    ]
+  }
 }

@@ -41,7 +41,10 @@
     "shape": "speaker-cabinet-v2",
     "params": {
       "edgeRadiusMm": 8,
-      "edgeSegments": 4
+      "edgeSegments": 4,
+      "bodyGrey": 30,
+      "rearWidthMm": 185,
+      "taperDepthMm": 330
     },
     "budget": {
       "min": 100,
@@ -51,6 +54,12 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front_rectified.png"
+      }
     ]
   },
   "sources": [

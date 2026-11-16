@@ -49,7 +49,7 @@ export interface Placement {
 const mmToM = (mm: number): number => mm / 1000
 
 /** Position and outward normal of the face-local point (x, y) metres on `face` of a casing of size `s`. */
-function onFace(face: FaceT, x: number, y: number, s: SizeM): { pos: Vec3; outward: Vec3 } {
+export function onFace(face: FaceT, x: number, y: number, s: SizeM): { pos: Vec3; outward: Vec3 } {
   const { w, h, d } = s
   switch (face) {
     case 'io': return { pos: [x - w / 2, y, d / 2], outward: [0, 0, 1] }
@@ -59,6 +59,16 @@ function onFace(face: FaceT, x: number, y: number, s: SizeM): { pos: Vec3; outwa
     case 'left': return { pos: [-w / 2, y, -d / 2 + x], outward: [-1, 0, 0] }
     case 'right': return { pos: [w / 2, y, d / 2 - x], outward: [1, 0, 0] }
   }
+}
+
+/** Face-local axes in GLB space: x to the right and y up seen from outside the face (on top and bottom y runs from the io edge). */
+export const FACE_AXES: Record<FaceT, { x: Vec3; y: Vec3 }> = {
+  io: { x: [1, 0, 0], y: [0, 1, 0] },
+  opposite: { x: [-1, 0, 0], y: [0, 1, 0] },
+  top: { x: [1, 0, 0], y: [0, 0, -1] },
+  bottom: { x: [-1, 0, 0], y: [0, 0, -1] },
+  left: { x: [0, 0, 1], y: [0, 1, 0] },
+  right: { x: [0, 0, -1], y: [0, 1, 0] },
 }
 
 /** Placement of every port and control of a spec in GLB space. A connector spec has no ports or controls, only its size. */

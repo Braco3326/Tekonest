@@ -103,7 +103,13 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1.5
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.webp"
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://manualmachine.com/dbxpro/160a/1285223-user-manual",
@@ -139,5 +145,17 @@
       "note": "Mains (review fix, read 2026-11-12 by a research pass, a third-party host copy of the dbx manual): the \"AC Power Jack\" section says the jack takes an IEC-type cord, the unit has NO power switch and is meant to stay on. The inlet type letter is not named: iec-c14 is assumed (plan assumedConnectors power-in). The catalogue keeps the simulator's Alimentation control (a mains inlet always carries it): it is not a switch of the real unit, and the entry says so. Positions: guesses."
     }
   ],
-  "powerNote": "Pas d'interrupteur secteur selon le manuel (l'appareil reste branché) : la commande Alimentation est celle du simulateur"
+  "powerNote": "Pas d'interrupteur secteur selon le manuel (l'appareil reste branché) : la commande Alimentation est celle du simulateur",
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 41,
+        "yMm": 12.5,
+        "wMm": 27,
+        "hMm": 21,
+        "marginMm": 4
+      }
+    ]
+  }
 }

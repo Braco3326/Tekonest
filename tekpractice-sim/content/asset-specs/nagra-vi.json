@@ -123,13 +123,15 @@
   "build": {
     "shape": "moulded-box",
     "params": {
-      "cornerRadiusMm": 10,
-      "edgeRadiusMm": 4,
-      "edgeSegments": 8
+      "cornerRadiusMm": 5,
+      "edgeRadiusMm": 3.2,
+      "edgeSegments": 8,
+      "bodyGrey": 175,
+      "edgeDropMm": 3.2
     },
     "projection": [
       "top",
-      "io",
+      "opposite",
       "left",
       "right"
     ],
@@ -137,7 +139,51 @@
       "min": 500,
       "max": 2000
     },
-    "minFilletMm": 3
+    "minFilletMm": 3,
+    "photos": [
+      {
+        "face": "top",
+        "file": "top_rectified_dark.png",
+        "crop": [
+          15,
+          38,
+          900,
+          785
+        ],
+        "fill": true
+      },
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "crop": [
+          398,
+          490,
+          1192,
+          268
+        ],
+        "fill": true
+      },
+      {
+        "face": "left",
+        "file": "left_silver.png",
+        "crop": [
+          0,
+          0,
+          1710,
+          444
+        ]
+      },
+      {
+        "face": "right",
+        "file": "right_silver.png",
+        "crop": [
+          0,
+          0,
+          1710,
+          444
+        ]
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://www.nagraaudio.com/de/product/nagra-vi-film/",
@@ -152,5 +198,33 @@
       "url": "https://www.nagraaudio.com/de/product/nagra-vi-film/",
       "note": "Nagra VI product page and specification table (German page, the English slug returns \"page not found\"), opened 2026-11-12: 310 x 74 x 285 mm (W x H x D) including the battery box, 3.8 kg with the battery pack. Four symmetrical XLR mic/line inputs, two more line inputs on XLR shared with the AES3 inputs (modelled as analog line inputs; the XLR genders are not stated: female for inputs and male for outputs by convention), two XLR line outputs, one XLR AES3 output, two 6.3 mm headphone jacks (only the second is placed on the right side by the page), external DC input on a 4-pin XLR and accessory power outputs (Hirose) (no signal type: not modelled), 5-pin LEMO timecode, 9-pole D-type word clock, 15-pin expansion, USB host and device (type A and type B; audio class not stated: not modelled), CompactFlash. Battery or external DC powered: no mains inlet and no power control. The recorder body is a plain rounded box (no handles, feet or battery box detail); the connector panels (left and right sides) are our layout. Generic artwork only (content/generic-panels/<id>.json, drawn by npm run asset:panel): connectors, knobs and indicators drawn at the port positions, no photo, no logo, no lettering. Every port and control position is a guess (confidence guess): no drawing or photo was opened. Connector genders not stated by the source follow the convention input = female, output = male."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 2,
+        "yMm": 4,
+        "wMm": 11,
+        "hMm": 63,
+        "marginMm": 2
+      },
+      {
+        "face": "opposite",
+        "xMm": 255,
+        "yMm": 36,
+        "wMm": 14,
+        "hMm": 14,
+        "marginMm": 2
+      },
+      {
+        "face": "top",
+        "xMm": 276,
+        "yMm": 0,
+        "wMm": 34,
+        "hMm": 35,
+        "marginMm": 3
+      }
+    ]
+  }
 }

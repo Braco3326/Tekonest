@@ -132,7 +132,8 @@
       "backRadiusMm": 38,
       "edgeRadiusMm": 20,
       "edgeDropMm": 28,
-      "edgeSegments": 8
+      "edgeSegments": 8,
+      "bodyGrey": 30
     },
     "budget": {
       "min": 1500,
@@ -142,6 +143,19 @@
     "projection": [
       "io",
       "opposite"
+    ],
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.png",
+        "crop": [
+          898,
+          183,
+          2204,
+          3634
+        ],
+        "fill": true
+      }
     ]
   },
   "sources": [
@@ -170,5 +184,17 @@
       "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-DXR12MKII_userGuide.pdf",
       "note": "build.projection io + opposite: our own generic artwork (content/generic-panels/<id>.json, drawn by npm run asset:panel): the rear panel with sockets drawn at the port positions and the baffle with drivers drawn at the datasheet sizes; no photo copy, no brand mark, no lettering. Colour: black polymer cabinet, steel grille (a PA default)."
     }
-  ]
+  ],
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 152,
+        "yMm": 48,
+        "wMm": 58,
+        "hMm": 55,
+        "marginMm": 6
+      }
+    ]
+  }
 }

@@ -11,9 +11,9 @@
     {
       "portId": "in-send-xlr",
       "face": "io",
-      "xMm": 60,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 285.5,
+      "yMm": 19.6,
+      "confidence": "photo",
       "connector": "xlr3-f",
       "signal": "line-level-pro",
       "dir": "in"
@@ -21,9 +21,9 @@
     {
       "portId": "out-caller-xlr",
       "face": "io",
-      "xMm": 90,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 261.2,
+      "yMm": 20,
+      "confidence": "photo",
       "connector": "xlr3-m",
       "signal": "line-level-pro",
       "dir": "out"
@@ -31,9 +31,9 @@
     {
       "portId": "net",
       "face": "io",
-      "xMm": 140,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 386.8,
+      "yMm": 18.5,
+      "confidence": "photo",
       "connector": "rj45",
       "signal": "ethernet-control",
       "dir": "bidir"
@@ -41,9 +41,9 @@
     {
       "portId": "power-in",
       "face": "io",
-      "xMm": 420,
-      "yMm": 22,
-      "confidence": "guess",
+      "xMm": 437.4,
+      "yMm": 26.1,
+      "confidence": "photo",
       "connector": "iec-c14",
       "signal": "mains-power",
       "dir": "in"
@@ -54,8 +54,8 @@
       "controlId": "power",
       "kind": "switch",
       "face": "io",
-      "xMm": 380,
-      "yMm": 22,
+      "xMm": 409,
+      "yMm": 16,
       "axis": "z",
       "sizeMm": {
         "w": 12,
@@ -82,8 +82,8 @@
       "ventPitchMm": 8,
       "ventDepthMm": 1.5,
       "ventFromRearMm": 20,
-      "plateRgb": 3356219,
-      "bodyRgb": 1842464
+      "plateRgb": 13158600,
+      "bodyRgb": 11842740
     },
     "projection": [
       "opposite",
@@ -93,7 +93,19 @@
       "min": 1500,
       "max": 3500
     },
-    "minFilletMm": 1.5
+    "minFilletMm": 1.5,
+    "photos": [
+      {
+        "face": "opposite",
+        "file": "front.jpg",
+        "fill": true
+      },
+      {
+        "face": "io",
+        "file": "rear.jpg",
+        "fill": true
+      }
+    ]
   },
   "portsDocumented": true,
   "portsSource": "https://cdn.abicart.com/shop/ws42/76342/art73/159887173-02cecc-sonifex_dhy04_manual.pdf",
@@ -124,5 +136,41 @@
       "note": "Mains switch (review fix, read 2026-11-12 by a research pass): the DHY-04 manual (covers the DHY-04S) lists a power LED, reset, speed-dial, AES lock and line hold / connect on the front panel and no power switch; mains enters through a filtered IEC inlet 85-264 V and the manual says to disconnect the lead before opening the unit. The manual does not state outright that there is no switch. The simulator's Alimentation control is not a documented switch."
     }
   ],
-  "powerNote": "Aucun interrupteur secteur n'est cité sur la face avant du manuel : la commande Alimentation est celle du simulateur"
+  "powerNote": "Aucun interrupteur secteur n'est cité sur la face avant du manuel : la commande Alimentation est celle du simulateur",
+  "texture": {
+    "blankRects": [
+      {
+        "face": "opposite",
+        "xMm": 23.5,
+        "yMm": 15,
+        "wMm": 30.9,
+        "hMm": 14.8,
+        "marginMm": 1
+      },
+      {
+        "face": "opposite",
+        "xMm": 97.5,
+        "yMm": 3,
+        "wMm": 31.5,
+        "hMm": 6,
+        "marginMm": 1.5
+      },
+      {
+        "face": "io",
+        "xMm": 256,
+        "yMm": 1.5,
+        "wMm": 32,
+        "hMm": 8,
+        "marginMm": 1
+      },
+      {
+        "face": "io",
+        "xMm": 422,
+        "yMm": 36.5,
+        "wMm": 39,
+        "hMm": 8.5,
+        "marginMm": 1
+      }
+    ]
+  }
 }

@@ -1447,6 +1447,7 @@ CONSOLE_V2_NAMES = (
     "slotPlates", "slotPlateWMm", "slotPlateHMm", "slotPlateXMm", "slotPlateYMm", "slotPlatePitchMm", "slotPlateDepthMm",
     "frontRecessWMm", "frontRecessHMm", "frontRecessXMm", "frontRecessYMm", "frontRecessDepthMm",
     "rearRecessWMm", "rearRecessHMm", "rearRecessXMm", "rearRecessYMm", "rearRecessDepthMm",
+    "bodyGrey",
 )
 CONSOLE_RECESS = "#1b1c20"        # the walls of a recess (the floor of a slot plate carries the picture)
 CONSOLE_FEET_DEFAULT_MM = {"feetWidthMm": 22.0, "feetFromSideMm": 42.0, "feetFromEndMm": 28.0}
@@ -1583,6 +1584,10 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
     unknown = [k for k in params if k != "chamferMm" and k not in CONSOLE_V2_NAMES]
     if unknown:
         raise BuildError(f"console-wedge has no param {unknown[0]!r}")
+    grey = params.get("bodyGrey")
+    if grey is not None and not (isinstance(grey, (int, float)) and 20 <= grey <= 200):
+        raise BuildError(f"params.bodyGrey must be a number from 20 to 200, got {grey!r}")
+    body_col = CHASSIS if grey is None else "#%02x%02x%02x" % (round(grey), round(grey) + 2, round(grey) + 9)
     fillet = rack_opt(plan, "filletMm")
     segs = rack_whole(plan, "filletSegments", 1, 12) or 4
     arm = rack_opt(plan, "armRestMm")
@@ -1660,13 +1665,13 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
         if fillet is not None:
             for cap in faces[:2]:
                 measured.append(console_cap_bevel(bm, cap, outline, fillet, segs, None))
-        body.done(CHASSIS)
+        body.done(body_col)
     else:
         # the core: base width, stepped back at the front under the shell; the rear stays flush
         core_pts = [(d / 2.0, feet), (-d / 2.0 + cheek, feet), (-d / 2.0 + cheek, y_base_top), (-d / 2.0, y_base_top)]
         pts, radii = deck_outline(core_pts, [0.0, 0.0, 0.0, 0.0])
         add_prism(pts, radii, -w / 2.0 + cheek, w / 2.0 - cheek)
-        body.done(CHASSIS)
+        body.done(body_col)
         # the two side plates (the cheeks), cheek thick, above the base
         plate_pts = [(d / 2.0, y_base_top), (-d / 2.0, y_base_top)]
         pts, radii = deck_outline(plate_pts, [0.0, corner_r])
@@ -1676,7 +1681,7 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
             if fillet is not None:
                 cap = faces[0] if sign < 0 else faces[1]
                 measured.append(console_cap_bevel(bm, cap, outline, fillet, segs, None))
-        body.done(CHASSIS)
+        body.done(body_col)
 
     if tier_poly is not None:
         radii = [0.0] * len(tier_poly)
@@ -1688,7 +1693,7 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
         if fillet is not None:
             for cap in faces[:2]:
                 measured.append(console_cap_bevel(bm, cap, outline, fillet, segs, tier_y))
-        body.done(CHASSIS)
+        body.done(body_col)
 
     # --- feet: four rubber feet, round, a truncated cone (wide at the body, 0.72 of it at the table) with a rounded lower edge --------------
     if feet > 0.0:
@@ -1767,7 +1772,7 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
             loops.append(mouth)
         body.done(CONSOLE_RECESS)
         fill_with_holes(bm, outline, loops, (0.0, 0.0, 1.0))
-        body.done(CHASSIS)
+        body.done(body_col)
 
     fw_ = rack_opt(plan, "frontRecessWMm")
     if fw_ is not None or any(k in params for k in ("frontRecessHMm", "frontRecessXMm", "frontRecessYMm", "frontRecessDepthMm")):
@@ -1782,7 +1787,7 @@ def build_console_wedge_v2(plan: Plan, w: float, h: float, d: float, stations: l
         mouth, _floor = cut_recess(bm, pts, lambda a, b: (a, b, z_front), (0.0, 0.0, 1.0), f_depth, False)
         body.done(CONSOLE_RECESS)
         fill_with_holes(bm, outline, [mouth], (0.0, 0.0, -1.0))
-        body.done(CHASSIS)
+        body.done(body_col)
 
     # --- checks ------------------------------------------------------------------------------------------------------------------------
     ys = [v.co.z for v in bm.verts]
@@ -2008,6 +2013,69 @@ def offset_outline(pts: list[tuple[float, float]], s: float) -> list[tuple[float
         if ex * ox + ez * oz <= 0.0:
             raise BuildError(f"the fillet folds over at the plan corner near x = {pts[i][0] / MM:.1f} mm, z = {pts[i][1] / MM:.1f} mm: the plan corner radius there is tighter than the {s / MM:.1f} mm inset (raise frontRadiusMm / sideRadiusMm / backRadiusMm or lower edgeRadiusMm)")
     return out
+
+
+def build_extruded_body(plan: Plan) -> bpy.types.Object:
+    """A body made of ONE convex outline seen from the front, extruded through the depth, with its own edge radius at the front and at the rear.
+
+    plan.outline = [[x, y], ...] in millimetres, counter-clockwise seen from the front, origin on the floor at the middle (x from -w/2 to w/2, y from 0 to h; default the
+    whole rectangle): an octagon with cut corners, a rounded trapezoid. Each corner of the outline is rounded by cornerRadiusMm (default 6). The front edge (z = -d/2) is
+    rounded by frontRadiusMm in frontSegments steps (a quarter circle that insets the outline and moves back in depth), the rear edge (z = +d/2) by rearRadiusMm in rearSegments
+    steps. Both radii must be at most cornerRadiusMm and at most a quarter of the depth. One colour (bodyGrey 20 to 200). A picture is projected on the flat faces like on every other
+    shape; ports are cut with structure pockets. The measured fillet (the smaller radius) goes to MEASURE for the 'fillet' gate."""
+    w, h, d = size_m(plan)
+    params = plan.get("params") or {}
+    outline_mm = plan.get("outline")
+    if outline_mm:
+        pts = [(float(p[0]) * MM, float(p[1]) * MM) for p in outline_mm]
+    else:
+        pts = [(-w / 2, 0.0), (w / 2, 0.0), (w / 2, h), (-w / 2, h)]
+    if len(pts) < 3:
+        raise BuildError("outline needs at least 3 points")
+    xs = [p[0] for p in pts]
+    ys = [p[1] for p in pts]
+    if min(xs) < -w / 2 - 1e-6 or max(xs) > w / 2 + 1e-6 or min(ys) < -1e-6 or max(ys) > h + 1e-6:
+        raise BuildError("outline must lie inside the box: x from -w/2 to w/2, y from 0 to h")
+    # counter-clockwise (positive area)
+    area = sum(pts[i][0] * pts[(i + 1) % len(pts)][1] - pts[(i + 1) % len(pts)][0] * pts[i][1] for i in range(len(pts)))
+    if area < 0:
+        pts = list(reversed(pts))
+    corner = param_m(plan, "cornerRadiusMm", 6.0) if "cornerRadiusMm" in params else 6.0 * MM
+    front_r = param_m(plan, "frontRadiusMm", 8.0) if "frontRadiusMm" in params else 8.0 * MM
+    rear_r = param_m(plan, "rearRadiusMm", 4.0) if "rearRadiusMm" in params else 4.0 * MM
+    f_seg = int(params.get("frontSegments", 8))
+    r_seg = int(params.get("rearSegments", 4))
+    if front_r > corner + 1e-9 or rear_r > corner + 1e-9:
+        raise BuildError(f"frontRadiusMm ({front_r / MM:.1f}) and rearRadiusMm ({rear_r / MM:.1f}) must be at most cornerRadiusMm ({corner / MM:.1f}): the edge fillet would fold over at the outline corners")
+    if front_r + rear_r > d * 0.9:
+        raise BuildError("the front and rear radii together are larger than the depth")
+    grey = params.get("bodyGrey")
+    colour = CABINET if grey is None else "#%02x%02x%02x" % (round(grey), round(grey) + 2, round(grey) + 9)
+    rounded = rounded_polygon(pts, [corner] * len(pts), CURVED_SEG90)
+    rings: list[tuple[float, list[tuple[float, float]]]] = []
+    for k in range(f_seg + 1):
+        th = (math.pi / 2.0) * k / f_seg
+        s = front_r * (1.0 - math.sin(th))
+        z = -d / 2 + front_r * (1.0 - math.cos(th))
+        rings.append((z, offset_outline(rounded, s)))
+    for k in range(r_seg + 1):
+        th = (math.pi / 2.0) * k / r_seg
+        s = rear_r * (1.0 - math.cos(th))
+        z = d / 2 - rear_r * (1.0 - math.sin(th))
+        rings.append((z, offset_outline(rounded, s)))
+    body = Body("tekpractice-extruded-body")
+    bm = body.bm
+    vr = [[bm.verts.new(g2b(x, y, z)) for (x, y) in ring_pts] for (z, ring_pts) in rings]
+    n = len(vr[0])
+    for a, b in zip(vr[:-1], vr[1:]):
+        for i in range(n):
+            j = (i + 1) % n
+            bm.faces.new([a[i], a[j], b[j], b[i]])
+    bm.faces.new(list(reversed(vr[0])))
+    bm.faces.new(list(vr[-1]))
+    body.done(colour)
+    MEASURE["filletMm"] = round(min(front_r, rear_r) / MM, 4)
+    return body.finish()
 
 
 def flat_face_polygon(bm: bmesh.types.BMesh, z: float) -> list[tuple[float, float]]:
@@ -2657,6 +2725,11 @@ def build_boom_arm(plan: Plan) -> bpy.types.Object:
     at y = 0 and scaled to the exact spec size (refused when that needs more than ARM_MAX_SCALE_ERROR: the spec numbers then do not match the pose)."""
     w, h, d = size_m(plan)
     p = {k: param_m(plan, k, v) for k, v in ARM_DEFAULTS_MM.items()}
+    grey = (plan.get("params") or {}).get("tubeGrey")
+    if grey is not None and not (isinstance(grey, (int, float)) and 10 <= grey <= 200):
+        raise BuildError(f"params.tubeGrey must be a grey level from 10 to 200, got {grey!r}")
+    tube_col = ARM_TUBE if grey is None else "#%02x%02x%02x" % (round(grey), round(grey) + 1, round(grey) + 5)
+    joint_col = ARM_JOINT if grey is None else "#%02x%02x%02x" % (round(grey) + 12, round(grey) + 13, round(grey) + 18)
     col_r = d / 2.0                      # the column's diameter is the depth of the model
     tube_r = p["tubeDiaMm"] / 2.0
     joint_r = p["jointDiaMm"] / 2.0
@@ -2676,18 +2749,18 @@ def build_boom_arm(plan: Plan) -> bpy.types.Object:
     body = Body("boom-arm")
     bm = body.bm
     cylinder_between(bm, at(0.0, col_bottom), at(0.0, col_top), col_r)                       # column housing
-    body.done(lift_hex(ARM_JOINT))
+    body.done(lift_hex(joint_col))
     cylinder_between(bm, at(0.0, rod_bottom), at(0.0, col_bottom), 8.0 * MM)                 # threaded rod under it
     body.done(lift_hex(ARM_METAL))
     for (jx, jy), r, ln in ((shoulder, joint_r, joint_len), (elbow, joint_r, joint_len), (head, head_r, 30.0 * MM)):
         cylinder_between(bm, at(jx, jy, -ln / 2), at(jx, jy, ln / 2), r)                      # a hinge: axis along z
-    body.done(lift_hex(ARM_JOINT))
+    body.done(lift_hex(joint_col))
     cylinder_between(bm, at(*shoulder), at(*elbow), tube_r)                                   # lower arm
     cylinder_between(bm, at(*elbow), at(*head), tube_r * 0.92)                                # upper arm (a touch slimmer)
-    body.done(lift_hex(ARM_TUBE))
+    body.done(lift_hex(tube_col))
     post_r = head_r * 0.75
     cylinder_between(bm, at(head[0], head[1]), at(head[0], head[1] - drop * 0.62), post_r)    # head block under the hinge
-    body.done(lift_hex(ARM_TUBE))
+    body.done(lift_hex(tube_col))
     cylinder_between(bm, at(head[0], head[1] - drop * 0.62), at(head[0], head[1] - drop), 7.0 * MM)  # the 5/8 inch mic thread
     body.done(lift_hex(ARM_METAL))
 
@@ -4673,6 +4746,7 @@ def build_cable_assembly_v2(plan: Plan) -> bpy.types.Object:
 
 # One entry per shape of tools/assets3d/shapes.ts (a test compares the two lists).
 SHAPES: dict[str, Callable[[Plan], bpy.types.Object]] = {
+    "extruded-body": build_extruded_body,
     "cable-assembly-v2": build_cable_assembly_v2,
     "speaker-cabinet-v2": build_speaker_cabinet_v2,
     "moulded-box": build_moulded_box,
@@ -4800,16 +4874,19 @@ def apply_projection(ob: bpy.types.Object, plan: Plan, out_png: str) -> None:
     looks_at: dict[int, int] = {}
     palette: list[tuple[int, int, int]] = []
     swatch_of: dict[int, int] = {}
+    part_attr = me.attributes.get("tkpart")   # faces of the structure parts keep their own colour: never the picture
     for poly in me.polygons:
-        for k, (face, _img, _iw, _ih, _px) in enumerate(pictures):
-            if face == "wrap":
-                hit = abs(poly.normal.z) <= WRAP_MAX_NORMAL_Z
-            else:
-                hit = poly.normal.dot(Vector(faces[face][0])) >= PROJECTION_COS
-            if hit:
-                looks_at[poly.index] = k
-                break
-        else:
+        is_part = part_attr is not None and part_attr.data[poly.index].value != 0
+        if not is_part:
+            for k, (face, _img, _iw, _ih, _px) in enumerate(pictures):
+                if face == "wrap":
+                    hit = abs(poly.normal.z) <= WRAP_MAX_NORMAL_Z
+                else:
+                    hit = poly.normal.dot(Vector(faces[face][0])) >= PROJECTION_COS
+                if hit:
+                    looks_at[poly.index] = k
+                    break
+        if poly.index not in looks_at:
             c = colours.data[poly.loop_start].color
             key = (srgb_byte(c[0]), srgb_byte(c[1]), srgb_byte(c[2]))
             if key not in palette:
@@ -4926,6 +5003,18 @@ def run() -> None:
         os.remove(measure_path)   # never leave the measurements of an earlier run next to this output
     MEASURE.clear()
     builder(plan)
+    if plan.get("parts"):
+        # the structure sheet: real parts (knobs, faders, buttons, sockets, keys...) modelled on the finished body (structure_parts.py)
+        meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
+        if len(meshes) != 1:
+            raise BuildError(f"a structure sheet needs exactly one mesh object, the build made {len(meshes)}")
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import structure_parts
+        try:
+            done = structure_parts.apply_structure(meshes[0], plan, COLOUR_ATTRIBUTE)
+        except structure_parts.PartError as exc:
+            raise BuildError(str(exc)) from exc
+        log(f"{plan.get('id')}: {done['parts']} structure parts")
     if plan.get("projections"):
         meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
         if len(meshes) != 1:

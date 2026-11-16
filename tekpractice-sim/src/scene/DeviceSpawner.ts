@@ -30,7 +30,7 @@ import { scaleForHeight } from './modelBody'
 import { frontDirection, localBounds, rearFace, rearGrid, yawOntoPlusZ, type FrontAxis, type RearFace } from './modelFront'
 import { findExtras, type AssetExtrasV1 } from './assetExtras'
 import { createMarkerRing, liftMarkerRing, markerFaceNormal, orientMarkerRing, surfaceLiftM } from './portMarkerMesh'
-import { markerDiameterM, ringDiameterOnFaceM } from './portMarkerSize'
+import { capRingsToNeighbours, markerDiameterM, ringDiameterOnFaceM } from './portMarkerSize'
 import type { AttachedControls, attachControls } from '../controls/attach'
 import type { ControlTicker } from '../controls/ticker'
 
@@ -579,6 +579,11 @@ export class DeviceSpawner {
       }
       return local
     })
+    // A ring never reaches past its nearest neighbour (real connector pitches are tighter than the oversize ring of two XLRs or two USB-C ports).
+    const neighbourCap = capRingsToNeighbours(
+      device.ports.map((p) => markerDiameterM(p.connector)),
+      locals,
+    )
     device.ports.forEach((port, i) => {
       const local = locals[i]
       const marker = portMarkers.get(port.portId)
@@ -594,7 +599,7 @@ export class DeviceSpawner {
           // Wave 1b finding 10: a ring on the base or the top of a small body (a mic's XLR) is capped at 0.85 x the body's smaller horizontal extent, so it
           // never overhangs the microphone. Sizes are in the root's frame, like the ring itself; every other ring is left at scale 1.
           const ring = marker.getBoundingInfo().boundingBox.extendSize.x * 2 // the ring built from its connector (scale 1 here)
-          const capped = ringDiameterOnFaceM(ring, face ? face.y : null, { w: bodyHi.x - bodyLo.x, d: bodyHi.z - bodyLo.z })
+          const capped = Math.min(ringDiameterOnFaceM(ring, face ? face.y : null, { w: bodyHi.x - bodyLo.x, d: bodyHi.z - bodyLo.z }), neighbourCap[i])
           if (capped < ring) {
             const k = capped / ring
             marker.scaling.setAll(k)
