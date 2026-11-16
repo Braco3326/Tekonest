@@ -146,14 +146,15 @@ test('the template mic cable is drawn in the mic colour and the legend names it 
   expect(await page.evaluate((k) => window.__creation!.cableColor(k), MIC_KEY)).toBe(SIGNAL_STYLE['mic-level']!.color)
   await expect(legend(page)).toBeVisible()
   await expect(items(page)).toHaveCount(1)
-  await expect(items(page).first()).toHaveText('Niveau micro')
+  await expect(items(page).first().locator('.cr-legend-name')).toHaveText('Niveau micro')
   await expect(items(page).first()).toHaveAttribute('data-signal', 'mic-level')
-  // the swatch carries the cable colour (a solid stroke: this signal is not dashed)
+  // the swatch carries the cable colour and its type's pattern (analogue: a solid stroke), and the row names the line (mission 3, cable cues)
   const stroke = await items(page).first().locator('line').evaluate((l) => ({ stroke: l.getAttribute('stroke'), dash: l.getAttribute('stroke-dasharray') }))
   expect(stroke).toEqual({ stroke: SIGNAL_STYLE['mic-level']!.color, dash: null })
+  await expect(items(page).first().locator('.cr-legend-note')).toHaveText('trait plein')
 })
 
-test('the powered reference rig: three mains cables in the mains colour, and the legend lists « Secteur 230 V » dashed (Task 32: reachable with verified gear)', async ({ page }) => {
+test('the powered reference rig: three mains cables in the mains colour with the mains cue, and the legend lists « Secteur 230 V » with its collars (Task 32: reachable with verified gear)', async ({ page }) => {
   await boot(page, { keepStrip: true })
   const keys = [cableKey({ instance: 'mains', port: 'out-1' }, { instance: 'ql1', port: 'power-in' }), cableKey({ instance: 'mains', port: 'out-2' }, { instance: 'k12-g', port: 'power-in' }), cableKey({ instance: 'mains', port: 'out-3' }, { instance: 'k12-d', port: 'power-in' })]
   for (const k of keys) expect(await page.evaluate((key) => window.__creation!.cableColor(key), k), k).toBe(SIGNAL_STYLE['mains-power']!.color)
@@ -162,8 +163,10 @@ test('the powered reference rig: three mains cables in the mains colour, and the
   const power = items(page).nth(1)
   await expect(power).toHaveAttribute('data-signal', 'mains-power')
   await expect(power).toContainText('Secteur 230 V')
-  await expect(power).toContainText('pointillés')
-  expect(await power.locator('line').getAttribute('stroke-dasharray')).toMatch(/^\d+ \d+$/)
+  // mission 3, cable cues: the sheet's mains line (thick, solid) with its glyph as collars, in 3D and in the swatch; it was a dash before
+  await expect(power.locator('.cr-legend-note')).toHaveText('trait épais à bagues')
+  await expect(power.locator('.cr-legend-tick')).toHaveCount(2)
+  for (const k of keys) expect(await page.evaluate((key) => window.__creation!.cableCue(key), k), k).toMatchObject({ type: 'mains', fallback: false, outline: true })
   expect(await items(page).nth(0).locator('line').getAttribute('stroke-dasharray')).toBeNull()
 })
 
@@ -173,8 +176,8 @@ test('the legend lists the signal types present: a second type appears with its 
   const r = await addLineCable(page)
   expect(r.ok).toBe(true)
   await expect(items(page)).toHaveCount(2)
-  await expect(items(page).nth(0)).toHaveText('Niveau micro')
-  await expect(items(page).nth(1)).toHaveText('Niveau ligne pro (+4 dBu)')
+  await expect(items(page).nth(0).locator('.cr-legend-name')).toHaveText('Niveau micro')
+  await expect(items(page).nth(1).locator('.cr-legend-name')).toHaveText('Niveau ligne pro (+4 dBu)')
   expect(await page.evaluate((k) => window.__creation!.cableColor(k), LINE_KEY)).toBe(SIGNAL_STYLE['line-level-pro']!.color)
   // mission 3 fixes, item 2: one palette with the 2D sheet: mic and line level are both « analogique symétrique », the sheet's one blue (the legend names them apart)
   expect(SIGNAL_STYLE['line-level-pro']!.color).toBe(SIGNAL_STYLE['mic-level']!.color)
@@ -365,20 +368,29 @@ test('undo of the hovered cable under a still pointer drops the highlight and th
   expect(await page.evaluate(() => window.__creation!.cableHovered())).toBeNull()
 })
 
-test('a mains-power entry is drawn dashed with its « pointillés » note, a solid one is not; an empty legend hides the block', async ({ page }) => {
+test('every legend entry draws its cable type’s pattern and names its line (mission 3, cable cues: was « mains dashed, the rest solid »); an empty legend hides the block', async ({ page }) => {
   await boot(page)
-  await page.evaluate(() => window.__creation!.legendPreview(['mains-power', 'mic-level']))
-  await expect(items(page)).toHaveCount(2)
+  await page.evaluate(() => window.__creation!.legendPreview(['mains-power', 'mic-level', 'aes3', 'aoip', 'wordclock']))
+  await expect(items(page)).toHaveCount(5)
   const mains = items(page).nth(0)
   await expect(mains).toHaveAttribute('data-signal', 'mains-power')
   await expect(mains).toContainText('Secteur 230 V')
-  await expect(mains).toContainText('pointillés')
+  await expect(mains.locator('.cr-legend-note')).toHaveText('trait épais à bagues')
   const line = mains.locator('line')
-  expect(await line.getAttribute('stroke-dasharray')).toMatch(/^\d+ \d+$/)
+  expect(await line.getAttribute('stroke-dasharray')).toBeNull()
   expect(await line.getAttribute('stroke')).toBe(SIGNAL_STYLE['mains-power']!.color)
+  await expect(mains.locator('.cr-legend-tick')).toHaveCount(2)
   const mic = items(page).nth(1)
   expect(await mic.locator('line').getAttribute('stroke-dasharray')).toBeNull()
-  await expect(mic.locator('.cr-legend-note')).toHaveCount(0)
+  await expect(mic.locator('.cr-legend-note')).toHaveText('trait plein')
+  // the sheet's own dashes: AES3 « 8 4 », Dante beads « 0 6 » (round caps), word clock dash-dot « 8 3 2 3 »
+  const dash = async (i: number) => items(page).nth(i).locator('line').evaluate((l) => [l.getAttribute('stroke-dasharray'), l.getAttribute('stroke-linecap')])
+  expect(await dash(2)).toEqual(['8 4', 'butt'])
+  expect(await dash(3)).toEqual(['0 6', 'round'])
+  expect(await dash(4)).toEqual(['8 3 2 3', 'butt'])
+  await expect(items(page).nth(2).locator('.cr-legend-note')).toHaveText('tirets')
+  await expect(items(page).nth(3).locator('.cr-legend-note')).toHaveText('points')
+  await expect(items(page).nth(4).locator('.cr-legend-note')).toHaveText('trait-point')
   // the toggle still folds and unfolds it, with the state and the name in step
   const toggle = page.getByTestId('cable-legend-toggle')
   await toggle.click()
@@ -414,4 +426,62 @@ test('a click on the hovered cable is no missed click: no « Rien ici » toast; 
   expect(sel).toBe('sm58')
   expect(await page.evaluate(() => window.__creation!.cableTrace()?.selected)).toBe(MIC_KEY)
   expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
+})
+
+/**
+ * Mission 3, cable cues: every cable type the catalogue can connect is drawn with its own line cue (the 2D sheet's pattern) and a dark outline, in the real
+ * app; the cue never moves the cable: its drawn points still lie at the 12 mm cable's height on the floor, its length is its polyline's, and the gravity
+ * oracle still holds. (DC has no catalogue pair.)
+ */
+test('every cable type has its own line cue and an outline in the real app; points, length and the gravity oracle are untouched by the cue', async ({ page }) => {
+  await boot(page)
+  const devices: [string, string, number, number][] = [
+    ['pc', 'playout-pc', -4, 0], ['mackie', 'mackie-profx12v3', -2, 0], ['crown', 'crown-xti-4002', 0, 0], ['y10p', 'db-audiotechnik-y10p', 2, 0],
+    ['axia', 'axia-iq', -4, 3], ['grace', 'grace-m905', -2, 3], ['litt', 'yellowtec-litt', -4, 5], ['hdio', 'avid-hd-io', 0, 3], ['mutec', 'mutec-mc-3-plus', 2, 3],
+    ['rio', 'yamaha-rio3224-d2', 3, 6],
+  ]
+  const cables: [string, string, string, string, string][] = [
+    ['sm58', 'out-xlr', 'ql1', 'in-mic-1', 'analog-bal'],
+    ['pc', 'out-analog-consumer', 'mackie', 'in-stereo-35', 'analog-unbal'],
+    ['crown', 'out-spk-1', 'y10p', 'bidir-nl4-1', 'speaker'],
+    ['axia', 'out-program-aes', 'grace', 'in-aes3', 'digital'],
+    ['ql1', 'dante-primary', 'rio', 'dante-primary', 'network'],
+    ['hdio', 'wordclock-out', 'mutec', 'in-wclk', 'clock'],
+    ['axia', 'gpio', 'litt', 'in-gpio', 'control'],
+  ]
+  await page.evaluate(
+    ([devs, cs]) => {
+      const c = window.__creation!
+      for (const [id, deviceId, x, z] of devs) c.dispatch({ type: 'SPAWN', deviceId, instanceId: id, position: [x, c.floorAtM(x, z), z], rotationY: 0, mount: 'floor' })
+      for (const [ai, ap, bi, bp] of cs) c.dispatch({ type: 'CONNECT', a: { instance: ai, port: ap }, b: { instance: bi, port: bp } })
+    },
+    [devices, cables] as const
+  )
+  await page.waitForFunction(() => window.__creation!.modelsPending() === 0)
+  const keyOf = ([ai, ap, bi, bp]: readonly string[]) => cableKey({ instance: ai!, port: ap! }, { instance: bi!, port: bp! })
+  const cues: Record<string, { type: string | null; pieces: number; fallback: boolean; outline: boolean }> = {}
+  for (const c of cables) {
+    const key = keyOf(c)
+    await page.waitForFunction((k) => window.__creation!.cablePoints(k) !== null, key)
+    const cue = (await page.evaluate((k) => window.__creation!.cableCue(k), key))!
+    expect(cue, key).toMatchObject({ type: c[4], fallback: false, outline: true })
+    cues[c[4]!] = cue
+    // the cue never moves the path: the points that rest on the floor are at the 12 mm cable's centre (15 mm), the length is the polyline's, the oracle holds
+    const pts = (await page.evaluate((k) => window.__creation!.cablePoints(k), key))!
+    let len = 0
+    for (let i = 1; i < pts.length; i++) len += Math.hypot(pts[i]![0] - pts[i - 1]![0], pts[i]![1] - pts[i - 1]![1], pts[i]![2] - pts[i - 1]![2])
+    expect((await page.evaluate((k) => window.__creation!.cableLengthM(k), key))!, key).toBeCloseTo(len, 6)
+    const lows: number[] = []
+    for (const [x, y, z] of pts.slice(1, -1)) lows.push(y - (await page.evaluate(([px, pz]) => window.__creation!.floorAtM(px!, pz!), [x, z] as const)))
+    expect(Math.min(...lows), key).toBeCloseTo(0.015, 3)
+    expectGrounded(key, await page.evaluate((k) => window.__creation!.cableSupportReport(k), key))
+  }
+  // different types draw differently: solid tubes have no piece, dashes, beads and dash-dots have many, and the pattern names differ
+  expect(cues['analog-bal']!.pieces).toBe(0)
+  expect(cues['speaker']!.pieces).toBe(0)
+  for (const t of ['digital', 'network', 'clock', 'control']) expect(cues[t]!.pieces, t).toBeGreaterThanOrEqual(3)
+  expect(new Set(Object.values(cues).map((c) => c.type)).size).toBe(cables.length)
+  // and each is ONE mesh named like a plain cable, its outline a child (the tree, the framing and the hide switch see one cable)
+  const meshes = await page.evaluate(() => window.__creation!.cableCenters().filter((c) => c !== null).length)
+  expect(meshes).toBe(await page.evaluate(() => window.__creation!.design().rig.connections.length))
 })

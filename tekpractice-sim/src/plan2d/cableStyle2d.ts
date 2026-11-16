@@ -1,7 +1,8 @@
 /**
  * Cable types of the 2D schema page (mission 2): the table (a) of « 2D schema - colour and symbol sheet » (2026-11-15) as data, and the derivation of a
  * cable's type from its two ports (connector, signal, flags). Pure. The COLOURS are not here: they are the shared cable palette (src/design/cablePalette.ts,
- * mission 3 fixes item 2), read by the 3D cables too, so a cable has one colour on both pages; the line pattern, width, tag and glyph are the 2D page's own.
+ * mission 3 fixes item 2), read by the 3D cables too, so a cable has one colour on both pages. The line pattern and width are the shared pattern table's (src/design/cablePattern.ts,
+ * mission 3 cable cues), read by the 3D view too, so a cable has one pattern on both pages; the tag and glyph are the 2D page's own.
  *
  * Honesty (the sheet's own tags): the meaning of each hue is OUR PROPOSAL (no audio signal-colour standard was found); the line styles are OUR PROPOSAL too
  * (no signal-flow line-style convention was found); mains brown nods to the harmonised live-conductor colour (a standard for conductor cores, not for drawings).
@@ -11,6 +12,7 @@
  * link (drawn in the colour of the signal it carries, normalling marker in a later item).
  */
 import { CABLE_TYPE_COLOUR as C, SIGNAL_CABLE_TYPE, type CableType } from '../design/cablePalette'
+import { CABLE_LINE as L } from '../design/cablePattern'
 
 export type { CableType }
 export type LineGlyph = 'arrow' | 'double-arrow' | 'clock' | 'lightning'
@@ -30,16 +32,19 @@ export interface CableStyle2d {
   confidence: 'OUR PROPOSAL'
 }
 
+/** Dash and width come from the shared pattern table (src/design/cablePattern.ts, mission 3 cable cues), which the 3D view reads too. */
+const line = (t: CableType) => ({ dash: L[t].dash, width: L[t].width })
+
 export const CABLE_STYLES: readonly CableStyle2d[] = [
-  { type: 'analog-bal', colour: C['analog-bal'], dash: '', width: 2, tag: 'sym.', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
-  { type: 'analog-unbal', colour: C['analog-unbal'], dash: '', width: 1.5, tag: 'asym.', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
-  { type: 'speaker', colour: C.speaker, dash: '', width: 4, tag: 'HP', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
-  { type: 'digital', colour: C.digital, dash: '8 4', width: 2.5, tag: 'num.', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
-  { type: 'network', colour: C.network, dash: '0 6', width: 3, tag: 'réseau', glyph: 'double-arrow', confidence: 'OUR PROPOSAL' },
-  { type: 'clock', colour: C.clock, dash: '8 3 2 3', width: 1.5, tag: 'horloge', glyph: 'clock', confidence: 'OUR PROPOSAL' },
-  { type: 'control', colour: C.control, dash: '10 4', width: 1.5, tag: 'ctrl', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
-  { type: 'mains', colour: C.mains, dash: '', width: 4.5, tag: 'secteur', glyph: 'lightning', confidence: 'OUR PROPOSAL' },
-  { type: 'dc', colour: C.dc, dash: '3 3', width: 2, tag: 'DC', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
+  { type: 'analog-bal', colour: C['analog-bal'], ...line('analog-bal'), tag: 'sym.', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
+  { type: 'analog-unbal', colour: C['analog-unbal'], ...line('analog-unbal'), tag: 'asym.', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
+  { type: 'speaker', colour: C.speaker, ...line('speaker'), tag: 'HP', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
+  { type: 'digital', colour: C.digital, ...line('digital'), tag: 'num.', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
+  { type: 'network', colour: C.network, ...line('network'), tag: 'réseau', glyph: 'double-arrow', confidence: 'OUR PROPOSAL' },
+  { type: 'clock', colour: C.clock, ...line('clock'), tag: 'horloge', glyph: 'clock', confidence: 'OUR PROPOSAL' },
+  { type: 'control', colour: C.control, ...line('control'), tag: 'ctrl', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
+  { type: 'mains', colour: C.mains, ...line('mains'), tag: 'secteur', glyph: 'lightning', confidence: 'OUR PROPOSAL' },
+  { type: 'dc', colour: C.dc, ...line('dc'), tag: 'DC', glyph: 'arrow', confidence: 'OUR PROPOSAL' },
 ]
 export const CABLE_TYPES: readonly CableType[] = CABLE_STYLES.map((s) => s.type)
 

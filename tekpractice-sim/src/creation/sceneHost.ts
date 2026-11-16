@@ -30,7 +30,7 @@ import type { PortRef } from '../engine/types'
 import type { RoomLayout } from '../explore/roomLayout'
 import type { DesignState, Placement } from '../trials/trial'
 import { DeviceSpawner, type DeviceInstance } from '../scene/DeviceSpawner'
-import { CableRenderer } from '../scene/CableRenderer'
+import { CableRenderer, type CueInfo } from '../scene/CableRenderer'
 import { FLOOR_CLEARANCE, polylineLength, type P3 } from '../scene/cablePath'
 import { buildSupport, gravityPath, supportReport, type Support, type SupportReport, type XZ } from '../scene/cableGravity'
 import { toXZ } from '../scene/cableRoute'
@@ -59,7 +59,7 @@ import { ControlController } from './controlController'
 import { fromCatalog, toCatalog, type CatalogControl } from '../controls/catalogLink'
 import type { ControlDef } from '../controls/controlTypes'
 import { CABLE_HIT_PX, nearestCable, type Pt } from './cablePick'
-import { cableColor, cableDash, connectionSignal, portInfoOf, type PortInfo } from './cableStyle'
+import { cableColor, cableCue, connectionSignal, portInfoOf, type PortInfo } from './cableStyle'
 import type { RoomTheme } from '../scene/RoomBuilder'
 import { CREATION_DEVICE_THEME, CREATION_ROOM_THEME } from './sceneTheme'
 import { ViewCubeWidget, type CubeHooks } from './viewCubeWidget'
@@ -520,6 +520,11 @@ export class SceneHost {
   /** The colour a drawn cable has ('#RRGGBB', read from its material), or null when it is not drawn. */
   cableColorOf(key: string): string | null {
     return this.cables?.colorOf(key) ?? null
+  }
+
+  /** Mission 3, cable cues: what a drawn cable's line cue was drawn as (type, pieces, budget fallback, outline), or null when it is not drawn. */
+  cableCueOf(key: string): CueInfo | null {
+    return this.cables?.cueInfo(key) ?? null
   }
 
   /** The cable drawn lighter (the hover), or null. */
@@ -1113,9 +1118,11 @@ export class SceneHost {
     bag.observe(camera.onViewMatrixChangedObservable, () => this.updateControlLod())
     this.cables = new CableRenderer(scene, undefined, {
       pulses: false,
-      // C18: the colour (and the dash) of a cable is its signal's, read from the catalog's port definitions.
+      // C18: the colour of a cable is its signal's, read from the catalog's port definitions.
       colorFor: (a, b) => Color3.FromHexString(cableColor(this.signalOf(a, b) ?? '')),
-      dashFor: (a, b) => cableDash(this.signalOf(a, b) ?? ''),
+      // Mission 3, cable cues: and its line pattern is its signal's cable type's (the 2D sheet's), with a thin dark outline under every cable.
+      cueFor: (a, b) => cableCue(this.signalOf(a, b) ?? ''),
+      outline: CREATION_TOKENS.scene.cableOutline,
       // The cables lie ON the floor (the room's own, raised decks included; a set or the blank room is flat), never under it.
       floorAt: (x, z) => this._layout?.floorAt(x, z) ?? 0,
       // Mission 3 A (« gravity first »): laid by gravity on the floor, the decks and the devices resting there; each cable leaves its port outward.

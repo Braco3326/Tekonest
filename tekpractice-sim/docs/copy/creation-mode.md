@@ -853,7 +853,7 @@ Chaque prise refusée du groupe « Incompatibles » affiche sous son nom deux li
 
 ## cables
 
-Câbles colorés par type de signal (Task 27, C18). La couleur n’est jamais le seul repère : le secteur est tracé en pointillés, et la légende comme le texte au survol nomment le signal. La légende est un bloc repliable en bas du panneau Propriétés (jamais sur la vue 3D) ; elle ne liste que les types de signal présents. Survoler un câble le met en évidence et affiche « ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu) » (les noms de signal sont ceux de la section `signal`).
+Câbles colorés par type de signal (Task 27, C18). La couleur n’est jamais le seul repère : chaque type de câble a son motif de trait, le même que sur le schéma 2D (mission 3, motifs de câble ; avant, seul le secteur était en pointillés), et la légende comme le texte au survol nomment le signal. La légende est un bloc repliable en bas du panneau Propriétés (jamais sur la vue 3D) ; elle ne liste que les types de signal présents. Survoler un câble le met en évidence et affiche « ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu) » (les noms de signal sont ceux de la section `signal`).
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
@@ -861,7 +861,15 @@ Câbles colorés par type de signal (Task 27, C18). La couleur n’est jamais le
 | `cables.legendCollapse` | Replier la légende des câbles | validé | Nom accessible du bouton de la légende quand elle est dépliée (il la replie) |
 | `cables.legendExpand` | Déplier la légende des câbles | validé | Nom accessible du bouton quand elle est repliée (il la déplie) |
 | `cables.legendRail` | Légende des câbles : déplier Propriétés | validé | Nom accessible et infobulle du bouton de la légende dans le rail de Propriétés repliée (visible seulement s’il y a un câble) : il déplie le panneau, légende ouverte |
-| `cables.dashed` | pointillés | validé | Mention à côté d’un type de signal tracé en pointillés (le trait n’est pas le seul repère : la couleur non plus) |
+| `cables.lineAnalogBal` | trait plein | à valider (tekuxwriter) | Mission 3, motifs de câble (2026-11-16) : mention à côté de l’échantillon d’un signal analogique symétrique (micro, ligne pro) dans la légende ; elle nomme le motif du câble, le même en 3D et sur le schéma 2D. Remplace `cables.dashed` (« pointillés », secteur seul), retirée : chaque type a désormais son motif |
+| `cables.lineAnalogUnbal` | trait plein fin | à valider (tekuxwriter) | Idem, analogique asymétrique (ligne grand public, instrument, casque) : même trait que le symétrique, plus fin, comme sur la fiche |
+| `cables.lineSpeaker` | trait plein épais | à valider (tekuxwriter) | Idem, niveau haut-parleur |
+| `cables.lineDigital` | tirets | à valider (tekuxwriter) | Idem, numérique point à point (AES3, S/PDIF, MADI) |
+| `cables.lineNetwork` | points | à valider (tekuxwriter) | Idem, réseau (Dante, AES50, Ethernet de contrôle) ; en 3D, des perles le long du câble |
+| `cables.lineClock` | trait-point | à valider (tekuxwriter) | Idem, horloge (word clock) |
+| `cables.lineControl` | tirets longs | à valider (tekuxwriter) | Idem, contrôle et données (USB, GPIO, DMX) |
+| `cables.lineMains` | trait épais à bagues | à valider (tekuxwriter) | Idem, secteur 230 V : trait épais, avec en 3D une bague tous les 25 cm (l’éclair de la fiche 2D) ; l’échantillon montre deux bagues |
+| `cables.lineDc` | tirets courts | à valider (tekuxwriter) | Idem, alimentation continue (fantôme 48 V) ; aucun câble DC posable aujourd’hui |
 | `cables.hover` | {a} → {b} · {signal} | validé | Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal |
 | `cables.hoverLength` | {a} → {b} · {signal} · {length} | validé | Le même texte avec la longueur du câble tracé ; {length} = « 6,4 m » |
 | `cables.length` | {n} m | validé | Une longueur de câble en mètres ; {n} = un chiffre après la virgule (« 6,4 ») |

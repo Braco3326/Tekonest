@@ -4,7 +4,7 @@ import catalogJson from '../../content/catalog.json'
 import { COPY } from '../../src/creation/copy'
 import { CREATION_TOKENS, contrastRatio } from '../../src/design/creationTokens'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
-import { SIGNAL_STYLE, cableColor, cableDash, cableText, connectionSignal, legendEntries, lengthText, portInfoOf, presentSignals } from '../../src/creation/cableStyle'
+import { FALLBACK_COLOR, SIGNAL_STYLE, cableColor, cableCue, cableText, connectionSignal, legendEntries, lengthText, portInfoOf, presentSignals } from '../../src/creation/cableStyle'
 import { CABLE_TYPE_COLOUR, SIGNAL_CABLE_TYPE } from '../../src/design/cablePalette'
 
 const catalogSignals: string[] = (catalogJson as { signalTypes: { id: string }[] }).signalTypes.map((s) => s.id)
@@ -74,8 +74,8 @@ describe('SIGNAL_STYLE', () => {
     for (const [name, m] of Object.entries(MACHADO))
       for (let i = 0; i < colours.length; i++)
         for (let j = i + 1; j < colours.length; j++) if (distance(simulate(m, colours[i]!), simulate(m, colours[j]!)) < 30) weak.push(`${name} ${colours[i]} ${colours[j]}`)
-    // purple (digital) / grey (clock, control) and green (network) / grey, blue (analogue) / green: in 2D the line patterns and tags carry the difference; in
-    // 3D the legend and the hover text name the signal (only mains is dashed there)
+    // purple (digital) / grey (clock, control) and green (network) / grey, blue (analogue) / green: the line patterns carry the difference on both pages
+    // (mission 3, cable cues: dashes vs dash-dot / long dashes, beads vs dash-dot / long dashes, solid vs beads), with the tags in 2D and the names in 3D
     expect(weak.sort()).toEqual(['deuteranopia #00946A #737A87', 'deuteranopia #B5659A #737A87', 'protanopia #B5659A #737A87', 'tritanopia #2B7BC2 #00946A'])
   })
   it('no signal colour is the selection Ambre or the hover Papier (a cable never reads as a selected device)', () => {
@@ -84,10 +84,14 @@ describe('SIGNAL_STYLE', () => {
       expect(distance(SIGNAL_STYLE[id]!.color, CREATION_TOKENS.color.papier), id).toBeGreaterThanOrEqual(60)
     }
   })
-  it('mains-power is dashed, so the colour is never the only cue; no other signal is', () => {
-    expect(SIGNAL_STYLE['mains-power']!.dash).toBe(true)
-    expect(cableDash('mains-power')).toBe(true)
-    for (const id of catalogSignals.filter((s) => s !== 'mains-power')) expect(cableDash(id), id).toBe(false)
+  it('every signal has the line cue of its cable type (mission 3, cable cues: was « mains only is dashed »), so the colour is never the only cue', () => {
+    for (const id of catalogSignals) {
+      expect(cableCue(id), id).not.toBeNull()
+      expect(cableCue(id)!.type, id).toBe(SIGNAL_STYLE[id]!.type)
+    }
+    expect(cableCue('mains-power')!.markEveryM).not.toBeNull() // the mains collars
+    expect(cableCue('aes3')!.runs).not.toBeNull() // dashed
+    expect(cableCue('mic-level')!.runs).toBeNull() // solid
   })
   it('labels are the French names of COPY.signal (strings live in copy.ts only)', () => {
     for (const id of catalogSignals) {
@@ -105,7 +109,7 @@ describe('cableColor', () => {
     const c = cableColor('not-in-the-catalog')
     expect(c).toMatch(/^#[0-9A-F]{6}$/)
     for (const id of catalogSignals) expect(c).not.toBe(SIGNAL_STYLE[id]!.color)
-    expect(cableDash('not-in-the-catalog')).toBe(false)
+    expect(cableCue('not-in-the-catalog')).toBeNull()
   })
 })
 
@@ -144,10 +148,11 @@ describe('legend', () => {
   it('presentSignals keeps a signal the palette does not know (it is on the scene, so it is in the legend) after the known ones', () => {
     expect(presentSignals(['zzz', 'mic-level'])).toEqual(['mic-level', 'zzz'])
   })
-  it('legendEntries: id, French label, colour and dash flag', () => {
-    expect(legendEntries(['mic-level', 'mains-power'])).toEqual([
-      { id: 'mic-level', label: 'Niveau micro', color: SIGNAL_STYLE['mic-level']!.color, dash: false },
-      { id: 'mains-power', label: 'Secteur 230 V', color: SIGNAL_STYLE['mains-power']!.color, dash: true },
+  it('legendEntries: id, French label, colour and cable type (whose pattern the swatch draws)', () => {
+    expect(legendEntries(['mic-level', 'mains-power', 'zzz'])).toEqual([
+      { id: 'mic-level', label: 'Niveau micro', color: SIGNAL_STYLE['mic-level']!.color, type: 'analog-bal' },
+      { id: 'mains-power', label: 'Secteur 230 V', color: SIGNAL_STYLE['mains-power']!.color, type: 'mains' },
+      { id: 'zzz', label: 'zzz', color: FALLBACK_COLOR, type: null },
     ])
   })
 })

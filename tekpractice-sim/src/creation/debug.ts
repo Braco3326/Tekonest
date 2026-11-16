@@ -119,6 +119,11 @@ export interface CreationDebug {
   cableCenters(): ([number, number, number] | null)[]
   /** Task 27: the colour a drawn cable has ('#RRGGBB', read from its material); null when it is not drawn. */
   cableColor(key: string): string | null
+  /**
+   * Mission 3, cable cues: what a drawn cable's line cue was drawn as: its cable type (null = plain tube), the dashes / beads / collars merged into its mesh,
+   * whether the point budget made it fall back to the plain tube, whether it has its dark outline; null when it is not drawn.
+   */
+  cableCue(key: string): { type: string | null; pieces: number; fallback: boolean; outline: boolean } | null
   /** Task 27 (test hook): show these signal ids in the legend as if their cables were on the scene (the next rig change puts the real ones back). */
   legendPreview(ids: string[]): void
   /** Task 27: the cable under the pointer (highlighted, its text shown), or null. */

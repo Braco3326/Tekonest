@@ -925,8 +925,19 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     legendExpand: 'Déplier la légende des câbles',
     /** Nom accessible (et infobulle) du bouton de la légende dans le rail de Propriétés repliée : il déplie le panneau, légende ouverte. */
     legendRail: 'Légende des câbles : déplier Propriétés',
-    /** Mention à côté d’un type de signal tracé en pointillés (le trait n’est pas le seul repère : la couleur non plus). */
-    dashed: 'pointillés',
+    /**
+     * Mission 3, motifs de câble : mention à côté de l’échantillon de chaque type de signal, qui nomme le motif du trait (le même sur le câble 3D et
+     * sur le schéma 2D), pour que ni la couleur ni le trait ne soient le seul repère. À valider (tekuxwriter, 2026-11-16).
+     */
+    lineAnalogBal: 'trait plein',
+    lineAnalogUnbal: 'trait plein fin',
+    lineSpeaker: 'trait plein épais',
+    lineDigital: 'tirets',
+    lineNetwork: 'points',
+    lineClock: 'trait-point',
+    lineControl: 'tirets longs',
+    lineMains: 'trait épais à bagues',
+    lineDc: 'tirets courts',
     /** Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal. */
     hover: '{a} → {b} · {signal}',
     /** Le même texte avec la longueur du câble tracé ; {length} = « 6,4 m ». */

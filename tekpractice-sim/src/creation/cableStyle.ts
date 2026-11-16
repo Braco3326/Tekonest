@@ -6,20 +6,18 @@
  *   2D colour and symbol sheet's. Each reads at >= 3:1 on Nuit (WCAG 1.4.11) and stays >= 60 from Papier (the hover and selected
  *   stroke) and Ambre (the selection); the sheet's weak pairs on the 3D side (its brown on the panel, colour-blind pairs) are pinned
  *   in tests/creation/cableStyle.test.ts and reported, not fixed here.
- * - Cues other than colour, honestly: every legend entry carries the French name of the signal next to its stroke sample,
- *   and the hover text names it. `mains-power` is also DASHED, and since Task 32 that cue
- *   is REACHABLE FOR VERIFIED GEAR: the catalog's generic `multiprise-secteur` (out `mains-power`, flag `isMainsSource`) feeds
- *   the reference rig through three mains cables, drawn dashed (a SceneHost test on the real template holds it). It was dormant
- *   before Task 32, then reachable only through Bêta proposals (`shure-axient-digital-ad4d` and `shure-ua845uwb` declare
- *   `mains-power` OUT ports without the flag; they still power nothing). The other families rely on colour that is
- *   colour-blind separable (above) plus the legend and hover names (docs/CREATIVE-MODE-LOG.md L17, L23, L25).
+ * - Cues other than colour: every legend entry carries the French name of the signal next to its stroke sample, and the hover
+ *   text names it. Since mission 3 (cable cues) every cable also has the LINE PATTERN of its cable type (src/design/cablePattern.ts,
+ *   the 2D sheet's table): solid, thick, dashes, beads, dash-dot, long dashes, short dashes, collars for mains; the legend swatch
+ *   draws the same pattern. Before it only `mains-power` was dashed (Task 27, reachable with verified gear since Task 32).
  * - The label of an entry is the French name already in `COPY.signal` (strings live in copy.ts only).
  *
  * Pure data and pure functions: no Babylon, no DOM. The shell never imports the engine; the scene host and the shell
  * both read this module.
  */
 import type { PortRef } from '../engine/types'
-import { signalColour } from '../design/cablePalette'
+import { SIGNAL_CABLE_TYPE, signalColour, type CableType } from '../design/cablePalette'
+import { cue3dOf, type Cue3d } from '../design/cablePattern'
 import { COPY } from './copy'
 
 export interface SignalStyle {
@@ -27,8 +25,8 @@ export interface SignalStyle {
   color: string
   /** The French name (COPY.signal). */
   label: string
-  /** Drawn dashed (a second cue next to the colour). */
-  dash?: boolean
+  /** The cable type of the signal (the shared table): its line pattern is the second cue next to the colour (mission 3, cable cues). */
+  type: CableType
 }
 
 const label = (id: string): string => COPY.signal?.[id] ?? id
@@ -39,43 +37,53 @@ const label = (id: string): string => COPY.signal?.[id] ?? id
  * Mission 3 fixes, item 2: the colour is no longer a per-signal colour of the 3D view's own (Task 27's 19 searched colours, tools/cable-palette-search.mjs):
  * it is the colour of the signal's CABLE TYPE in the shared palette (src/design/cablePalette.ts, the 2D colour and symbol sheet), so a cable has the same
  * colour on the 2D page and in the 3D view, and the renderer, the hover tint (CableRenderer lightens this colour), the legend rows and the e2e checks all
- * read it from there. Signals of one family share a colour; the legend and the hover text name the signal. Only the colour changed: mains stays dashed.
+ * read it from there. Signals of one family share a colour; the legend and the hover text name the signal.
+ *
+ * Mission 3, cable cues: the old « mains only is dashed » cue is replaced by the line pattern of the signal's cable type (src/design/cablePattern.ts, the 2D
+ * sheet's own table), so EVERY cable carries a second cue and a cable has the same pattern on both pages; the legend swatch draws it.
  */
-const ORDER: ReadonlyArray<readonly [id: string, dash?: true]> = [
-  ['mic-level'],
-  ['line-level-pro'],
-  ['line-level-consumer'],
-  ['instrument-hiz'],
-  ['speaker-level'],
-  ['headphone-level'],
-  ['aes3'],
-  ['spdif'],
-  ['madi'],
-  ['aoip'],
-  ['aes50'],
-  ['wordclock'],
-  ['usb-audio'],
-  ['gpio-tally'],
-  ['dmx512'],
-  ['ethernet-control'],
-  ['usb-control'],
-  ['phantom-48v'],
-  ['mains-power', true],
+const ORDER: readonly string[] = [
+  'mic-level',
+  'line-level-pro',
+  'line-level-consumer',
+  'instrument-hiz',
+  'speaker-level',
+  'headphone-level',
+  'aes3',
+  'spdif',
+  'madi',
+  'aoip',
+  'aes50',
+  'wordclock',
+  'usb-audio',
+  'gpio-tally',
+  'dmx512',
+  'ethernet-control',
+  'usb-control',
+  'phantom-48v',
+  'mains-power',
 ]
 
 /** A signal the palette does not know (a catalog newer than this table): neutral, never one of the signal colours. */
 export const FALLBACK_COLOR = '#A39B91'
 
 export const SIGNAL_STYLE: Record<string, SignalStyle> = Object.fromEntries(
-  ORDER.map(([id, dash]) => [id, { color: signalColour(id) ?? FALLBACK_COLOR, label: label(id), ...(dash ? { dash: true } : {}) }])
+  ORDER.map((id) => [id, { color: signalColour(id) ?? FALLBACK_COLOR, label: label(id), type: SIGNAL_CABLE_TYPE[id] ?? 'analog-bal' }])
 )
 
 export function cableColor(signalId: string): string {
   return SIGNAL_STYLE[signalId]?.color ?? FALLBACK_COLOR
 }
 
-export function cableDash(signalId: string): boolean {
-  return SIGNAL_STYLE[signalId]?.dash === true
+/** The cable type of a signal, or null for a signal the table does not know (it is then drawn as a plain tube, its neutral colour being the cue). */
+export function cableTypeOfSignal(signalId: string): CableType | null {
+  return SIGNAL_STYLE[signalId]?.type ?? null
+}
+
+/** How a cable carrying this signal is drawn in 3D (pattern, thickness, collars), or null for an unknown signal. */
+export function cableCue(signalId: string): Cue3d | null {
+  const t = cableTypeOfSignal(signalId)
+  return t ? cue3dOf(t) : null
 }
 
 /** The French name of a signal for the hover text and the legend. */
@@ -111,11 +119,12 @@ export interface LegendEntry {
   id: string
   label: string
   color: string
-  dash: boolean
+  /** The cable type whose pattern the swatch draws; null for a signal the table does not know (a plain stroke). */
+  type: CableType | null
 }
 
 export function legendEntries(ids: readonly string[]): LegendEntry[] {
-  return ids.map((id) => ({ id, label: signalLabel(id), color: cableColor(id), dash: cableDash(id) }))
+  return ids.map((id) => ({ id, label: signalLabel(id), color: cableColor(id), type: cableTypeOfSignal(id) }))
 }
 
 /** The direction and signal of any port of a design (`instances` = the rig's), through the catalog. Undefined when unknown. */

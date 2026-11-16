@@ -1,16 +1,19 @@
 /**
  * Cable legend (Task 27, C18): a collapsible block at the bottom of the « Propriétés » panel (never over the 3D view)
- * listing ONLY the signal types that have a cable on the scene, each with a stroke sample (solid or dashed, in the
- * cable's colour) and its French name. Colour is never the only cue: the dashed signal also says « pointillés ».
+ * listing ONLY the signal types that have a cable on the scene, each with a stroke sample (in the cable's colour, drawn with
+ * its cable type's line pattern, the one the 3D cable has: mission 3, cable cues) and its French name. Colour is never the only
+ * cue: each row also names its line (« tirets », « points »…).
  *
  * DOM only, no scene, no timer, no render request. Fed by the shell with plain data (`LegendEntry`: id, label, colour,
- * dash) computed in `src/creation/cableStyle.ts`; it never reads the rig (C6: the shell dispatches intents only).
+ * cable type) computed in `src/creation/cableStyle.ts`; it never reads the rig (C6: the shell dispatches intents only).
  * Hidden entirely while no cable is on the scene. While Propriétés is folded (a 32 px rail) the block shows only a small rail button
  * (night wave 1, item 4): it unfolds Propriétés with the legend open and puts focus on the legend's toggle, so the legend stays reachable. The toggle is a real button: named, `aria-expanded`, a visible
  * focus ring (the shell's 2 px Ambre + 1 px Nuit, in the CSS), no transition.
  */
 import type { LegendEntry } from '../cableStyle'
 import type { DisposableBag } from '../../util/disposable'
+import type { CableType } from '../../design/cablePalette'
+import { cueSwatch } from '../../design/cablePattern'
 import { COPY } from '../copy'
 
 export interface CableLegend {
@@ -28,8 +31,18 @@ export interface CableLegend {
 const SVG = 'http://www.w3.org/2000/svg'
 const L = (): Readonly<Record<string, string>> => COPY.cables!
 
-/** The dash pattern of a dashed signal's stroke sample (SVG user units, the swatch is 36 wide). */
-export const DASH_PATTERN = '6 4'
+/** The COPY.cables key naming each cable type's line (the text next to its sample: the stroke is never the only cue). */
+const LINE_NOTE: Readonly<Record<CableType, string>> = {
+  'analog-bal': 'lineAnalogBal',
+  'analog-unbal': 'lineAnalogUnbal',
+  speaker: 'lineSpeaker',
+  digital: 'lineDigital',
+  network: 'lineNetwork',
+  clock: 'lineClock',
+  control: 'lineControl',
+  mains: 'lineMains',
+  dc: 'lineDc',
+}
 
 /** What one legend row shows: the data the DOM is built from (pure, unit tested: the repo's unit tests have no DOM). */
 export interface LegendRow {
@@ -37,14 +50,22 @@ export interface LegendRow {
   label: string
   /** The stroke sample's colour. */
   color: string
-  /** `stroke-dasharray` of the sample; null = a solid stroke. */
+  /** `stroke-dasharray` of the sample (the 2D sheet's, as the 3D cable); null = a solid stroke. */
   dasharray: string | null
-  /** The text note next to a dashed sample (« pointillés »), so the stroke is not the only cue; null otherwise. */
+  /** The sample's stroke width (the sheet's width order) and its caps (round for beads). */
+  strokeWidth: number
+  linecap: 'butt' | 'round'
+  /** x of the collar ticks drawn across the sample (mains), empty otherwise. */
+  ticks: number[]
+  /** The text naming the line (« tirets », « points »…), so the stroke is not the only cue; null for a signal the table does not know. */
   note: string | null
 }
 
 export function legendRows(entries: readonly LegendEntry[]): LegendRow[] {
-  return entries.map((e) => ({ id: e.id, label: e.label, color: e.color, dasharray: e.dash ? DASH_PATTERN : null, note: e.dash ? L().dashed! : null }))
+  return entries.map((e) => {
+    const s = e.type ? cueSwatch(e.type) : { dasharray: null, strokeWidth: 3, linecap: 'butt' as const, ticks: [] }
+    return { id: e.id, label: e.label, color: e.color, ...s, note: e.type ? (L()[LINE_NOTE[e.type]] ?? null) : null }
+  })
 }
 
 /** The toggle's state for the list being open or folded: `aria-expanded`, the accessible name, the list's `hidden`. */
@@ -69,7 +90,7 @@ function chevron(doc: Document): SVGSVGElement {
   return svg
 }
 
-/** The stroke sample: a line in the cable's colour, dashed like the cable when it is. */
+/** The stroke sample: a line in the cable's colour drawn with its type's pattern (dashes, beads, width), the mains collars as ticks across it. */
 function swatch(doc: Document, e: LegendRow): SVGSVGElement {
   const svg = doc.createElementNS(SVG, 'svg')
   svg.setAttribute('viewBox', '0 0 36 8')
@@ -77,15 +98,27 @@ function swatch(doc: Document, e: LegendRow): SVGSVGElement {
   svg.setAttribute('aria-hidden', 'true')
   svg.setAttribute('focusable', 'false')
   const line = doc.createElementNS(SVG, 'line')
-  line.setAttribute('x1', '1')
-  line.setAttribute('x2', '35')
+  // a round cap grows a line by half its width at each end: keep the beads inside the sample
+  const inset = e.linecap === 'round' ? 1 + e.strokeWidth / 2 : 1
+  line.setAttribute('x1', String(inset))
+  line.setAttribute('x2', String(36 - inset))
   line.setAttribute('y1', '4')
   line.setAttribute('y2', '4')
   line.setAttribute('stroke', e.color)
-  line.setAttribute('stroke-width', '3')
-  line.setAttribute('stroke-linecap', 'butt')
+  line.setAttribute('stroke-width', String(e.strokeWidth))
+  line.setAttribute('stroke-linecap', e.linecap)
   if (e.dasharray) line.setAttribute('stroke-dasharray', e.dasharray)
   svg.appendChild(line)
+  for (const x of e.ticks) {
+    const tick = doc.createElementNS(SVG, 'rect')
+    tick.setAttribute('class', 'cr-legend-tick')
+    tick.setAttribute('x', String(x - 1.5))
+    tick.setAttribute('y', '0')
+    tick.setAttribute('width', '3')
+    tick.setAttribute('height', '8')
+    tick.setAttribute('fill', e.color)
+    svg.appendChild(tick)
+  }
   return svg
 }
 
@@ -181,7 +214,7 @@ export function mountCableLegend(doc: Document, container: HTMLElement, bag: Dis
     },
     set(entries) {
       const rows = legendRows(entries)
-      const key = rows.map((r) => `${r.id}|${r.color}|${r.dasharray}|${r.label}`).join('\n')
+      const key = rows.map((r) => `${r.id}|${r.color}|${r.dasharray}|${r.strokeWidth}|${r.ticks.join(',')}|${r.label}|${r.note}`).join('\n')
       if (key === shown) return
       shown = key
       list.replaceChildren(

@@ -2653,6 +2653,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
         return f ? ([f.center.x, f.center.y, f.center.z] as [number, number, number]) : null
       }),
     cableColor: (key) => host.cableColorOf(key),
+    cableCue: (key) => host.cableCueOf(key),
     legendPreview: (ids) => cableLegend.set(legendEntries(ids)),
     cableAtPage: (x, y) => {
       const r = canvas.getBoundingClientRect()

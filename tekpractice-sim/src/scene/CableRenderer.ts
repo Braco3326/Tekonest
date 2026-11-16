@@ -10,6 +10,8 @@ import type { PortRef } from '../engine/types'
 import { CableBudget, catenaryPoints, FLOOR_CLEARANCE, pointAlong, SEGMENTS_FULL, type FloorRest, type P3 } from './cablePath'
 import { buildSupport, gravityPath, hangInHand, type Support, type XZ } from './cableGravity'
 import { motionEnabled, TOKENS } from '../design/tokens'
+import { DOT_SCALE, MARK_SCALE, cueLayout, type Cue3d } from '../design/cablePattern'
+import type { CableType } from '../design/cablePalette'
 import { DisposableBag } from '../util/disposable'
 
 export type DragTint = 'neutral' | 'ok' | 'bad'
@@ -23,14 +25,39 @@ const DASH_MAX = 48
 const DASH_MIN = 4
 /** A coloured cable glows at this share of its colour (legacy committed: 0.1) so the legend colour reads in the dark room. */
 const COLOR_GLOW = 0.55
+/**
+ * The dark underlay (mission 3, cable cues): an inverted hull this much wider than each piece of the cable, on every side (m). Only its back faces are
+ * drawn, so it shows as a rim around the cable (on the dark floor, the raised stage and the light sets alike) and never covers the cable's colour.
+ */
+export const OUTLINE_M = 0.0015
+/** A plain tube: the cue of a cable whose signal the table does not know, or of a legacy call without ends, on a renderer that draws outlines. */
+const PLAIN_CUE: Cue3d = { type: 'analog-bal', radiusM: CABLE_RADIUS, runs: null, markEveryM: null }
+
+/** What the renderer drew for a cable's cue (tests and the e2e debug hooks). */
+export interface CueInfo {
+  /** The cable type whose pattern was drawn; null = a plain tube (no cue, or a legacy cable). */
+  type: CableType | null
+  /** Dashes, beads or collars merged into the cable's mesh (0 for a plain tube). */
+  pieces: number
+  /** Over the point budget: drawn as the plain tube (with its outline) instead of its pattern. */
+  fallback: boolean
+  outline: boolean
+}
 
 /** What a creation host adds (Task 27); without them the renderer is the legacy one. */
 export interface CableOptions {
   pulses?: boolean
   /** The colour of a connection between two ports (the host reads the catalog's signal). Absent = the legacy committed colour. */
   colorFor?: (a: PortRef, b: PortRef) => Color3
-  /** Draw this connection dashed (a second cue next to the colour). */
+  /** Draw this connection dashed (a second cue next to the colour). Legacy (Task 27): `cueFor` replaces it where given. */
   dashFor?: (a: PortRef, b: PortRef) => boolean
+  /**
+   * Mission 3, cable cues: the line pattern of this connection (src/design/cablePattern.ts: thickness, dashes, beads, collars), null = a plain tube. The
+   * pieces are merged into the cable's ONE mesh (same name, same tree / framing / hide / hover contract); the drawn path is never changed by it.
+   */
+  cueFor?: (a: PortRef, b: PortRef) => Cue3d | null
+  /** '#RRGGBB' of a thin dark underlay under every cable (a child mesh `cable-outline:<id>`, never pickable, hidden and disposed with its cable). */
+  outline?: string
   /**
    * The height of the floor under a point (a raised deck included): with it every cable, and the cable in hand, rests ON the surface instead of sagging under it
    * (founder, 2026-11-15). Absent (the legacy callers) = the cable keeps its old sag.
@@ -56,6 +83,7 @@ interface Drawn {
   base: StandardMaterial
   /** '#RRGGBB' of the cable's colour. */
   hex: string
+  cue: CueInfo
 }
 
 export class CableRenderer {
@@ -138,6 +166,8 @@ export class CableRenderer {
     this._highlighted = null
     this.pulseMaterial?.dispose()
     this.pulseMaterial = undefined
+    this.outlineMaterial?.dispose()
+    this.outlineMaterial = undefined
   }
   private static readonly PULSE_PERIOD_MS = 2400
   private static readonly PULSE_CAP = 12 // perf guard: no pulse swarm on huge rigs
@@ -150,16 +180,31 @@ export class CableRenderer {
     const wasHot = this._highlighted === connectionId
     this._revision = ++revisionSeq
     this.removeCable(connectionId)
-    const path = this.layOut(connectionId, a, b, ends, route)
+    const { path, fits } = this.layOut(connectionId, a, b, ends, route)
     const color = ends && this.opts.colorFor ? this.opts.colorFor(ends[0], ends[1]) : null
-    const dashed = !!ends && this.opts.dashFor?.(ends[0], ends[1]) === true
     const name = `cable:${connectionId}`
-    const mesh = dashed ? this.buildDashed(name, path) : this.buildTubeFromPath(name, path)
+    let mesh: Mesh
+    let cue: CueInfo = { type: null, pieces: 0, fallback: false, outline: false }
+    if (this.opts.cueFor || this.opts.outline) {
+      const asked = ends && this.opts.cueFor ? this.opts.cueFor(ends[0], ends[1]) : null
+      const built = this.buildCued(connectionId, path, asked ?? PLAIN_CUE, fits)
+      mesh = built.mesh
+      cue = { type: asked ? asked.type : null, pieces: built.pieces, fallback: !!asked && !fits, outline: built.outline }
+    } else {
+      const dashed = !!ends && this.opts.dashFor?.(ends[0], ends[1]) === true
+      mesh = dashed ? this.buildDashed(name, path) : this.buildTubeFromPath(name, path)
+    }
     const base = color ? this.colorMaterial(color) : this.mats.committed
     mesh.material = base
-    this.committed.set(connectionId, { mesh, path, base, hex: color ? color.toHexString() : TOKENS.color.cable })
+    this.committed.set(connectionId, { mesh, path, base, hex: color ? color.toHexString() : TOKENS.color.cable, cue })
     if (wasHot) this.setHighlighted(connectionId)
     this.addPulse(connectionId, path)
+  }
+
+  /** What a cable's cue was drawn as (pattern type, pieces, budget fallback, outline), or null for an unknown cable. */
+  cueInfo(connectionId: string): CueInfo | null {
+    const c = this.committed.get(connectionId)
+    return c ? { ...c.cue } : null
   }
 
   /** The colour a cable was drawn in ('#RRGGBB'), or null for an unknown cable. */
@@ -296,9 +341,12 @@ export class CableRenderer {
    * A hand-drawn `route` (mission 3 B) is the plan its run follows: its corners rounded in the full path (every arc point counts against the budget),
    * sharp in the coarse one; never dropped.
    */
-  private layOut(connectionId: string, a: Vector3, b: Vector3, ends?: readonly [PortRef, PortRef], route?: readonly XZ[]): P3[] {
+  private layOut(connectionId: string, a: Vector3, b: Vector3, ends?: readonly [PortRef, PortRef], route?: readonly XZ[]): { path: P3[]; fits: boolean } {
     const support = this.supportNow()
-    if (!support) return catenaryPoints(a, b, this.budget.grant(connectionId), this.rest()) // straight line once over budget
+    if (!support) {
+      const segments = this.budget.grant(connectionId)
+      return { path: catenaryPoints(a, b, segments, this.rest()), fits: segments > 1 } // straight line once over budget
+    }
     const out = (ref: PortRef | undefined): P3 | null => (ref && this.opts.outwardFor ? this.opts.outwardFor(ref) : null)
     const ea = { at: { x: a.x, y: a.y, z: a.z }, out: out(ends?.[0]) }
     const eb = { at: { x: b.x, y: b.y, z: b.z }, out: out(ends?.[1]) }
@@ -306,11 +354,11 @@ export class CableRenderer {
     const fine = gravityPath(ea, eb, support, { ...opts, round: true })
     if (this.budget.fits(connectionId, fine.length)) {
       this.budget.take(connectionId, fine.length)
-      return fine
+      return { path: fine, fits: true }
     }
     const coarse = gravityPath(ea, eb, support, { ...opts, arcs: false, tolM: 0.05 })
     this.budget.take(connectionId, coarse.length)
-    return coarse
+    return { path: coarse, fits: false }
   }
 
   private buildTube(name: string, a: Vector3, b: Vector3, segments: number, radius = CABLE_RADIUS): Mesh {
@@ -348,13 +396,114 @@ export class CableRenderer {
     return merged
   }
 
-  private buildTubeFromPath(name: string, path: P3[], radius = CABLE_RADIUS, tessellation = 8): Mesh {
+  private outlineMaterial?: StandardMaterial
+  /** The underlay's one material: unlit, its colour exactly, front faces culled (an inverted hull). */
+  private outlineMat(hex: string): StandardMaterial {
+    if (!this.outlineMaterial) {
+      const m = new StandardMaterial('cable:outline', this.scene)
+      const c = Color3.FromHexString(hex)
+      m.diffuseColor = c
+      m.emissiveColor = c
+      m.specularColor = Color3.Black()
+      m.disableLighting = true
+      m.backFaceCulling = true
+      m.cullBackFaces = false // draw the back faces only: a rim around the cable, never over it
+      this.outlineMaterial = m
+    }
+    return this.outlineMaterial
+  }
+
+  /**
+   * A cable with its line cue (mission 3, cable cues): the solid tube (thickness of its type) or its dashes / beads, plus collars for mains, merged into ONE
+   * mesh named like a plain cable; and, when an outline colour is given, the same pieces a hair wider merged into ONE child mesh `cable-outline:<id>`.
+   * The drawn path is never changed: a tube thicker than the 12 mm the path was laid for is lifted by the difference so it rests on the surface, not in it.
+   * Over the point budget (`fits` false) the pattern is dropped for the plain tube, outline kept: a cable is never dropped.
+   */
+  private buildCued(connectionId: string, path: P3[], cue: Cue3d, fits: boolean): { mesh: Mesh; pieces: number; outline: boolean } {
+    const name = `cable:${connectionId}`
+    const ring = this.opts.outline ? OUTLINE_M : 0
+    const r = cue.radiusM
+    // the widest piece (a bead or a collar) sets the lift: like a real ferrule, it holds the cable up off the surface by its own thickness
+    const widest = r * Math.max(1, cue.markEveryM !== null ? MARK_SCALE : 1, cue.runs?.some((x, i) => i % 2 === 0 && x === 0) ? DOT_SCALE : 1)
+    const lift = this.opts.floorAt || this.opts.support ? Math.max(0, widest + ring - (FLOOR_CLEARANCE - 0.0005)) : 0
+    const run = lift ? path.map((q) => ({ x: q.x, y: q.y + lift, z: q.z })) : path
+    const at = sampler(run)
+    const layout = fits ? cueLayout(cue, at.length) : []
+    const solid = !cue.runs || !fits
+    const body: Mesh[] = []
+    const rim: Mesh[] = []
+    const piece = (from: P3[], radius: number, cap: boolean): void => {
+      body.push(this.buildTubeFromPath(`${name}:part`, from, radius, cap ? 6 : 8, cap))
+      if (ring) rim.push(this.buildTubeFromPath(`${name}:rim`, from, radius + ring, cap ? 6 : 8, cap))
+    }
+    if (solid) piece(run, r, false)
+    for (const p of layout) {
+      if (p.kind === 'dot') {
+        const c = at.point(p.t0)
+        const bead = (d: number, tag: string): Mesh => {
+          const s = MeshBuilder.CreateSphere(`${name}:${tag}`, { diameter: d, segments: 4 }, this.scene)
+          s.position.set(c.x, c.y, c.z)
+          s.isPickable = false
+          return s
+        }
+        body.push(bead(2 * r * DOT_SCALE, 'dot'))
+        if (ring) rim.push(bead(2 * (r * DOT_SCALE + ring), 'dotrim'))
+      } else piece(at.span(p.t0, p.t1), p.kind === 'mark' ? r * MARK_SCALE : r, true)
+    }
+    const mesh = merge(body, name)
+    if (rim.length) {
+      const outline = merge(rim, `cable-outline:${connectionId}`)
+      outline.material = this.outlineMat(this.opts.outline!)
+      outline.parent = mesh // hidden, disabled and disposed with its cable; never in paths(), never pickable
+    }
+    return { mesh, pieces: layout.length, outline: rim.length > 0 }
+  }
+
+  private buildTubeFromPath(name: string, path: P3[], radius = CABLE_RADIUS, tessellation = 8, cap = false): Mesh {
     const mesh = MeshBuilder.CreateTube(
       name,
-      { path: path.map(toVec), radius, tessellation, updatable: true },
+      { path: path.map(toVec), radius, tessellation, updatable: true, ...(cap ? { cap: Mesh.CAP_ALL } : {}) },
       this.scene,
     )
     mesh.isPickable = false
     return mesh
   }
+}
+
+/** Merge the parts of one cable (or of its outline) into ONE unpickable mesh of this name: one draw call however many pieces. */
+function merge(parts: Mesh[], name: string): Mesh {
+  const merged = parts.length === 1 ? parts[0]! : Mesh.MergeMeshes(parts, true, true, undefined, false, false)
+  if (!merged) throw new Error(`CableRenderer: could not merge ${name}`)
+  merged.name = name
+  merged.id = name
+  merged.isPickable = false
+  return merged
+}
+
+/** Points along a polyline by share of its length, and the sub-polyline between two shares (sampled every ~4 cm, at least its two ends and middle). */
+function sampler(path: readonly P3[]): { length: number; point(t: number): P3; span(t0: number, t1: number): P3[] } {
+  const cum = [0]
+  for (let i = 1; i < path.length; i++) cum.push(cum[i - 1]! + Math.hypot(path[i]!.x - path[i - 1]!.x, path[i]!.y - path[i - 1]!.y, path[i]!.z - path[i - 1]!.z))
+  const length = cum[cum.length - 1] ?? 0
+  const point = (t: number): P3 => {
+    if (path.length < 2 || length === 0) return { ...(path[0] ?? { x: 0, y: 0, z: 0 }) }
+    const d = Math.min(length, Math.max(0, t * length))
+    let lo = 0
+    let hi = cum.length - 1
+    while (hi - lo > 1) {
+      const mid = (lo + hi) >> 1
+      if (cum[mid]! <= d) lo = mid
+      else hi = mid
+    }
+    const seg = cum[hi]! - cum[lo]!
+    const u = seg > 0 ? (d - cum[lo]!) / seg : 0
+    const a = path[lo]!
+    const b = path[hi]!
+    return { x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u, z: a.z + (b.z - a.z) * u }
+  }
+  const span = (t0: number, t1: number): P3[] => {
+    const n = Math.min(8, Math.max(2, Math.ceil(((t1 - t0) * length) / 0.04)))
+    return Array.from({ length: n + 1 }, (_, k) => point(t0 + ((t1 - t0) * k) / n))
+  }
+  return { length, point, span }
 }

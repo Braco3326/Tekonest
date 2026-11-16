@@ -106,6 +106,11 @@ export const CREATION_TOKENS = {
     labelBg: '#1C191D',
     /** Contact shadow core colour (fades to transparent). */
     shadow: '#050405',
+    /**
+     * The thin dark underlay under every 3D cable (mission 3, cable cues): near-black, never a cable palette colour, the same in every design package
+     * (the scene keeps its dark room in all of them), so a cable's edge reads on the dark floor, the raised deck and a light set floor alike.
+     */
+    cableOutline: '#0A090B',
     /** Selected device: Ambre outline + wash (as the tree / Propriétés selection). */
     selection: '#DD9349',
     /** Hovered device: a thin Papier outline, no wash. */

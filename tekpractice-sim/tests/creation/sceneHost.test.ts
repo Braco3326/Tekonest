@@ -585,22 +585,31 @@ describe('SceneHost cables (Task 27, C18): coloured by signal, hover, screen-spa
     host.dispose()
   })
 
-  it('a mains-power cable is dashed (a second cue); a line cable is one plain tube', async () => {
+  it('a mains-power cable has the mains cue (a thick tube with collars), a line cable is one plain tube; both have their dark outline (mission 3, cable cues)', async () => {
     const { host } = makeHost()
     const d = rig(ROOM)
     d.rig.connections.push({ a: { instance: 'ql1', port: 'power-in' }, b: { instance: 'k12-g', port: 'power-in' } })
     await host.load(placeFromKey(ROOM), d)
     const power = 'cable:k12-g power-in|ql1 power-in'
     expect(host.cableColorOf('k12-g power-in|ql1 power-in')).toBe(SIGNAL_STYLE['mains-power']!.color)
-    expect(cableMeshes(host)).toBe(2) // one mesh per cable, dashes merged
-    // Gaps, not a vertex count: a continuous tube is ONE connected piece of triangles, a dashed one is many separate dashes
+    expect(cableMeshes(host)).toBe(2) // one mesh per cable, pieces merged; the outlines are `cable-outline:` children, not cables
+    // Pieces, not a vertex count: a continuous tube is ONE connected piece of triangles; the mains tube carries separate collars
     const pieces = (name: string): number => cablePieces(host, name)
     expect(pieces(NAME)).toBe(1) // the line cable is one continuous tube
-    expect(pieces(power)).toBeGreaterThanOrEqual(10) // the mains cable is a run of separate dashes (cap 48, never fewer than 4)
+    expect(pieces(power)).toBeGreaterThanOrEqual(4) // the mains tube and its collars (one every 30 cm)
+    expect(host.cableCueOf('k12-g power-in|ql1 power-in')).toMatchObject({ type: 'mains', fallback: false, outline: true })
+    expect(host.cableCueOf(NAME.slice('cable:'.length))).toMatchObject({ type: 'analog-bal', pieces: 0, outline: true })
+    const outline = host.scene!.getMeshByName(`cable-outline:${NAME.slice('cable:'.length)}`)!
+    expect(outline.parent).toBe(host.scene!.getMeshByName(NAME))
+    expect(outline.isPickable).toBe(false)
+    expect(host.frameOfKey(NAME)).not.toBeNull()
+    // the hide switch hides the outline with its cable
+    host.setHidden([NAME])
+    expect(outline.isEnabled()).toBe(false)
     host.dispose()
   })
 
-  it('the powered reference rig (the real template: strip + three mains cables) draws its mains cables DASHED and its mic cable plain (Task 32: the cue is reachable by users)', async () => {
+  it('the powered reference rig (the real template: strip + three mains cables) draws its mains cables with the mains collars and its mic cable plain (Task 32: the cue is reachable by users)', async () => {
     const { host } = makeHost()
     const template = Template.parse(JSON.parse(readFileSync('content/templates/concert-simple-reference.json', 'utf8')))
     await host.load(placeFromKey(ROOM), templateToDesign(template))
@@ -618,7 +627,10 @@ describe('SceneHost cables (Task 27, C18): coloured by signal, hover, screen-spa
       expect(host.cableColorOf(parts.join('|'))).toBe(SIGNAL_STYLE['mains-power']!.color)
     }
     expect(cablePieces(host, mic[0]!)).toBe(1) // the mic cable: one continuous tube
-    for (const n of power) expect(cablePieces(host, n), n).toBeGreaterThanOrEqual(10) // each mains cable: a run of separate dashes
+    for (const n of power) {
+      expect(cablePieces(host, n), n).toBeGreaterThanOrEqual(2) // each mains cable: its tube and at least one collar
+      expect(host.cableCueOf(n.slice('cable:'.length))!.type, n).toBe('mains')
+    }
     host.dispose()
   })
 
