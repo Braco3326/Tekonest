@@ -50,6 +50,10 @@ export const DATA_ITEMS: DataItem[] = [
 
 export const PRIVACY_TITLE = 'Vos données et votre compte'
 
+/** The full public policy (built from ./privacyPolicy.ts by tools/build-privacy-page.ts), linked from the sign-up path and « Mon compte ». */
+export const PRIVACY_POLICY_URL = 'https://tekonest.com/tekpractice/confidentialite/'
+export const PRIVACY_POLICY_LINK = 'Politique de confidentialité complète'
+
 export const PRIVACY_SECTIONS: CopySection[] = [
   section('responsable', 'Qui est responsable de vos données', [
     'Le responsable du traitement de vos données est Tekonest, en France.',

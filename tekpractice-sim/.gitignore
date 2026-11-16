@@ -15,6 +15,7 @@ test-results/
 assets-source/
 
 dist-site/
+dist-site-pages/
 
 # Contact sheets that embed the manufacturers' product photos (wordmarks visible): private modelling reference, never published
 docs/superpowers/notes/img/

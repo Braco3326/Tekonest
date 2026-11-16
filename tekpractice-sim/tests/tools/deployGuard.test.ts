@@ -160,13 +160,24 @@ describe('tools/build-site.mjs refuses BEFORE building', () => {
     "fs.writeFileSync(path.join(root, 'dist-site', 'assets', 'boot-x.js'), 'var F={levels:!1,legacyPages:!1,guide:!1,guideLegacy:!1,guideInbox:!1,goals:!0,plainTutorial:!0,accounts:!1,plan2d:!0,cableTrace:!0};')",
     '',
   ].join('\n')
-  /** A temp project root: tools/build-site.mjs + its two guards copied, node_modules/vite/bin/vite.js the stub. */
+  // 2026-11-16: build-site.mjs then runs tools/build-privacy-page.ts through tsx; the stub writes a placeholder page where the real one goes (argv[3] = output root).
+  const STUB_TSX = [
+    "import { mkdirSync, writeFileSync } from 'node:fs'",
+    "import { join } from 'node:path'",
+    "const dir = join(process.argv[3], 'tekpractice', 'confidentialite')",
+    'mkdirSync(dir, { recursive: true })',
+    "writeFileSync(join(dir, 'index.html'), '<html></html>')",
+    '',
+  ].join('\n')
+  /** A temp project root: tools/build-site.mjs + its two guards copied, node_modules/vite/bin/vite.js and node_modules/tsx/dist/cli.mjs the stubs. */
   const fakeRoot = (): string => {
     const dir = join(tmp, `site${++n}`)
     mkdirSync(join(dir, 'tools'), { recursive: true })
     mkdirSync(join(dir, 'node_modules', 'vite', 'bin'), { recursive: true })
+    mkdirSync(join(dir, 'node_modules', 'tsx', 'dist'), { recursive: true })
     for (const f of ['build-site.mjs', 'deploy-guard.mjs', 'deploy-flag-guard.mjs']) copyFileSync(join(tools, f), join(dir, 'tools', f))
     writeFileSync(join(dir, 'node_modules', 'vite', 'bin', 'vite.js'), STUB_VITE)
+    writeFileSync(join(dir, 'node_modules', 'tsx', 'dist', 'cli.mjs'), STUB_TSX)
     return dir
   }
   const build = (dir: string, env: Record<string, string>) => {
@@ -197,6 +208,15 @@ describe('tools/build-site.mjs refuses BEFORE building', () => {
     expect(r.code).toBe(0)
     expect(existsSync(join(dir, 'vite-ran.marker'))).toBe(true)
     expect(existsSync(join(dir, 'dist-site', 'index.html'))).toBe(true)
+    expect(existsSync(join(dir, 'dist-site-pages', 'tekpractice', 'confidentialite', 'index.html'))).toBe(true)
+    expect(r.out).toContain('dist-site-pages/tekpractice/confidentialite/   -> website-prototype/tekpractice/confidentialite/')
+  })
+  it('without the privacy page (the generator wrote nothing) the build is refused, exit 1', () => {
+    const dir = fakeRoot()
+    writeFileSync(join(dir, 'node_modules', 'tsx', 'dist', 'cli.mjs'), '')
+    const r = build(dir, {})
+    expect(r.code).toBe(1)
+    expect(r.out).toContain('REFUSED: the privacy page was not generated')
   })
   it('a build whose output carries the guide inbox flag ON fails (exit 1, names the file, the output is removed); the same build with the flag off passes', () => {
     const withFlag = (on: boolean): string => {

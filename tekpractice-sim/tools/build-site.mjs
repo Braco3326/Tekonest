@@ -1,4 +1,6 @@
 // Deploy build for https://tekonest.com/tekpractice/jouer/ -> dist-site/
+// and the public privacy page https://tekonest.com/tekpractice/confidentialite/ -> dist-site-pages/tekpractice/confidentialite/index.html
+// (tools/build-privacy-page.ts; dist-site-pages/ mirrors the umbrella site's root: the deploy copies it next to tekpractice/jouer).
 // Windows-safe (no cross-env). Strips sourcemaps, drops .glb > 25 MiB (the game
 // falls back to placeholders), reports files > 20 MiB and the total file count.
 // REFUSES to run (exit 1, before anything is removed or built) while a VITE_*KEY/SECRET/TOKEN/PASSWORD variable is set in the environment or defined in a .env*
@@ -24,6 +26,8 @@ if (secrets.length) {
 }
 
 rmSync(out, { recursive: true, force: true })
+const pagesOut = join(root, 'dist-site-pages')
+rmSync(pagesOut, { recursive: true, force: true })
 const viteBin = join(root, 'node_modules', 'vite', 'bin', 'vite.js')
 const r = spawnSync(process.execPath, [viteBin, 'build', '--outDir', 'dist-site', '--emptyOutDir'], {
   cwd: root,
@@ -76,3 +80,16 @@ console.log(big.length ? `[build-site] files over 20 MiB:\n` + big.map((s) => ` 
 for (const f of excluded) console.log(`[build-site] EXCLUDED (> 25 MiB, placeholder fallback): ${rel(f)}`)
 if (!existsSync(join(out, 'index.html'))) process.exit(1)
 if (files.length > 20000) process.exit(1)
+
+// 2026-11-16: the public privacy page, generated from src/accounts/privacyPolicy.ts (never hand-edited in the site worktree).
+const tsxCli = join(root, 'node_modules', 'tsx', 'dist', 'cli.mjs')
+const p = spawnSync(process.execPath, [tsxCli, join(root, 'tools', 'build-privacy-page.ts'), pagesOut], { cwd: root, stdio: 'inherit' })
+const pageFile = join(pagesOut, 'tekpractice', 'confidentialite', 'index.html')
+if (p.status !== 0 || !existsSync(pageFile)) {
+  console.error('[build-site] REFUSED: the privacy page was not generated (' + pageFile + '). Nothing ships without it.')
+  process.exit(1)
+}
+console.log('[build-site] privacy page: ' + pageFile)
+console.log('[build-site] DEPLOY, two copies into website-prototype/ of the site worktree:')
+console.log('  1. dist-site/                                     -> website-prototype/tekpractice/jouer/          (https://tekonest.com/tekpractice/jouer/)')
+console.log('  2. dist-site-pages/tekpractice/confidentialite/   -> website-prototype/tekpractice/confidentialite/ (https://tekonest.com/tekpractice/confidentialite/)')
