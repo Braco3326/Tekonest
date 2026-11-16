@@ -378,6 +378,38 @@ test('« Raccourcis clavier » lists the tracing keys in their own group', async
   await expect(list.locator('[data-row="trace-remove"]')).toHaveText('Retour arrière')
 })
 
+// Classic-look check (2026-11-16): the room a tracing makes is for narrow screens only; a wide window keeps Propriétés as the learner left it.
+test('a wide window keeps Propriétés open while tracing', async ({ page }) => {
+  await boot(page)
+  await page.evaluate((k) => window.__creation!.cableSelect(k), KEY)
+  if ((await page.getByTestId('props-collapse').getAttribute('aria-expanded')) !== 'true') await page.getByTestId('props-collapse').click()
+  await page.getByTestId('cable-trace').click()
+  await expect(page.getByTestId('trace-bar')).toBeVisible()
+  await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+  await expect(page.getByTestId('cable-panel')).toBeVisible()
+  await page.getByTestId('trace-cancel').click()
+  await expect(page.getByTestId('trace-bar')).toHaveCount(0)
+  await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+})
+
+test.describe('a tablet (820 x 1180, touch): both panels open', () => {
+  test.use({ viewport: { width: 820, height: 1180 }, hasTouch: true })
+  test('« Tracer le câble » folds Propriétés (the 3D view had 44 % of the width), keeps Projet, and opens Propriétés again at the end', async ({ page }) => {
+    await boot(page)
+    await page.evaluate((k) => window.__creation!.cableSelect(k), KEY)
+    if ((await page.getByTestId('props-collapse').getAttribute('aria-expanded')) !== 'true') await page.getByTestId('props-collapse').tap()
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await page.getByTestId('cable-trace').tap()
+    await expect(page.getByTestId('trace-bar')).toBeVisible()
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByTestId('tree-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await expect.poll(async () => (await page.locator('#renderCanvas').boundingBox())!.width).toBeGreaterThanOrEqual(0.6 * 820)
+    await page.getByTestId('trace-cancel').tap()
+    await expect(page.getByTestId('trace-bar')).toHaveCount(0)
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+  })
+})
+
 test.describe('a phone (390 x 844, touch)', () => {
   test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true })
   test('trace with taps and the buttons; every control of the bar is at least 44 px', async ({ page }) => {
@@ -423,6 +455,28 @@ test.describe('a phone (390 x 844, touch)', () => {
     expect(r.length).toBeGreaterThanOrEqual(1)
     for (const [x, z] of r) expect(onGrid(x, 0.25) && onGrid(z, 0.25)).toBe(true)
     await expectGroundedOnPorts(page)
+    expect(errors()).toEqual([])
+  })
+  // Classic-look check (2026-11-16): with Propriétés open the 3D view was ~140 px wide and the floor the cable runs over was under the panel (the taps landed on it).
+  test('« Tracer le câble » folds Propriétés so the floor is under the finger, and opens it again when the tracing ends', async ({ page }) => {
+    const errors = watchErrors(page)
+    await boot(page)
+    await page.evaluate((k) => window.__creation!.cableSelect(k), KEY)
+    await page.getByTestId('props-collapse').tap()
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await page.getByTestId('cable-trace').tap()
+    await expect(page.getByTestId('trace-bar')).toBeVisible()
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.locator('#renderCanvas')).toBeFocused()
+    await expect.poll(async () => (await page.locator('#renderCanvas').boundingBox())!.width).toBeGreaterThanOrEqual(0.6 * 390)
+    const s = await floorScreen(page, 0.5, 7.4)
+    expect(await page.evaluate(([x, y]) => document.elementFromPoint(x!, y!)?.id, [s.x, s.y] as const), 'the floor point is on the 3D view').toBe('renderCanvas')
+    await page.touchscreen.tap(s.x, s.y)
+    await expect.poll(() => state(page).then((t) => t.tracing?.points.length)).toBe(1)
+    await page.getByTestId('trace-finish').tap()
+    await expect(page.getByTestId('trace-bar')).toHaveCount(0)
+    await expect(page.getByTestId('props-collapse')).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByTestId('cable-panel')).toBeVisible()
     expect(errors()).toEqual([])
   })
 })

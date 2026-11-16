@@ -110,6 +110,8 @@ export interface CableRouteDeps {
   invalidate(): void
   /** Before a dispatch (a stepper burst of Propriétés closes first). */
   beforeDispatch?(): void
+  /** A tracing starts (true) or ends (false): the page may make room for the 3D view (boot.ts folds a side panel on a narrow screen, then gives it back). */
+  onTracing?(on: boolean): void
   /** Tests: the scene chunk. */
   loadTracer?(): Promise<typeof import('./cableTracer')>
 }
@@ -404,6 +406,7 @@ export class CableRouteController {
     this.canvasLabel = canvas.getAttribute('aria-label')
     canvas.setAttribute('aria-label', C().canvasTracing!)
     this.bar.show(this.barView())
+    this.d.onTracing?.(true) // before the focus moves: a folded panel takes the « Tracer le câble » button away
     this.ensureTracer()
     this.render()
     canvas.focus() // the keys of a tracing act on the 3D view
@@ -432,6 +435,7 @@ export class CableRouteController {
     this.press = null
     this.lengthCache = null
     this.bar.hide()
+    this.d.onTracing?.(false)
     const canvas = this.d.host.canvasElement
     if (this.canvasLabel !== null) canvas.setAttribute('aria-label', this.canvasLabel)
     this.canvasLabel = null

@@ -485,3 +485,38 @@ test('every cable type has its own line cue and an outline in the real app; poin
   const meshes = await page.evaluate(() => window.__creation!.cableCenters().filter((c) => c !== null).length)
   expect(meshes).toBe(await page.evaluate(() => window.__creation!.design().rig.connections.length))
 })
+// Classic-look check (2026-11-16, the plain address, no package): on a phone the legend column is ~200 px; its names used to shrink to nothing and break inside a
+// word (« Secte / ur 230 V »). A word is never split over two lines, and every name and note stays inside the legend.
+test.describe('a phone (390 x 844, touch): the cable legend', () => {
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true })
+  test('no word of a name or a note is broken over two lines, and nothing leaves the legend', async ({ page }) => {
+    await boot(page, { keepStrip: true })
+    await addLineCable(page)
+    if ((await page.getByTestId('props-collapse').getAttribute('aria-expanded')) !== 'true') await page.getByTestId('props-collapse').tap()
+    await expect(items(page)).toHaveCount(3)
+    await legend(page).scrollIntoViewIfNeeded()
+    const report = await page.evaluate(() => {
+      const list = document.querySelector('[data-testid="cable-legend-list"]')!
+      const box = list.getBoundingClientRect()
+      const split: string[] = []
+      const outside: string[] = []
+      for (const el of list.querySelectorAll<HTMLElement>('.cr-legend-name, .cr-legend-note')) {
+        const r = el.getBoundingClientRect()
+        if (r.left < box.left - 0.5 || r.right > box.right + 0.5) outside.push(el.textContent ?? '')
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
+        for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+          for (const m of (n.textContent ?? '').matchAll(/\S+/g)) {
+            const range = document.createRange()
+            range.setStart(n, m.index!)
+            range.setEnd(n, m.index! + m[0].length)
+            const tops = new Set([...range.getClientRects()].map((c) => Math.round(c.top)))
+            if (tops.size > 1) split.push(m[0])
+          }
+        }
+      }
+      return { split, outside }
+    })
+    expect(report.split, 'a word broken over two lines').toEqual([])
+    expect(report.outside, 'a name or a note outside the legend').toEqual([])
+  })
+})

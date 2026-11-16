@@ -445,10 +445,12 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-legend-chevron { width: 12px; height: 12px; flex: none; }
 .cr-legend[data-open='false'] .cr-legend-chevron { transform: rotate(-90deg); }
 .cr-legend-list { list-style: none; margin: 0; padding: 4px 12px 10px; }
-.cr-legend-item { display: flex; align-items: center; gap: 8px; min-height: 22px; font: 400 12px/1.3 var(--cr-font-ui); color: var(--cr-papier); }
+/* Classic-look check 2026-11-16: on a phone the column is ~200 px and the name used to shrink to nothing and break inside a word (« Secte / ur 230 V »). The name keeps
+   room for a whole word (7em), breaks only between words, and the note wraps under it, on the right, when the row is too narrow (tests/e2e/creation-cables.spec.ts). */
+.cr-legend-item { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; min-height: 22px; font: 400 12px/1.3 var(--cr-font-ui); color: var(--cr-papier); }
 .cr-legend-swatch { width: 36px; height: 8px; flex: none; }
-.cr-legend-name { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
-.cr-legend-note { flex: none; color: var(--cr-ink-muted); font-size: 11px; }
+.cr-legend-name { flex: 1 1 7em; min-width: 7em; overflow-wrap: break-word; }
+.cr-legend-note { flex: none; margin-left: auto; color: var(--cr-ink-muted); font-size: 11px; }
 
 /* collapsed = a 32 px rail with its expand button and a vertical name */
 .cr[data-tree='collapsed'] .cr-tree .cr-panel-head,

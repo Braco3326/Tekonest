@@ -2011,6 +2011,25 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
   // ── Hand-drawn cables (mission 3 B stage 2): after the picking, the patching, the placement and the edits (their capture-phase presses come first; a tracing makes
   // them inert through the `busy` and pick predicates above). Only with the switch on: off, a cable is not selectable and nothing of this is in the page.
   if (FEATURES.cableTrace === true) {
+    // Classic-look check 2026-11-16: on a phone (Propriétés open, ~140 px of 3D view left) or a tablet with both panels open, the floor the cable runs over was
+    // under a panel and the taps landed on it. While a tracing runs, an open side panel that the layout's own width rules would not open by themselves
+    // (`panelFits`: Propriétés below 1200 px, Projet below 760 px, the 60 % rule of layout.ts) is folded (the drawing bar holds every tracing control); the ones
+    // folded here open again when it ends. A wide window is never touched. The rule, not a measure: the grid can lag a frame behind a fold.
+    let foldedForTrace: ('props' | 'tree')[] = []
+    const roomForTrace = (on: boolean): void => {
+      if (on) {
+        foldedForTrace = []
+        for (const p of ['props', 'tree'] as const) {
+          if (shell.isPanelOpen(p) && !shell.panelFits(p)) {
+            shell.setPanel(p, false)
+            foldedForTrace.push(p)
+          }
+        }
+        return
+      }
+      for (const p of foldedForTrace) if (!shell.isPanelOpen(p)) shell.setPanel(p, true)
+      foldedForTrace = []
+    }
     routes = new CableRouteController({
       host,
       bag: shellBag,
@@ -2043,6 +2062,7 @@ export async function bootCreation(opts: { onboarding?: boolean; tutorialAllowed
       coarse: () => coarsePointer(),
       invalidate: () => scheduler.invalidate(),
       beforeDispatch: () => props.flush(),
+      onTracing: roomForTrace,
     })
   }
 
