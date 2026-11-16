@@ -31,31 +31,38 @@ const pageSection = (id: string, inc: PrivacyIncludes = PRIVACY_INCLUDES): strin
 const html = renderPrivacyPage()
 const page = textOf(html)
 
-describe('this release: accounts OFF, Resend and Google not live', () => {
-  it('the switches are the release defaults', () => {
-    expect(PRIVACY_INCLUDES).toEqual({ resend: false, google: false, signUpOpen: false })
+describe('this release: sign-up not open yet, Resend and Google live on Supabase', () => {
+  it('the switches are the release defaults (2026-11-16: TekoData confirmed Resend and Google live)', () => {
+    expect(PRIVACY_INCLUDES).toEqual({ resend: true, google: true, signUpOpen: false })
   })
 
-  it('with them off, « Resend » and « Google » appear nowhere in the page (text, attributes, markup)', () => {
-    expect(html).not.toMatch(/resend/i)
-    expect(html).not.toMatch(/google/i)
-  })
-
-  it('with them on, both appear (the accounts release flips them, one change each)', () => {
-    const on = renderPrivacyPage({ includes: ALL_ON })
-    const t = textOf(on)
+  it('with them on, both are named: the Resend and Google bullets, the Google data paragraph, the transfer sentence', () => {
+    const t = textOf(html)
     expect(t).toContain('Resend : envoie les e-mails de service')
     expect(t).toContain('Google : seulement si vous choisissez « Continuer avec Google ».')
     expect(t).toContain('Si vous vous connectez avec Google')
     expect(t).toContain('Cloudflare, Google et Resend sont des sociétés américaines')
-    expect(renderPrivacyPage({ includes: { ...PRIVACY_INCLUDES, resend: true } })).not.toMatch(/google/i)
-    expect(renderPrivacyPage({ includes: { ...PRIVACY_INCLUDES, google: true } })).not.toMatch(/resend/i)
   })
 
-  it('section 6 names Cloudflare only, as an American company, under the GDPR safeguards, with no unconfirmed framework', () => {
-    const t = pageSection('transferts')
+  it('each one flips alone: without Resend the word is gone, without Google the word is gone', () => {
+    const off = { ...PRIVACY_INCLUDES, resend: false, google: false }
+    expect(renderPrivacyPage({ includes: { ...off, resend: true } })).not.toMatch(/google/i)
+    expect(renderPrivacyPage({ includes: { ...off, google: true } })).not.toMatch(/resend/i)
+    const none = renderPrivacyPage({ includes: off })
+    expect(none).not.toMatch(/resend/i)
+    expect(none).not.toMatch(/google/i)
+  })
+
+  it('section 6 without them names Cloudflare only, under the GDPR safeguards, with no unconfirmed framework', () => {
+    const t = pageSection('transferts', { resend: false, google: false, signUpOpen: false })
     expect(t).toContain('Cloudflare est une société américaine')
     expect(t).toContain('Ces transferts sont encadrés par les garanties prévues par le RGPD.')
+    expect(t).not.toMatch(/Data Privacy Framework|clauses contractuelles|à vérifier/i)
+  })
+
+  it('section 6 with them says Cloudflare, Google and Resend are American companies, with no unconfirmed framework', () => {
+    const t = pageSection('transferts')
+    expect(t).toContain('Cloudflare, Google et Resend sont des sociétés américaines')
     expect(t).not.toMatch(/Data Privacy Framework|clauses contractuelles|à vérifier/i)
   })
 

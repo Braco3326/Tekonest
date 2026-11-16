@@ -5,7 +5,7 @@ import { DATA_ITEMS, DRAFT_MARK, type DataItem, PRIVACY_SECTIONS } from './conse
  * the page is in this file; tools/privacyPage.ts turns it into HTML (a pure function) and tools/build-privacy-page.ts writes the file.
  *
  * Content: TekoData, E:\CLAUDE BU\reports\tekodata-privacy-policy.md (2026-11-16), with the edits ordered for the release where
- * sign-up is still OFF: every [bracketed] sentence deleted; Resend and Google left out (see PRIVACY_INCLUDES); one sentence at the
+ * sign-up is still OFF: every [bracketed] sentence deleted; Resend and Google named once live on Supabase (see PRIVACY_INCLUDES); one sentence at the
  * top of section 3 saying account creation is not open yet. Nothing here is legal advice: TekoData and the founder own the content.
  *
  * Voice: the page speaks AS Tekonest (« nous », TekoData's text) TO the reader (« vous »). The account dialog (consentCopy.ts) keeps
@@ -26,7 +26,8 @@ export interface PrivacyIncludes {
   signUpOpen: boolean
 }
 
-export const PRIVACY_INCLUDES: Readonly<PrivacyIncludes> = { resend: false, google: false, signUpOpen: false }
+/** 2026-11-16: Resend and Google are live on the Supabase side (TekoData's word), so the page names them; sign-up itself is still not open. */
+export const PRIVACY_INCLUDES: Readonly<PrivacyIncludes> = { resend: true, google: true, signUpOpen: false }
 
 /**
  * The page-wide draft mark (in the <title> and the <h1>). ONE place: set it to false once TekoData and the founder have validated
