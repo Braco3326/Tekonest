@@ -2,8 +2,9 @@ import type { ProfileKey } from './profileModel'
 
 /**
  * DRAFT legal copy for the account: the privacy notice, the consent text, the parent confirmation text.
- * EVERY section is marked « à valider »: none of it is validated by a lawyer or by the person responsible, and the placeholders
- * between square brackets must be filled in before the `accounts` switch is turned on. Plain French, « vous ».
+ * EVERY section is marked « à valider »: none of it is validated by a lawyer or by the person responsible. The controller is Tekonest
+ * (founder's order 2026-11-16, through TekoData); no blank is left. Plain French, « vous ». The full public page, which shares these
+ * facts, is built from ./privacyPolicy.ts (tests/accounts/privacyPolicy.test.ts pins the two together).
  */
 
 export const DRAFT_MARK = 'à valider'
@@ -37,7 +38,7 @@ export interface DataItem {
 /** The data collected, item for item. A test pins this list to the allowed profile keys. */
 export const DATA_ITEMS: DataItem[] = [
   { key: 'email', label: 'votre adresse e-mail' },
-  { key: 'password', label: 'votre mot de passe (conservé sous forme chiffrée par le service de connexion ; il n’est pas lisible)' },
+  { key: 'password', label: 'votre mot de passe (transformé de façon irréversible par le service de connexion ; il n’est pas lisible)' },
   { key: 'ageRange', label: 'votre tranche d’âge' },
   { key: 'goal', label: 'votre but choisi dans le jeu (par exemple une formation)' },
   { key: 'firstName', label: 'votre prénom (facultatif)' },
@@ -51,7 +52,7 @@ export const PRIVACY_TITLE = 'Vos données et votre compte'
 
 export const PRIVACY_SECTIONS: CopySection[] = [
   section('responsable', 'Qui est responsable de vos données', [
-    'Le responsable du traitement de vos données est [nom et prénom], à titre personnel, en France.',
+    'Le responsable du traitement de vos données est Tekonest, en France.',
   ]),
   section('finalites', 'Pourquoi vos données sont utilisées', [
     'Vos données servent à une seule chose : créer et faire fonctionner votre compte (votre profil et votre but dans le jeu). Vos projets restent sur votre appareil.',

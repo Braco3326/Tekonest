@@ -31,11 +31,18 @@ describe('legal drafts', () => {
     expect(PRIVACY_SECTIONS.map((s) => s.id)).toEqual(['responsable', 'finalites', 'base-legale', 'donnees', 'hebergement', 'conservation', 'droits', 'moins-de-15-ans', 'contact'])
   })
 
-  it('the controller keeps ONE blank for the founder to type himself; the contact is the routed address', () => {
+  it('the controller is Tekonest, in France, with no blank left anywhere; the contact is the routed address', () => {
     const r = section('responsable')
-    expect(r).toContain('[nom et prénom], à titre personnel, en France')
-    expect(r.match(/\[[^\]]*\]/g)).toEqual(['[nom et prénom]'])
+    expect(PRIVACY_SECTIONS.find((s) => s.id === 'responsable')!.paragraphs).toEqual(['Le responsable du traitement de vos données est Tekonest, en France.'])
+    expect(r).not.toMatch(/à titre personnel/)
+    for (const s of ALL_LEGAL_TEXTS) expect(plainText(s), s.id).not.toMatch(/[[\]]/)
     expect(section('contact')).toContain('privacy@tekonest.com')
+  })
+
+  it('the password is described as irreversibly transformed (a one-way hash), not « chiffré »', () => {
+    const pw = DATA_ITEMS.find((d) => d.key === 'password')!
+    expect(pw.label).toBe('votre mot de passe (transformé de façon irréversible par le service de connexion ; il n’est pas lisible)')
+    for (const s of ALL_LEGAL_TEXTS) expect(plainText(s), s.id).not.toMatch(/chiffrée/)
   })
 
   it('purposes: the account only (profile and goal), projects stay on the device; no advertising, no sale', () => {
