@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, describe, expect, it } from 'vitest'
 import { DATA_ITEMS, PRIVACY_POLICY_URL, PRIVACY_SECTIONS, plainText } from '../../src/accounts/consentCopy'
-import { NNBSP, plain, renderPrivacyPage } from '../../src/accounts/privacyPage'
+import { NNBSP, plain, renderPrivacyPage } from '../../tools/privacyPage'
 import {
   PAGE_DATA_LABEL_OVERRIDES,
   PRIVACY_INCLUDES,

@@ -2,7 +2,7 @@ import { DATA_ITEMS, DRAFT_MARK, type DataItem, PRIVACY_SECTIONS } from './conse
 
 /**
  * The PUBLIC privacy policy page of TekPractice (https://tekonest.com/tekpractice/confidentialite/), as data. Every French string of
- * the page is in this file; ./privacyPage.ts turns it into HTML (a pure function) and tools/build-privacy-page.ts writes the file.
+ * the page is in this file; tools/privacyPage.ts turns it into HTML (a pure function) and tools/build-privacy-page.ts writes the file.
  *
  * Content: TekoData, E:\CLAUDE BU\reports\tekodata-privacy-policy.md (2026-11-16), with the edits ordered for the release where
  * sign-up is still OFF: every [bracketed] sentence deleted; Resend and Google left out (see PRIVACY_INCLUDES); one sentence at the

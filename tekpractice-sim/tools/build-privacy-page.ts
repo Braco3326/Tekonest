@@ -1,4 +1,4 @@
-// Writes the public TekPractice privacy page (src/accounts/privacyPolicy.ts -> privacyPage.ts) as a static file:
+// Writes the public TekPractice privacy page (src/accounts/privacyPolicy.ts -> tools/privacyPage.ts) as a static file:
 //   <outRoot>/tekpractice/confidentialite/index.html   (default outRoot: dist-site-pages/)
 // The tree under outRoot mirrors the umbrella site's root (website-prototype/), so the deploy copies dist-site-pages/tekpractice/confidentialite
 // to website-prototype/tekpractice/confidentialite, next to tekpractice/jouer (dist-site). Served at https://tekonest.com/tekpractice/confidentialite/.
@@ -6,7 +6,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { renderPrivacyPage } from '../src/accounts/privacyPage'
+import { renderPrivacyPage } from './privacyPage'
 import { PRIVACY_PAGE_PATH } from '../src/accounts/privacyPolicy'
 
 export const PRIVACY_PAGES_DIR = 'dist-site-pages'

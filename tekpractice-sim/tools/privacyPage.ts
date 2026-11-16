@@ -11,10 +11,12 @@ import {
   PRIVACY_UPDATED,
   type PrivacyIncludes,
   policySections,
-} from './privacyPolicy'
+} from '../src/accounts/privacyPolicy'
 
 /**
- * Renders the public privacy page (./privacyPolicy.ts) to one static HTML document. Pure: same input, same string; no DOM, no I/O.
+ * Renders the public privacy page (src/accounts/privacyPolicy.ts) to one static HTML document. Pure: same input, same string; no DOM, no I/O.
+ * It lives in tools/, not src/: it is a build tool, never part of the game bundle, and its /assets/ paths are the UMBRELLA site's
+ * (src/assetUrl.test.ts rightly refuses an unprefixed /assets/ literal in game code).
  *
  * The page is served by the umbrella site at /tekpractice/confidentialite/ and reuses the site's own stylesheets, fonts, favicon and
  * menu script with ROOT-ABSOLUTE paths (/assets/…), the way the site's pages use them. No external request: no font, script, image or
