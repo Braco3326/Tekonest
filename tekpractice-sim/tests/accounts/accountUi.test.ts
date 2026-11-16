@@ -483,6 +483,52 @@ describe('« Mon compte »', () => {
   })
 })
 
+describe('the link to the full privacy policy', () => {
+  const URL_ = 'https://tekonest.com/tekpractice/confidentialite/'
+  /** The link, checked: text, href, new tab without opener, focusable, inside the focus trap, not hidden in a closed <details>. */
+  function policyLinkIn(box: HTMLElement): HTMLAnchorElement {
+    const links = [...box.querySelectorAll<HTMLAnchorElement>('a')].filter((a) => a.textContent === 'Politique de confidentialité complète')
+    expect(links.length, box.dataset.testid).toBe(1)
+    const a = links[0]
+    expect(a.getAttribute('href')).toBe(URL_)
+    expect(a.getAttribute('target')).toBe('_blank')
+    expect(a.getAttribute('rel')?.split(/\s+/)).toContain('noopener')
+    expect(a.tabIndex).toBe(0)
+    expect(a.closest('details:not([open])'), 'visible without opening a <details>').toBeNull()
+    expect(a.closest('[hidden], [inert], [aria-hidden="true"]')).toBeNull()
+    const [start, end] = [...box.querySelectorAll('[data-sentinel]')]
+    expect(start.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(end.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_PRECEDING).toBeTruthy()
+    a.focus()
+    expect(document.activeElement).toBe(a)
+    return a
+  }
+
+  it('the consent dialog (first step of sign-up) shows it next to the privacy text', async () => {
+    await mount()
+    void handle.openSignUp()
+    const c = await waitFor('acc-consent')
+    const a = policyLinkIn(c)
+    expect(q(c, '.acc-notice')!.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
+  it('the sign-up form shows it', async () => {
+    await mount()
+    void handle.openSignUp()
+    policyLinkIn(await passConsent())
+  })
+
+  it('« Mon compte » shows it outside the folded privacy text', async () => {
+    await fake.signUpEmail('sam@example.org', 'motdepasse1')
+    const r = normaliseProfile({ ageRange: '22-25', consentAt: NOW.toISOString() })
+    if (!r.ok) throw new Error('fixture')
+    await fake.saveProfile(r.profile)
+    await mount()
+    void handle.open()
+    policyLinkIn(await waitFor('acc-account'))
+  })
+})
+
 describe('coming back from the sign-in redirect', () => {
   it('resumes the profile step by itself when the URL carries a sign-in code and there is no profile', async () => {
     history.replaceState({}, '', '/?code=abc123')

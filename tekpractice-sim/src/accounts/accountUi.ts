@@ -2,7 +2,7 @@ import { modalButton, modalRow, openModal } from '../creation/shell/modal'
 import './accountUi.css'
 import { type AccountService, type AccountUser, failingService, failureMessage } from './accountService'
 import { AGE_RANGES, type AgeRange, ageRangeLabel, isAgeRange } from './ageRange'
-import { CONSENT_TEXT, PARENT_CONFIRMATION_TEXT, PRIVACY_SECTIONS, PRIVACY_TITLE, headingOf } from './consentCopy'
+import { CONSENT_TEXT, PARENT_CONFIRMATION_TEXT, PRIVACY_POLICY_LINK, PRIVACY_POLICY_URL, PRIVACY_SECTIONS, PRIVACY_TITLE, headingOf } from './consentCopy'
 import { canCreateAccount, fieldsFor, isStudentGoal, needsParentConfirmation } from './fieldsFor'
 import { LIMITS, OTHER_SCHOOL_PREFIX, type Profile, normaliseProfile, validateCredentials } from './profileModel'
 
@@ -260,6 +260,17 @@ function privacyNotice(): HTMLDivElement {
   return box
 }
 
+/** The visible link to the full public policy (a new tab: the dialog and the learner's work stay where they are). */
+function policyLink(): HTMLParagraphElement {
+  const p = el('p', 'acc-policy')
+  const a = el('a', undefined, PRIVACY_POLICY_LINK)
+  a.href = PRIVACY_POLICY_URL
+  a.target = '_blank'
+  a.rel = 'noopener'
+  p.append(a)
+  return p
+}
+
 const OTHER_VALUE = '__other'
 
 interface SchoolField {
@@ -381,7 +392,7 @@ function consentDialog(ctx: Ctx, allowLogin: boolean): Promise<ConsentResult> {
       const next = modalButton(T.continue, true, 'submit')
       const cancel = modalButton(T.cancel, false)
       cancel.addEventListener('click', () => done(null))
-      form.append(notice, consent.row, error, modalRow(next, cancel))
+      form.append(notice, policyLink(), consent.row, error, modalRow(next, cancel))
       let login: HTMLButtonElement | null = null
       if (allowLogin) {
         login = el('button', 'acc-link', T.haveAccount)
@@ -499,7 +510,7 @@ function signUpDialog(ctx: Ctx): Promise<SignUpResult> {
       })
 
       const orLine = el('p', 'acc-or', T.or)
-      form.append(age.row, gate, email.row, password.row, error, modalRow(submit), orLine, google, modalRow(cancel), loginRow)
+      form.append(age.row, gate, email.row, password.row, policyLink(), error, modalRow(submit), orLine, google, modalRow(cancel), loginRow)
       box.append(form)
       return { first: age.select, edges: () => [age.select, login] }
     },
@@ -693,7 +704,7 @@ function accountDialog(ctx: Ctx, view: AccountView): Promise<'sign-out' | 'delet
       }
       const details = el('details', 'acc-details')
       details.append(el('summary', undefined, T.dataDetails), privacyNotice())
-      box.append(details)
+      box.append(details, policyLink())
       const out = modalButton(T.signOut, true)
       const del = modalButton(T.deleteAccount, false)
       del.classList.add('acc-danger')
