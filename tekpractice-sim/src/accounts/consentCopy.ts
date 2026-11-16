@@ -51,12 +51,10 @@ export const PRIVACY_TITLE = 'Vos données et votre compte'
 
 export const PRIVACY_SECTIONS: CopySection[] = [
   section('responsable', 'Qui est responsable de vos données', [
-    'Le responsable du traitement de vos données est : [responsable de traitement à compléter].',
+    'Le responsable du traitement de vos données est [nom et prénom], à titre personnel, en France.',
   ]),
   section('finalites', 'Pourquoi vos données sont utilisées', [
-    'Vos données servent à deux choses seulement :',
-    '- créer et faire fonctionner votre compte ;',
-    '- enregistrer vos projets pour que vous les retrouviez.',
+    'Vos données servent à une seule chose : créer et faire fonctionner votre compte (votre profil et votre but dans le jeu). Vos projets restent sur votre appareil.',
     'Il n’y a aucune publicité, aucune vente ni cession de vos données, et aucun profilage.',
   ]),
   section('base-legale', 'Sur quelle base', [
@@ -69,7 +67,7 @@ export const PRIVACY_SECTIONS: CopySection[] = [
     'Jouer sans compte n’enregistre rien sur les serveurs de TekPractice : votre travail reste sur votre appareil.',
   ]),
   section('hebergement', 'Où elles sont hébergées', [
-    'Vos données sont hébergées chez Supabase, dans une région de l’Union européenne [région exacte à confirmer].',
+    'Vos données sont hébergées chez Supabase, à Francfort (Allemagne), dans l’Union européenne.',
   ]),
   section('conservation', 'Combien de temps', [
     'Vos données sont conservées jusqu’à la suppression de votre compte. « Supprimer mon compte » efface votre profil et votre connexion, sans possibilité de retour.',
@@ -87,13 +85,13 @@ export const PRIVACY_SECTIONS: CopySection[] = [
     'Un compte ne peut être créé qu’avec la confirmation d’un parent ou d’un tuteur. Sans cette confirmation, seuls la tranche d’âge et le but sont demandés, et vous continuez à jouer sans compte, sur votre appareil.',
   ]),
   section('contact', 'Contact', [
-    'Pour exercer vos droits ou poser une question : [contact à compléter].',
+    'Pour exercer vos droits ou poser une question : privacy@tekonest.com.',
   ]),
 ]
 
 /** The sentence next to the unticked consent box. */
 export const CONSENT_TEXT: CopySection = section('consentement', 'Votre consentement', [
-  'Vous acceptez que TekPractice enregistre les données listées ci-dessus pour créer votre compte et sauvegarder vos projets. Vous pouvez retirer ce consentement à tout moment en supprimant votre compte.',
+  'Vous acceptez que TekPractice enregistre les données listées ci-dessus pour créer votre compte. Vous pouvez retirer ce consentement à tout moment en supprimant votre compte.',
 ])
 
 /** The sentence next to the parent or guardian box (learners under 15). */

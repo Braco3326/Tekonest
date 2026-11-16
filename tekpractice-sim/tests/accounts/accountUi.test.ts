@@ -103,7 +103,7 @@ describe('consent first', () => {
     expect(c.getAttribute('aria-modal')).toBe('true')
     const title = document.getElementById(c.getAttribute('aria-labelledby') ?? '')
     expect(title?.textContent).toBe('Créer votre compte')
-    expect(q(c, '.acc-notice')?.textContent).toContain('[responsable de traitement à compléter]')
+    expect(q(c, '.acc-notice')?.textContent).toContain('[nom et prénom], à titre personnel, en France')
     expect(c.textContent).toContain('à valider')
     const box = q<HTMLInputElement>(c, '[name=consent]')!
     expect(box.type).toBe('checkbox')

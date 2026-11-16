@@ -31,15 +31,20 @@ describe('legal drafts', () => {
     expect(PRIVACY_SECTIONS.map((s) => s.id)).toEqual(['responsable', 'finalites', 'base-legale', 'donnees', 'hebergement', 'conservation', 'droits', 'moins-de-15-ans', 'contact'])
   })
 
-  it('the controller and the contact are placeholders to fill in', () => {
-    expect(section('responsable')).toContain('[responsable de traitement à compléter]')
-    expect(section('contact')).toContain('[contact à compléter]')
+  it('the controller keeps ONE blank for the founder to type himself; the contact is the routed address', () => {
+    const r = section('responsable')
+    expect(r).toContain('[nom et prénom], à titre personnel, en France')
+    expect(r.match(/\[[^\]]*\]/g)).toEqual(['[nom et prénom]'])
+    expect(section('contact')).toContain('privacy@tekonest.com')
   })
 
-  it('purposes: the account and saving projects, nothing else; no advertising, no sale', () => {
+  it('purposes: the account only (profile and goal), projects stay on the device; no advertising, no sale', () => {
     const t = section('finalites')
+    expect(t).toMatch(/une seule chose/)
     expect(t).toMatch(/compte/)
-    expect(t).toMatch(/projets/)
+    expect(t).toMatch(/profil et votre but/)
+    expect(t).toMatch(/Vos projets restent sur votre appareil/)
+    expect(t).not.toMatch(/enregistrer vos projets|sauvegarder vos projets/)
     expect(t).toMatch(/aucune publicité/i)
     expect(t).toMatch(/vend|vente/i)
   })
@@ -50,10 +55,12 @@ describe('legal drafts', () => {
     expect(t).toMatch(/retirer/)
   })
 
-  it('names the EU hosting and the host', () => {
+  it('names the EU hosting, the host and the city', () => {
     const t = section('hebergement')
     expect(t).toMatch(/Supabase/)
+    expect(t).toMatch(/Francfort \(Allemagne\)/)
     expect(t).toMatch(/Union européenne/)
+    expect(t).not.toMatch(/à confirmer/)
   })
 
   it('retention: until the account is deleted', () => {
@@ -103,6 +110,7 @@ describe('voice', () => {
     const t = plainText(CONSENT_TEXT)
     expect(t).toMatch(/Vous acceptez/)
     expect(t).toMatch(/compte/)
+    expect(t).not.toMatch(/projets/)
     expect(plainText(PARENT_CONFIRMATION_TEXT)).toMatch(/Vous confirmez/)
   })
 })
